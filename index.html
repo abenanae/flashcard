@@ -1484,7 +1484,7 @@
     Object.assign(window,{appState,render,setTab,importCsvFile,saveSyncSettings,saveNicknameSettings,saveGoogleDriveSettings,connectGoogleDrive,syncGoogleDrive,syncGoogleDriveFromForm,disconnectGoogleDrive,syncFromGas,testGasConnection,openGasUrlForCheck,copyGasUrl,syncFromPastedGasJson,runSelfTests,rateCurrentCard,skipCurrentCard,speakCardFrontText,speakCurrentCard,speakEditorFrontText,openEditor,closeEditor,closeCompletionModal,saveCardFromEditor,addImageToCard,removeImage,deleteCard,resetAllData,exportData});
 
     if("serviceWorker" in navigator){
-      window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(error=>console.warn("Service Worker registration failed:",error)));
+      window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").then(registration=>registration.update()).catch(error=>console.warn("Service Worker registration failed:",error)));
     }
 
     loadData().then(async()=>{
