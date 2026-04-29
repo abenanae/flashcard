@@ -84,13 +84,7 @@
     function openDb(){
       if(dbPromise)return dbPromise;
       dbPromise=new Promise((resolve,reject)=>{
-        let blockedTimer;
         const req=indexedDB.open(DB_NAME,DB_VERSION);
-        req.onblocked=()=>{
-          clearTimeout(blockedTimer);
-          dbPromise=null;
-          reject(new Error("IndexedDBの更新がブロックされています。Chromeで開いている同じアプリのタブやPWAをすべて閉じてから、このページを再読み込みしてください。"));
-        };
         req.onupgradeneeded=()=>{
           const db=req.result;
           if(!db.objectStoreNames.contains(STORES.cards)){
@@ -119,20 +113,8 @@
             store.createIndex("updatedAt","updatedAt",{unique:false});
           }
         };
-        req.onsuccess=()=>{
-          clearTimeout(blockedTimer);
-          const db=req.result;
-          db.onversionchange=()=>db.close();
-          resolve(db);
-        };
-        req.onerror=()=>{
-          clearTimeout(blockedTimer);
-          reject(req.error);
-        };
-        blockedTimer=setTimeout(()=>{
-          dbPromise=null;
-          reject(new Error("IndexedDBの初期化が完了しません。Chromeで同じアプリの別タブやPWAが開いていれば閉じてから再読み込みしてください。"));
-        },8000);
+        req.onsuccess=()=>resolve(req.result);
+        req.onerror=()=>reject(req.error);
       });
       return dbPromise;
     }
@@ -1532,11 +1514,11 @@
       render();
       startGoogleDriveAutoSync();
       await maybeAutoSyncFromGas();
-      }).catch(error=>{
-        console.error(error);
-        appState.error=`データベースの初期化に失敗しました。\n${error.message||error}`;
-        render();
-      });
+    }).catch(error=>{
+      console.error(error);
+      appState.error="データベースの初期化に失敗しました。ブラウザのIndexedDBが利用可能か確認してください。";
+      render();
+    });
   </script>
 </body>
 </html>
