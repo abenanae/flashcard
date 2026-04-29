@@ -1,4 +1,4 @@
-const CACHE_NAME = 'flashcards-pwa-v4';
+const CACHE_NAME = 'flashcards-pwa-v5';
 const APP_ASSETS = [
   './',
   './index.html',
@@ -25,14 +25,7 @@ self.addEventListener('fetch', event => {
 
   if (event.request.mode === 'navigate' || url.pathname.endsWith('/') || url.pathname.endsWith('/index.html')) {
     event.respondWith(
-      fetch(event.request, { cache: 'no-store' }).then(response => {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then(cache => {
-          cache.put('./', copy.clone());
-          cache.put('./index.html', copy);
-        });
-        return response;
-      }).catch(() => caches.match('./index.html'))
+      fetch(event.request).catch(() => caches.match('./index.html'))
     );
     return;
   }

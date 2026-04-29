@@ -15,9 +15,29 @@
   </style>
 </head>
 <body>
-  <div id="app" class="app"></div>
+  <div id="app" class="app"><div class="card empty"><strong>読み込み中です。</strong></div></div>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script>
+    window.addEventListener("error",event=>{
+      if(!event.message)return;
+      const root=document.getElementById("app");
+      if(!root)return;
+      root.textContent="";
+      const box=document.createElement("div");
+      box.className="card errorBox";
+      box.textContent=`アプリの読み込みに失敗しました。\n${String(event.message||event.error||"Unknown error")}`;
+      root.appendChild(box);
+    });
+    window.addEventListener("unhandledrejection",event=>{
+      const root=document.getElementById("app");
+      if(!root)return;
+      const reason=event.reason?.message||event.reason||"Unknown error";
+      root.textContent="";
+      const box=document.createElement("div");
+      box.className="card errorBox";
+      box.textContent=`アプリの読み込みに失敗しました。\n${String(reason)}`;
+      root.appendChild(box);
+    });
     const DB_NAME="personal_flashcards_v2";
     const DB_VERSION=3;
     const STORES={cards:"cards",states:"reviewStates",logs:"reviewLogs",images:"images",settings:"settings",completions:"dailyCompletions",tombstones:"syncTombstones"};
