@@ -84,6 +84,15 @@
     function openDb(){
       if(dbPromise)return dbPromise;
       dbPromise=new Promise((resolve,reject)=>{
+        let settled=false;
+        const timer=setTimeout(()=>fail(new Error("IndexedDBの初期化がタイムアウトしました。古いタブやホーム画面PWAをすべて閉じてから再読み込みしてください。")),8000);
+        function fail(error){
+          if(settled)return;
+          settled=true;
+          clearTimeout(timer);
+          dbPromise=null;
+          reject(error instanceof Error?error:new Error(String(error?.message||error||"IndexedDBの初期化に失敗しました。")));
+        }
         const req=indexedDB.open(DB_NAME,DB_VERSION);
         req.onupgradeneeded=()=>{
           const db=req.result;
@@ -113,8 +122,23 @@
             store.createIndex("updatedAt","updatedAt",{unique:false});
           }
         };
-        req.onsuccess=()=>resolve(req.result);
-        req.onerror=()=>reject(req.error);
+        req.onblocked=()=>fail(new Error("IndexedDBの更新がブロックされています。このアプリを開いている他のタブ、別ウィンドウ、ホーム画面PWAを閉じてから再読み込みしてください。データは削除されていません。"));
+        req.onsuccess=()=>{
+          if(settled){
+            req.result.close();
+            return;
+          }
+          settled=true;
+          clearTimeout(timer);
+          const db=req.result;
+          db.onversionchange=()=>{
+            db.close();
+            appState.warning="別の画面でアプリが更新されました。この画面を再読み込みしてください。";
+            if(typeof render==="function")render();
+          };
+          resolve(db);
+        };
+        req.onerror=()=>fail(req.error);
       });
       return dbPromise;
     }
