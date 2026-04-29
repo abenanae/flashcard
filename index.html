@@ -16,10 +16,20 @@
 </head>
 <body>
   <div id="app" class="app"></div>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script>
     const DB_NAME="personal_flashcards_v2";
-    const DB_VERSION=2;
-    const STORES={cards:"cards",states:"reviewStates",logs:"reviewLogs",images:"images",settings:"settings",completions:"dailyCompletions"};
+    const DB_VERSION=3;
+    const STORES={cards:"cards",states:"reviewStates",logs:"reviewLogs",images:"images",settings:"settings",completions:"dailyCompletions",tombstones:"syncTombstones"};
+    const DRIVE_SYNC_FILE_NAME="flashcards-sync.json";
+    const DRIVE_SYNC_SCOPE="https://www.googleapis.com/auth/drive.appdata";
+    const SYNC_COLLECTIONS=[
+      {store:STORES.cards,collection:"cards",key:"id"},
+      {store:STORES.states,collection:"reviewStates",key:"cardId"},
+      {store:STORES.logs,collection:"reviewLogs",key:"id"},
+      {store:STORES.completions,collection:"dailyCompletions",key:"dateKey"},
+      {store:STORES.images,collection:"images",key:"id"}
+    ];
     const ratingLabels={again:"もう一度",hard:"難しい",good:"正解",easy:"簡単"};
     const praiseWords=["すごい！","かっこいい！","ワンダフル！","最高！"];
     const appState={
@@ -29,6 +39,7 @@
       logs:[],
       images:[],
       dailyCompletions:[],
+      tombstones:[],
       currentCardId:null,
       answerVisible:false,
       message:null,
@@ -41,9 +52,14 @@
       completionModalState:null,
       sessionReviewedCount:0,
       streakDays:0,
-      settings:{gasUrl:"",autoSyncEnabled:false,autoSyncIntervalHours:12,lastSyncAt:null,nickname:""}
+      settings:{gasUrl:"",autoSyncEnabled:false,autoSyncIntervalHours:12,lastSyncAt:null,nickname:"",nicknameUpdatedAt:null,googleDriveClientId:"",googleDriveAutoSyncEnabled:true,googleDriveAutoSyncIntervalMinutes:5,googleDriveLastSyncAt:null}
     };
     let dbPromise;
+    let googleDriveAccessToken="";
+    let googleDriveTokenExpiresAt=0;
+    let googleDriveAutoSyncTimer=null;
+    let googleDriveSyncInFlight=false;
+    let googleDriveSyncQueued=false;
 
     function openDb(){
       if(dbPromise)return dbPromise;
@@ -71,6 +87,11 @@
           }
           if(!db.objectStoreNames.contains(STORES.settings))db.createObjectStore(STORES.settings,{keyPath:"key"});
           if(!db.objectStoreNames.contains(STORES.completions))db.createObjectStore(STORES.completions,{keyPath:"dateKey"});
+          if(!db.objectStoreNames.contains(STORES.tombstones)){
+            const store=db.createObjectStore(STORES.tombstones,{keyPath:"id"});
+            store.createIndex("collection","collection",{unique:false});
+            store.createIndex("updatedAt","updatedAt",{unique:false});
+          }
         };
         req.onsuccess=()=>resolve(req.result);
         req.onerror=()=>reject(req.error);
@@ -119,21 +140,25 @@
     }
 
     async function loadData(){
-      const [cards,states,logs,images,settingsRows,dailyCompletions]=await Promise.all([
+      const [cards,states,logs,images,settingsRows,dailyCompletions,tombstones]=await Promise.all([
         getAll(STORES.cards),
         getAll(STORES.states),
         getAll(STORES.logs),
         getAll(STORES.images),
         getAll(STORES.settings),
-        getAll(STORES.completions)
+        getAll(STORES.completions),
+        getAll(STORES.tombstones)
       ]);
       appState.cards=cards.sort((a,b)=>(a.createdAt||"").localeCompare(b.createdAt||""));
       appState.reviewStates=states;
       appState.logs=logs;
       appState.images=images;
       appState.dailyCompletions=(dailyCompletions||[]).sort((a,b)=>String(a.dateKey||"").localeCompare(String(b.dateKey||"")));
+      appState.tombstones=tombstones||[];
       const saved=settingsRows.find(row=>row.key==="settings");
       if(saved)appState.settings={...appState.settings,...saved.value};
+      appState.settings.googleDriveAutoSyncEnabled=true;
+      appState.settings.googleDriveAutoSyncIntervalMinutes=Math.max(1,Number(appState.settings.googleDriveAutoSyncIntervalMinutes||5));
       appState.streakDays=calculateCurrentStreak(appState.dailyCompletions);
       selectNextCard();
     }
@@ -211,6 +236,355 @@
       return (await sha256(JSON.stringify(row))).slice(0,32);
     }
 
+    function timestampMs(value){
+      const ms=new Date(value||0).getTime();
+      return Number.isFinite(ms)?ms:0;
+    }
+
+    function recordUpdatedAt(record){
+      return record?.updatedAt||record?.lastReviewedAt||record?.reviewedAt||record?.lastCompletedAt||record?.createdAt||record?.firstCompletedAt||record?.dueAt||"1970-01-01T00:00:00.000Z";
+    }
+
+    function tombstoneId(collection,key){
+      return `${collection}:${String(key)}`;
+    }
+
+    async function putSyncTombstone(collection,key,updatedAt=nowIso()){
+      if(!collection||!key)return;
+      await putItem(STORES.tombstones,{id:tombstoneId(collection,key),collection,key:String(key),updatedAt});
+    }
+
+    async function putSyncTombstonesForRows(collection,rows,keyName){
+      const timestamp=nowIso();
+      for(const row of rows||[]){
+        const key=row?.[keyName];
+        if(key)await putSyncTombstone(collection,key,timestamp);
+      }
+    }
+
+    function latestTombstoneMap(...groups){
+      const map=new Map();
+      for(const rows of groups){
+        for(const row of rows||[]){
+          if(!row?.collection||!row?.key)continue;
+          const id=tombstoneId(row.collection,row.key);
+          const current=map.get(id);
+          if(!current||timestampMs(row.updatedAt)>timestampMs(current.updatedAt))map.set(id,{...row,id});
+        }
+      }
+      return map;
+    }
+
+    function blobToDataUrl(blob){
+      return new Promise((resolve,reject)=>{
+        const reader=new FileReader();
+        reader.onload=()=>resolve(String(reader.result||""));
+        reader.onerror=()=>reject(reader.error);
+        reader.readAsDataURL(blob);
+      });
+    }
+
+    async function dataUrlToBlob(dataUrl){
+      const res=await fetch(dataUrl);
+      if(!res.ok)throw new Error("画像データの復元に失敗しました。");
+      return res.blob();
+    }
+
+    async function serializeRecordForSync(config,row){
+      if(config.collection!=="images")return{...row,updatedAt:recordUpdatedAt(row)};
+      const {blob,...rest}=row;
+      return{...rest,updatedAt:recordUpdatedAt(row),blobDataUrl:blob?await blobToDataUrl(blob):""};
+    }
+
+    async function hydrateRecordFromSync(config,row){
+      if(config.collection!=="images")return{...row,updatedAt:recordUpdatedAt(row)};
+      const {blobDataUrl,blob,...rest}=row;
+      const imageBlob=blob||((blobDataUrl&&String(blobDataUrl).startsWith("data:"))?await dataUrlToBlob(blobDataUrl):new Blob([],{type:rest.type||"application/octet-stream"}));
+      return{...rest,blob:imageBlob,updatedAt:recordUpdatedAt(row)};
+    }
+
+    function normalizeDriveSnapshot(payload){
+      if(!payload||typeof payload!=="object")throw new Error("Google Driveの同期ファイル形式が不正です。");
+      const data=payload.data&&typeof payload.data==="object"?payload.data:payload;
+      return{
+        cards:Array.isArray(data.cards)?data.cards:[],
+        reviewStates:Array.isArray(data.reviewStates)?data.reviewStates:[],
+        reviewLogs:Array.isArray(data.reviewLogs)?data.reviewLogs:[],
+        dailyCompletions:Array.isArray(data.dailyCompletions)?data.dailyCompletions:[],
+        images:Array.isArray(data.images)?data.images:[],
+        tombstones:Array.isArray(data.tombstones)?data.tombstones:[],
+        settings:data.settings&&typeof data.settings==="object"?data.settings:{}
+      };
+    }
+
+    async function buildDriveSyncSnapshot(){
+      await loadData();
+      const data={};
+      for(const config of SYNC_COLLECTIONS){
+        const rows=await getAll(config.store);
+        data[config.collection]=[];
+        for(const row of rows)data[config.collection].push(await serializeRecordForSync(config,row));
+      }
+      data.tombstones=await getAll(STORES.tombstones);
+      data.settings={nickname:appState.settings.nickname||"",nicknameUpdatedAt:appState.settings.nicknameUpdatedAt||null};
+      return{schemaVersion:1,app:"flashcards-pwa",exportedAt:nowIso(),data};
+    }
+
+    async function mergeDriveSnapshot(payload){
+      const data=normalizeDriveSnapshot(payload);
+      const tombstoneMap=latestTombstoneMap(await getAll(STORES.tombstones),data.tombstones);
+      for(const tombstone of tombstoneMap.values())await putItem(STORES.tombstones,tombstone);
+      let upserted=0,deleted=0;
+
+      for(const config of SYNC_COLLECTIONS){
+        const remoteRows=Array.isArray(data[config.collection])?data[config.collection]:[];
+        const localRows=await getAll(config.store);
+        const localByKey=new Map(localRows.map(row=>[String(row[config.key]),row]));
+
+        for(const remoteRow of remoteRows){
+          const key=remoteRow?.[config.key];
+          if(!key)continue;
+          const tombstone=tombstoneMap.get(tombstoneId(config.collection,key));
+          if(tombstone&&timestampMs(tombstone.updatedAt)>=timestampMs(recordUpdatedAt(remoteRow))){
+            if(localByKey.has(String(key))){
+              await deleteItem(config.store,key);
+              deleted++;
+            }
+            continue;
+          }
+          const localRow=localByKey.get(String(key));
+          if(!localRow||timestampMs(recordUpdatedAt(remoteRow))>timestampMs(recordUpdatedAt(localRow))){
+            await putItem(config.store,await hydrateRecordFromSync(config,remoteRow));
+            upserted++;
+          }
+        }
+
+        for(const localRow of localRows){
+          const key=localRow?.[config.key];
+          if(!key)continue;
+          const tombstone=tombstoneMap.get(tombstoneId(config.collection,key));
+          if(tombstone&&timestampMs(tombstone.updatedAt)>timestampMs(recordUpdatedAt(localRow))){
+            await deleteItem(config.store,key);
+            deleted++;
+          }
+        }
+      }
+
+      const remoteNicknameTime=timestampMs(data.settings.nicknameUpdatedAt);
+      const localNicknameTime=timestampMs(appState.settings.nicknameUpdatedAt);
+      if(remoteNicknameTime>localNicknameTime){
+        appState.settings={...appState.settings,nickname:data.settings.nickname||"",nicknameUpdatedAt:data.settings.nicknameUpdatedAt};
+        await putItem(STORES.settings,{key:"settings",value:appState.settings});
+      }
+      await loadData();
+      return{upserted,deleted};
+    }
+
+    function googleDriveConfigured(){
+      return !!normalizeText(appState.settings.googleDriveClientId||"");
+    }
+
+    function googleDriveTokenValid(){
+      return !!googleDriveAccessToken&&Date.now()<googleDriveTokenExpiresAt-60000;
+    }
+
+    async function ensureGoogleDriveToken({interactive=true}={}){
+      if(googleDriveTokenValid())return googleDriveAccessToken;
+      const clientId=normalizeText(appState.settings.googleDriveClientId||"");
+      if(!clientId)throw new Error("Google OAuth クライアントIDを設定してください。");
+      if(!interactive)throw new Error("Google Driveの再連携が必要です。");
+      if(!window.google?.accounts?.oauth2)throw new Error("Google Identity Servicesを読み込めませんでした。ネットワーク接続を確認してください。");
+
+      return new Promise((resolve,reject)=>{
+        let settled=false;
+        const timer=setTimeout(()=>{
+          if(settled)return;
+          settled=true;
+          reject(new Error("Google連携がタイムアウトしました。"));
+        },60000);
+        const client=google.accounts.oauth2.initTokenClient({
+          client_id:clientId,
+          scope:DRIVE_SYNC_SCOPE,
+          callback:response=>{
+            if(settled)return;
+            settled=true;
+            clearTimeout(timer);
+            if(response?.error){
+              reject(new Error(response.error_description||response.error));
+              return;
+            }
+            googleDriveAccessToken=response.access_token||"";
+            googleDriveTokenExpiresAt=Date.now()+Math.max(1,Number(response.expires_in||3600))*1000;
+            resolve(googleDriveAccessToken);
+          },
+          error_callback:error=>{
+            if(settled)return;
+            settled=true;
+            clearTimeout(timer);
+            reject(new Error(error?.message||error?.type||"Google連携に失敗しました。"));
+          }
+        });
+        client.requestAccessToken({prompt:appState.settings.googleDriveLastSyncAt?"":"consent"});
+      });
+    }
+
+    async function googleDriveRequest(url,{method="GET",headers={},body,interactive=true,retry=true}={}){
+      const token=await ensureGoogleDriveToken({interactive});
+      const res=await fetch(url,{method,headers:{Authorization:`Bearer ${token}`,...headers},body});
+      if(res.status===401&&retry){
+        googleDriveAccessToken="";
+        googleDriveTokenExpiresAt=0;
+        return googleDriveRequest(url,{method,headers,body,interactive,retry:false});
+      }
+      if(!res.ok){
+        const text=await res.text().catch(()=>"");
+        throw new Error(`Google Drive API エラー HTTP ${res.status}: ${text.slice(0,240)}`);
+      }
+      return res;
+    }
+
+    async function findDriveSyncFile({interactive=true}={}){
+      const params=new URLSearchParams({
+        spaces:"appDataFolder",
+        q:`name='${DRIVE_SYNC_FILE_NAME}' and trashed=false`,
+        fields:"files(id,name,modifiedTime,size)"
+      });
+      const res=await googleDriveRequest(`https://www.googleapis.com/drive/v3/files?${params}`,{interactive});
+      const data=await res.json();
+      return (data.files||[]).sort((a,b)=>String(b.modifiedTime||"").localeCompare(String(a.modifiedTime||"")))[0]||null;
+    }
+
+    async function downloadDriveSyncFile(fileId,{interactive=true}={}){
+      const res=await googleDriveRequest(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(fileId)}?alt=media`,{interactive});
+      return res.json();
+    }
+
+    async function createDriveSyncFile({interactive=true}={}){
+      const metadata={name:DRIVE_SYNC_FILE_NAME,parents:["appDataFolder"],mimeType:"application/json"};
+      const res=await googleDriveRequest("https://www.googleapis.com/drive/v3/files?fields=id,name,modifiedTime,size",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(metadata),
+        interactive
+      });
+      return res.json();
+    }
+
+    async function uploadDriveSyncSnapshot(snapshot,file,{interactive=true}={}){
+      const target=file||await createDriveSyncFile({interactive});
+      const res=await googleDriveRequest(`https://www.googleapis.com/upload/drive/v3/files/${encodeURIComponent(target.id)}?uploadType=media&fields=id,name,modifiedTime,size`,{
+        method:"PATCH",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(snapshot),
+        interactive
+      });
+      return res.json();
+    }
+
+    function startGoogleDriveAutoSync(){
+      if(googleDriveAutoSyncTimer)clearInterval(googleDriveAutoSyncTimer);
+      googleDriveAutoSyncTimer=null;
+      const minutes=Math.max(1,Number(appState.settings.googleDriveAutoSyncIntervalMinutes||15));
+      if(!appState.settings.googleDriveAutoSyncEnabled||!googleDriveConfigured()||!googleDriveTokenValid())return;
+      googleDriveAutoSyncTimer=setInterval(()=>syncGoogleDrive("merge",true),minutes*60000);
+    }
+
+    function queueGoogleDriveAutoSync(){
+      if(!appState.settings.googleDriveAutoSyncEnabled||!googleDriveConfigured()||!googleDriveTokenValid()||googleDriveSyncQueued)return;
+      googleDriveSyncQueued=true;
+      setTimeout(runQueuedGoogleDriveSync,1200);
+    }
+
+    async function runQueuedGoogleDriveSync(){
+      if(googleDriveSyncInFlight){
+        setTimeout(runQueuedGoogleDriveSync,1200);
+        return;
+      }
+      googleDriveSyncQueued=false;
+      await syncGoogleDrive("merge",true);
+    }
+
+    function readGoogleDriveSettingsFromForm(){
+      const clientId=normalizeText(document.getElementById("googleDriveClientId")?.value||appState.settings.googleDriveClientId||"");
+      const intervalMinutes=Math.max(1,Number(document.getElementById("googleDriveAutoSyncIntervalMinutes")?.value||appState.settings.googleDriveAutoSyncIntervalMinutes||5));
+      appState.settings={...appState.settings,googleDriveClientId:clientId,googleDriveAutoSyncEnabled:true,googleDriveAutoSyncIntervalMinutes:intervalMinutes};
+    }
+
+    async function saveGoogleDriveSettings(){
+      clearMessages();
+      readGoogleDriveSettingsFromForm();
+      await putItem(STORES.settings,{key:"settings",value:appState.settings});
+      startGoogleDriveAutoSync();
+      appState.message="Google Drive同期設定を保存しました。";
+      render();
+    }
+
+    async function connectGoogleDrive(){
+      clearMessages();
+      try{
+        readGoogleDriveSettingsFromForm();
+        await ensureGoogleDriveToken({interactive:true});
+        await putItem(STORES.settings,{key:"settings",value:appState.settings});
+        startGoogleDriveAutoSync();
+        await syncGoogleDrive("merge",false);
+        if(!appState.error)appState.message="Google Driveと連携し、安全同期しました。";
+      }catch(error){
+        appState.error=String(error.message||error);
+      }
+      render();
+    }
+
+    async function syncGoogleDriveFromForm(){
+      readGoogleDriveSettingsFromForm();
+      await syncGoogleDrive("merge",false);
+    }
+
+    async function syncGoogleDrive(mode="merge",isAuto=false){
+      if(googleDriveSyncInFlight)return;
+      if(mode!=="merge")mode="merge";
+      googleDriveSyncInFlight=true;
+      if(!isAuto)clearMessages();
+      try{
+        const interactive=!isAuto;
+        let file=await findDriveSyncFile({interactive});
+        let merged={upserted:0,deleted:0};
+        if(file){
+          const remoteSnapshot=await downloadDriveSyncFile(file.id,{interactive});
+          merged=await mergeDriveSnapshot(remoteSnapshot);
+        }
+        const snapshot=await buildDriveSyncSnapshot();
+        file=await uploadDriveSyncSnapshot(snapshot,file,{interactive});
+        appState.settings={...appState.settings,googleDriveLastSyncAt:nowIso()};
+        await putItem(STORES.settings,{key:"settings",value:appState.settings});
+        startGoogleDriveAutoSync();
+        if(!isAuto){
+          appState.message=`Google Drive安全同期完了: 反映 ${merged.upserted}件 / 削除 ${merged.deleted}件`;
+        }
+      }catch(error){
+        console.error(error);
+        if(isAuto){
+          appState.warning=`Google Drive自動同期に失敗しました。\n${error.message||error}`;
+        }else{
+          appState.error=`Google Drive同期に失敗しました。\n${error.message||error}`;
+        }
+      }finally{
+        googleDriveSyncInFlight=false;
+        await loadData();
+        render();
+      }
+    }
+
+    function disconnectGoogleDrive(){
+      if(googleDriveAccessToken&&window.google?.accounts?.oauth2){
+        google.accounts.oauth2.revoke(googleDriveAccessToken,()=>{});
+      }
+      googleDriveAccessToken="";
+      googleDriveTokenExpiresAt=0;
+      startGoogleDriveAutoSync();
+      appState.message="この端末のGoogle Drive連携を解除しました。同期ファイルはDriveに残ります。";
+      render();
+    }
+
     function getNickname(){
       return normalizeText(appState.settings.nickname||"");
     }
@@ -274,8 +648,8 @@
       const existing=appState.dailyCompletions.find(row=>row.dateKey===dateKey);
       const timestamp=nowIso();
       const completion=existing
-        ? {...existing,lastCompletedAt:timestamp,completionCount:Number(existing.completionCount||0)+1}
-        : {dateKey,firstCompletedAt:timestamp,lastCompletedAt:timestamp,completionCount:1};
+        ? {...existing,lastCompletedAt:timestamp,completionCount:Number(existing.completionCount||0)+1,updatedAt:timestamp}
+        : {dateKey,firstCompletedAt:timestamp,lastCompletedAt:timestamp,completionCount:1,updatedAt:timestamp};
       await putItem(STORES.completions,completion);
       return completion;
     }
@@ -380,7 +754,7 @@
           continue;
         }
         const card={id,externalId:fields.externalId,frontText:fields.frontText,backText:fields.backText,exampleText:fields.exampleText,noteText:"",imageIds:[],suspended:false,sourceHash,sourceLabel,createdAt:timestamp,updatedAt:timestamp};
-        const state={cardId:id,dueAt:timestamp,intervalDays:0,easeFactor:2.5,reviewCount:0,lapseCount:0,lastReviewedAt:null};
+        const state={cardId:id,dueAt:timestamp,intervalDays:0,easeFactor:2.5,reviewCount:0,lapseCount:0,lastReviewedAt:null,updatedAt:timestamp};
         await putItem(STORES.cards,card);
         await putItem(STORES.states,state);
         existingById.set(id,card);
@@ -388,6 +762,7 @@
       }
       await loadData();
       appState.importResult={created,updated,skipped,errors};
+      queueGoogleDriveAutoSync();
       return{created,updated,skipped,errors};
     }
 
@@ -535,9 +910,10 @@
     async function saveNicknameSettings(){
       clearMessages();
       const nickname=normalizeText(document.getElementById("nicknameInput")?.value||"");
-      appState.settings={...appState.settings,nickname};
+      appState.settings={...appState.settings,nickname,nicknameUpdatedAt:nowIso()};
       await putItem(STORES.settings,{key:"settings",value:appState.settings});
       appState.message=nickname?"呼び名を保存しました。":"呼び名を空にしました。";
+      queueGoogleDriveAutoSync();
       render();
     }
 
@@ -682,7 +1058,8 @@
         easeFactor=Math.min(3.4,easeFactor+.15);
         dueAt=addDays(now,intervalDays);
       }
-      return{cardId:state.cardId,dueAt:dueAt.toISOString(),intervalDays,easeFactor,reviewCount:Number(state.reviewCount||0)+1,lapseCount,lastReviewedAt:now.toISOString()};
+      const reviewedAt=now.toISOString();
+      return{cardId:state.cardId,dueAt:dueAt.toISOString(),intervalDays,easeFactor,reviewCount:Number(state.reviewCount||0)+1,lapseCount,lastReviewedAt:reviewedAt,updatedAt:reviewedAt};
     }
 
     async function rateCurrentCard(rating){
@@ -691,7 +1068,8 @@
       stopSpeaking();
       const oldState=getReviewState(card.id);
       const newState=calculateNextReview(oldState,rating);
-      const log={id:makeId(),cardId:card.id,reviewedAt:nowIso(),rating,previousIntervalDays:oldState.intervalDays||0,nextIntervalDays:newState.intervalDays||0};
+      const reviewedAt=nowIso();
+      const log={id:makeId(),cardId:card.id,reviewedAt,rating,previousIntervalDays:oldState.intervalDays||0,nextIntervalDays:newState.intervalDays||0,updatedAt:reviewedAt};
       appState.sessionReviewedCount+=1;
       await putItem(STORES.states,newState);
       await putItem(STORES.logs,log);
@@ -715,6 +1093,7 @@
       }else{
         appState.message=`${ratingLabels[rating]}: 次回は${rating==="again"?"10分後":`${newState.intervalDays}日後`}`;
       }
+      queueGoogleDriveAutoSync();
       render();
     }
 
@@ -844,6 +1223,7 @@
       await loadData();
       appState.editorCardId=null;
       appState.message="カードを保存しました。";
+      queueGoogleDriveAutoSync();
       render();
     }
 
@@ -857,50 +1237,70 @@
         render();
         return;
       }
-      const image={id:"img_"+makeId(),cardId,blob:file,side,name:file.name,type:file.type,createdAt:nowIso()};
+      const timestamp=nowIso();
+      const image={id:"img_"+makeId(),cardId,blob:file,side,name:file.name,type:file.type,createdAt:timestamp,updatedAt:timestamp};
       await putItem(STORES.images,image);
-      await putItem(STORES.cards,{...card,imageIds:[...(card.imageIds||[]),image.id],updatedAt:nowIso()});
+      await putItem(STORES.cards,{...card,imageIds:[...(card.imageIds||[]),image.id],updatedAt:timestamp});
       await loadData();
       appState.editorCardId=cardId;
       appState.message="画像を追加しました。";
+      queueGoogleDriveAutoSync();
       render();
     }
 
     async function removeImage(cardId,imageId){
       const card=appState.cards.find(current=>current.id===cardId);
       if(!card)return;
+      await putSyncTombstone("images",imageId);
       await putItem(STORES.cards,{...card,imageIds:(card.imageIds||[]).filter(id=>id!==imageId),updatedAt:nowIso()});
       await deleteItem(STORES.images,imageId);
       await loadData();
       appState.editorCardId=cardId;
       appState.message="画像を削除しました。";
+      queueGoogleDriveAutoSync();
       render();
     }
 
     async function deleteCard(cardId){
       if(!confirm("このカードを削除しますか？ 学習履歴と画像も削除されます。"))return;
-      for(const log of appState.logs.filter(current=>current.cardId===cardId))await deleteItem(STORES.logs,log.id);
-      for(const image of appState.images.filter(current=>current.cardId===cardId))await deleteItem(STORES.images,image.id);
+      await putSyncTombstone("cards",cardId);
+      await putSyncTombstone("reviewStates",cardId);
+      for(const log of appState.logs.filter(current=>current.cardId===cardId)){
+        await putSyncTombstone("reviewLogs",log.id);
+        await deleteItem(STORES.logs,log.id);
+      }
+      for(const image of appState.images.filter(current=>current.cardId===cardId)){
+        await putSyncTombstone("images",image.id);
+        await deleteItem(STORES.images,image.id);
+      }
       await deleteItem(STORES.cards,cardId);
       await deleteItem(STORES.states,cardId);
       await loadData();
       appState.editorCardId=null;
       appState.message="カードを削除しました。";
+      queueGoogleDriveAutoSync();
       render();
     }
 
     async function resetAllData(){
       if(!confirm("すべてのカード、画像、学習履歴を削除しますか？"))return;
+      await putSyncTombstonesForRows("cards",appState.cards,"id");
+      await putSyncTombstonesForRows("reviewStates",appState.reviewStates,"cardId");
+      await putSyncTombstonesForRows("reviewLogs",appState.logs,"id");
+      await putSyncTombstonesForRows("dailyCompletions",appState.dailyCompletions,"dateKey");
+      await putSyncTombstonesForRows("images",appState.images,"id");
       await Promise.all([clearStore(STORES.cards),clearStore(STORES.states),clearStore(STORES.logs),clearStore(STORES.images),clearStore(STORES.completions)]);
       appState.sessionReviewedCount=0;
       appState.completionModalState=null;
       await loadData();
       appState.message="すべてのデータを削除しました。";
+      queueGoogleDriveAutoSync();
       render();
     }
 
-    function exportData(){
-      const payload={exportedAt:nowIso(),cards:appState.cards.map(card=>({...card})),reviewStates:appState.reviewStates,logs:appState.logs,dailyCompletions:appState.dailyCompletions,settings:appState.settings,note:"画像Blobはこの簡易JSONバックアップには含まれません。"};
+    async function exportData(){
+      const payload=await buildDriveSyncSnapshot();
+      payload.note="Google Drive同期と同じ形式のフルバックアップです。画像はdata URLとして含まれます。";
       const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
       const url=URL.createObjectURL(blob);
       const anchor=document.createElement("a");
@@ -939,6 +1339,12 @@
         assert("createTenQuestionModalState rewards high accuracy",milestoneState.headline.includes("最高！"),JSON.stringify(milestoneState));
         assert("calculateCurrentStreak counts unique completed days",calculateCurrentStreak([{dateKey:"2026-04-24"},{dateKey:"2026-04-25"},{dateKey:"2026-04-25"},{dateKey:"2026-04-26"}],"2026-04-26")===3);
         assert("calculateCurrentStreak resets after a missed day",calculateCurrentStreak([{dateKey:"2026-04-24"}],"2026-04-26")===0);
+        assert("tombstoneId includes collection and key",tombstoneId("cards","abc")==="cards:abc");
+        assert("recordUpdatedAt falls back to reviewedAt",recordUpdatedAt({reviewedAt:"2026-04-26T00:00:00.000Z"})==="2026-04-26T00:00:00.000Z");
+        const tombstones=latestTombstoneMap([{collection:"cards",key:"1",updatedAt:"2026-04-24T00:00:00.000Z"}],[{collection:"cards",key:"1",updatedAt:"2026-04-25T00:00:00.000Z"}]);
+        assert("latestTombstoneMap keeps newest tombstone",tombstones.get("cards:1").updatedAt==="2026-04-25T00:00:00.000Z");
+        const driveSnapshot=normalizeDriveSnapshot({data:{cards:[{id:"1"}],reviewStates:[],reviewLogs:[],dailyCompletions:[],images:[],tombstones:[],settings:{nickname:"Yuki"}}});
+        assert("normalizeDriveSnapshot reads Drive sync payload",driveSnapshot.cards.length===1&&driveSnapshot.settings.nickname==="Yuki");
       }catch(error){
         tests.push({name:"Self-test crashed",ok:false,detail:String(error.message||error)});
       }
@@ -996,8 +1402,14 @@
       return`<div class="card"><div class="statsGrid"><div class="stat"><div class="num">${summary.due}</div><div class="label">今日の対象</div></div><div class="stat"><div class="num">${summary.reviewedToday}</div><div class="label">今日の学習</div></div><div class="stat"><div class="num">${summary.activeCards}</div><div class="label">有効カード</div></div><div class="stat"><div class="num">${summary.newCards}</div><div class="label">未学習</div></div></div></div>`;
     }
 
+    function renderDriveSync(){
+      const linked=googleDriveTokenValid();
+      const lastSync=appState.settings.googleDriveLastSyncAt?formatDateTime(appState.settings.googleDriveLastSyncAt):"未同期";
+      return`<div class="card"><h2 style="margin:0 0 10px;letter-spacing:-.03em">Google Drive 同期</h2><div class="notice">カード、学習状態、学習履歴、達成日、画像をGoogle Driveのアプリデータ領域に保存します。同期時は必ずDrive側を読み込んでから端末内データとマージし、その結果だけをアップロードします。</div><label for="googleDriveClientId">Google OAuth クライアントID</label><input id="googleDriveClientId" type="text" placeholder="000000000000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com" value="${escapeHtml(appState.settings.googleDriveClientId||"")}"/><div class="notice" style="margin-top:14px"><strong>自動同期: ON</strong><br>連携後は学習・編集・画像変更・削除のたびに安全同期します。</div><label for="googleDriveAutoSyncIntervalMinutes">定期確認の間隔（分）</label><input id="googleDriveAutoSyncIntervalMinutes" type="number" inputmode="numeric" min="1" value="${escapeHtml(appState.settings.googleDriveAutoSyncIntervalMinutes||5)}"/><p class="small">状態: ${linked?"連携中":"未連携"} / 最終同期: ${lastSync}</p><div class="row"><button onclick="connectGoogleDrive()">設定して連携</button><button class="blue" onclick="syncGoogleDriveFromForm()">今すぐ安全同期</button><button class="secondary" onclick="disconnectGoogleDrive()">連携解除</button></div></div>`;
+    }
+
     function renderImport(){
-      return`<div class="card"><h2 style="margin:0 0 10px;letter-spacing:-.03em">Google Spreadsheet 同期</h2><div class="notice">GitHub PagesなどのHTTPS公開環境では直接同期を試せます。失敗した場合はJSON貼り付け同期で反映できます。<br>対応列: <strong>id</strong>任意, <strong>日本語</strong>, <strong>英語</strong>, <strong>例文</strong></div><label for="gasUrl">GAS WebアプリURL</label><input id="gasUrl" type="text" placeholder="https://script.google.com/macros/s/.../exec" value="${escapeHtml(appState.settings.gasUrl||"")}"/><div class="toggleLine"><div><strong>アプリ起動時に直接同期を試す</strong><div class="small">直接同期がブロックされる環境では警告だけ表示します。</div></div><input id="autoSyncEnabled" class="checkbox" type="checkbox" ${appState.settings.autoSyncEnabled?"checked":""}/></div><label for="autoSyncIntervalHours">自動同期を試す間隔（時間）</label><input id="autoSyncIntervalHours" type="number" inputmode="numeric" value="${escapeHtml(appState.settings.autoSyncIntervalHours||12)}"/><p class="small">最終同期: ${appState.settings.lastSyncAt?formatDateTime(appState.settings.lastSyncAt):"未同期"}</p><div class="row"><button onclick="saveSyncSettings()">同期設定を保存</button><button class="blue" onclick="saveSyncSettings().then(()=>syncFromGas(false))">直接同期を試す</button><button class="ghost" onclick="testGasConnection()">接続テスト</button><button class="secondary" onclick="openGasUrlForCheck()">GAS URLを開く</button><button class="secondary" onclick="copyGasUrl()">URLをコピー</button></div></div><div class="card"><h2 style="margin:0 0 10px;letter-spacing:-.03em">JSON貼り付け同期</h2><div class="notice">直接同期が失敗する場合の確実な反映方法です。GAS URLを開いて表示されたJSON全体をここに貼ってください。</div><label for="gasJsonPaste">GASで表示されたJSON</label><textarea id="gasJsonPaste" placeholder='{"cards":[{"id":"001","日本語":"切羽詰まった","英語":"hard-pressed","例文":"..."}]}'></textarea><button class="blue" onclick="syncFromPastedGasJson()">貼り付けJSONを同期</button></div><div class="card"><h2 style="margin:0 0 10px;letter-spacing:-.03em">CSVインポート</h2><div class="notice">CSVファイルからの手動追加も使えます。対応列: <strong>id</strong>任意, <strong>日本語</strong>, <strong>英語</strong>, <strong>例文</strong></div><label for="csvFile">CSVファイル</label><input id="csvFile" class="fileInput" type="file" accept=".csv,text/csv" onchange="importCsvFile(this.files[0])"/></div><div class="card"><h3 style="margin-top:0">テスト</h3><button class="ghost" onclick="runSelfTests()">内蔵テストを実行</button></div><div class="card"><h3 style="margin-top:0">Spreadsheet / CSV例</h3><pre class="notice mono" style="overflow:auto;white-space:pre-wrap;">id,日本語,英語,例文\n001,切羽詰まった,hard-pressed,you will be hard-pressed to find anything cheaper in this location.\n002,勉強になる,enlightening,I'm glad that you found it enlightening</pre></div>`;
+      return`${renderDriveSync()}<div class="card"><h2 style="margin:0 0 10px;letter-spacing:-.03em">Google Spreadsheet 同期</h2><div class="notice">GitHub PagesなどのHTTPS公開環境では直接同期を試せます。失敗した場合はJSON貼り付け同期で反映できます。<br>対応列: <strong>id</strong>任意, <strong>日本語</strong>, <strong>英語</strong>, <strong>例文</strong></div><label for="gasUrl">GAS WebアプリURL</label><input id="gasUrl" type="text" placeholder="https://script.google.com/macros/s/.../exec" value="${escapeHtml(appState.settings.gasUrl||"")}"/><div class="toggleLine"><div><strong>アプリ起動時に直接同期を試す</strong><div class="small">直接同期がブロックされる環境では警告だけ表示します。</div></div><input id="autoSyncEnabled" class="checkbox" type="checkbox" ${appState.settings.autoSyncEnabled?"checked":""}/></div><label for="autoSyncIntervalHours">自動同期を試す間隔（時間）</label><input id="autoSyncIntervalHours" type="number" inputmode="numeric" value="${escapeHtml(appState.settings.autoSyncIntervalHours||12)}"/><p class="small">最終同期: ${appState.settings.lastSyncAt?formatDateTime(appState.settings.lastSyncAt):"未同期"}</p><div class="row"><button onclick="saveSyncSettings()">同期設定を保存</button><button class="blue" onclick="saveSyncSettings().then(()=>syncFromGas(false))">直接同期を試す</button><button class="ghost" onclick="testGasConnection()">接続テスト</button><button class="secondary" onclick="openGasUrlForCheck()">GAS URLを開く</button><button class="secondary" onclick="copyGasUrl()">URLをコピー</button></div></div><div class="card"><h2 style="margin:0 0 10px;letter-spacing:-.03em">JSON貼り付け同期</h2><div class="notice">直接同期が失敗する場合の確実な反映方法です。GAS URLを開いて表示されたJSON全体をここに貼ってください。</div><label for="gasJsonPaste">GASで表示されたJSON</label><textarea id="gasJsonPaste" placeholder='{"cards":[{"id":"001","日本語":"切羽詰まった","英語":"hard-pressed","例文":"..."}]}'></textarea><button class="blue" onclick="syncFromPastedGasJson()">貼り付けJSONを同期</button></div><div class="card"><h2 style="margin:0 0 10px;letter-spacing:-.03em">CSVインポート</h2><div class="notice">CSVファイルからの手動追加も使えます。対応列: <strong>id</strong>任意, <strong>日本語</strong>, <strong>英語</strong>, <strong>例文</strong></div><label for="csvFile">CSVファイル</label><input id="csvFile" class="fileInput" type="file" accept=".csv,text/csv" onchange="importCsvFile(this.files[0])"/></div><div class="card"><h3 style="margin-top:0">テスト</h3><button class="ghost" onclick="runSelfTests()">内蔵テストを実行</button></div><div class="card"><h3 style="margin-top:0">Spreadsheet / CSV例</h3><pre class="notice mono" style="overflow:auto;white-space:pre-wrap;">id,日本語,英語,例文\n001,切羽詰まった,hard-pressed,you will be hard-pressed to find anything cheaper in this location.\n002,勉強になる,enlightening,I'm glad that you found it enlightening</pre></div>`;
     }
 
     function renderSettings(){
@@ -1050,7 +1462,7 @@
 
     function renderHistory(){
       const logs=[...appState.logs].sort((left,right)=>new Date(right.reviewedAt)-new Date(left.reviewedAt)).slice(0,100);
-      return`${renderStatsCard()}<div class="card"><h2 style="margin-top:0">学習履歴</h2>${logs.length?logs.map(log=>{const card=appState.cards.find(current=>current.id===log.cardId);return`<div class="listItem"><div><div class="listTitle">${escapeHtml(card?.frontText||"削除済みカード")}</div><div class="listMeta">${formatDateTime(log.reviewedAt)} / ${ratingLabels[log.rating]||log.rating}<br>間隔: ${log.previousIntervalDays||0}日 → ${log.nextIntervalDays||0}日</div></div></div>`}).join(""):`<div class="empty">履歴はまだありません。</div>`}</div><div class="card"><h2 style="margin-top:0">データ管理</h2><p class="small">学習データはこのiPhone内のブラウザデータとして保存されます。</p><div class="row"><button class="ghost" onclick="exportData()">JSONバックアップ</button><button class="danger" onclick="resetAllData()">全データ削除</button></div></div>`;
+      return`${renderStatsCard()}<div class="card"><h2 style="margin-top:0">学習履歴</h2>${logs.length?logs.map(log=>{const card=appState.cards.find(current=>current.id===log.cardId);return`<div class="listItem"><div><div class="listTitle">${escapeHtml(card?.frontText||"削除済みカード")}</div><div class="listMeta">${formatDateTime(log.reviewedAt)} / ${ratingLabels[log.rating]||log.rating}<br>間隔: ${log.previousIntervalDays||0}日 → ${log.nextIntervalDays||0}日</div></div></div>`}).join(""):`<div class="empty">履歴はまだありません。</div>`}</div><div class="card"><h2 style="margin-top:0">データ管理</h2><p class="small">学習データはこの端末のブラウザデータとして保存され、Google Drive同期を有効にするとDriveにも反映されます。</p><div class="row"><button class="ghost" onclick="exportData()">JSONバックアップ</button><button class="danger" onclick="resetAllData()">全データ削除</button></div></div>`;
     }
 
     function renderTabs(){
@@ -1069,7 +1481,7 @@
       root.innerHTML=`${renderAppHeader()}${renderMessages()}${main}${renderEditor()}${renderCompletionModal()}${renderTabs()}`;
     }
 
-    Object.assign(window,{appState,render,setTab,importCsvFile,saveSyncSettings,saveNicknameSettings,syncFromGas,testGasConnection,openGasUrlForCheck,copyGasUrl,syncFromPastedGasJson,runSelfTests,rateCurrentCard,skipCurrentCard,speakCardFrontText,speakCurrentCard,speakEditorFrontText,openEditor,closeEditor,closeCompletionModal,saveCardFromEditor,addImageToCard,removeImage,deleteCard,resetAllData,exportData});
+    Object.assign(window,{appState,render,setTab,importCsvFile,saveSyncSettings,saveNicknameSettings,saveGoogleDriveSettings,connectGoogleDrive,syncGoogleDrive,syncGoogleDriveFromForm,disconnectGoogleDrive,syncFromGas,testGasConnection,openGasUrlForCheck,copyGasUrl,syncFromPastedGasJson,runSelfTests,rateCurrentCard,skipCurrentCard,speakCardFrontText,speakCurrentCard,speakEditorFrontText,openEditor,closeEditor,closeCompletionModal,saveCardFromEditor,addImageToCard,removeImage,deleteCard,resetAllData,exportData});
 
     if("serviceWorker" in navigator){
       window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(error=>console.warn("Service Worker registration failed:",error)));
@@ -1077,6 +1489,7 @@
 
     loadData().then(async()=>{
       render();
+      startGoogleDriveAutoSync();
       await maybeAutoSyncFromGas();
     }).catch(error=>{
       console.error(error);

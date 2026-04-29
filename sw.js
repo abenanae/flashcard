@@ -1,4 +1,4 @@
-const CACHE_NAME = 'flashcards-pwa-v1';
+const CACHE_NAME = 'flashcards-pwa-v3';
 const APP_ASSETS = [
   './',
   './index.html',
