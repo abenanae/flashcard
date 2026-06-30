@@ -15,12 +15,14 @@ Google Spreadsheet / GAS からカードを読み込む、個人用フラッシ�
 シート名は `cards` にしてください。
 
 ```csv
-id,日本語,英語,例文
-001,切羽詰まった,hard-pressed,you will be hard-pressed to find anything cheaper in this location.
-002,勉強になる,enlightening,I'm glad that you found it enlightening
+id,日本語,英語,例文,単語帖
+001,切羽詰まった,hard-pressed,you will be hard-pressed to find anything cheaper in this location.,英語 / 教科書
+002,勉強になる,enlightening,I'm glad that you found it enlightening,英語 / 教科書
 ```
 
 `id` は固定してください。英語や日本語を後から修正しても、同じ `id` なら既存カードとして更新されます。
+`単語帖` は任意です。空の場合は、アプリのインポート画面で選んだ単語帖に入ります。
+`英語 / 教科書` のように `/` で区切ると、単語帖一覧で階層表示されます。
 
 ## GAS設定
 
@@ -60,7 +62,7 @@ id,日本語,英語,例文
 
 ## Google Drive同期
 
-カード、学習状態、学習履歴、達成日、画像はGoogle Driveのアプリデータ領域（`appDataFolder`）に1つのJSONファイルとして同期できます。
+単語帖、カード、学習状態、学習履歴、達成日、画像はGoogle Driveのアプリデータ領域（`appDataFolder`）に1つのJSONファイルとして同期できます。
 同期ファイルはDriveの通常画面には表示されず、このPWAだけが読み書きします。
 
 ### Google Cloud設定
@@ -101,3 +103,13 @@ PWA単体ではGoogleの長期更新トークンを安全に保持しないた�
 アプリの `インポート` タブでGAS WebアプリURLを貼ってください。
 
 直接同期が失敗する環境では、`GAS URLを開く` → 表示されたJSONをコピー → `JSON貼り付け同期` で反映してください。
+
+## AI例文チェック
+
+AI例文チェックはOpenRouterを使います。
+アプリの `設定` → `OpenRouter` にAPIキーを保存すると、学習画面で裏面表示後に自分の例文を入力して判定できます。
+
+- API endpoint: `https://openrouter.ai/api/v1/chat/completions`
+- 初期モデル: `openai/gpt-5.2`
+- APIキーはこの端末のIndexedDB設定にだけ保存されます
+- Google Drive同期データとJSONバックアップにはAPIキーを含めません

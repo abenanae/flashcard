@@ -11,7 +11,144 @@
   <title>Flash Cards</title>
   <style>
     :root{--bg:#f8fafc;--panel:#fff;--text:#0f172a;--muted:#64748b;--line:#e2e8f0;--primary:#0f172a;--shadow:0 14px 35px rgba(15,23,42,.08);--radius:22px;--safeTop:env(safe-area-inset-top);--safeBottom:env(safe-area-inset-bottom)}
-    *{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}body{min-height:100vh;padding:calc(12px + var(--safeTop)) 14px calc(92px + var(--safeBottom))}button,input,textarea{font:inherit}button{border:0;border-radius:999px;padding:12px 16px;background:var(--primary);color:#fff;font-weight:750;cursor:pointer;min-height:44px}button.secondary{background:#e2e8f0;color:var(--text)}button.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}button.danger{background:#fee2e2;color:#991b1b}button.warning{background:#fef3c7;color:#78350f}button.success{background:#dcfce7;color:#14532d}button.blue{background:#dbeafe;color:#1d4ed8}button:disabled{opacity:.45}input[type=text],input[type=search],input[type=number],textarea{width:100%;border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:#fff;color:var(--text);outline:0;min-height:44px}textarea{resize:vertical;min-height:96px;line-height:1.5}label{display:block;font-size:13px;font-weight:800;color:#334155;margin:16px 0 8px}.app{max-width:760px;margin:0 auto}.header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0 16px}.headerPills{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}.titleBlock h1{margin:0;font-size:24px;line-height:1.15;letter-spacing:-.03em}.titleBlock p{margin:4px 0 0;color:var(--muted);font-size:13px}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin:14px 0}.heroCard{min-height:300px;display:flex;flex-direction:column;justify-content:center;align-items:stretch;text-align:center;gap:20px}.frontText{font-size:clamp(34px,11vw,64px);font-weight:850;line-height:1.05;letter-spacing:-.05em;word-break:break-word}.backText{font-size:clamp(26px,8vw,44px);font-weight:850;line-height:1.18;letter-spacing:-.03em;word-break:break-word}.exampleText{margin-top:16px;padding:14px;border-radius:18px;background:#f1f5f9;color:#334155;font-size:17px;line-height:1.55;text-align:left;white-space:pre-wrap}.noteText{margin-top:12px;color:#475569;text-align:left;white-space:pre-wrap;line-height:1.55}.imageGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:14px}.cardImage{display:block;width:100%;height:auto;object-fit:contain;border-radius:16px;border:1px solid var(--line);background:#f1f5f9}.cardImage--study{max-height:320px}.cardImage--editor{max-height:180px}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.row>button{flex:1 1 auto}.reviewButtons{display:grid;grid-template-columns:1fr 1fr;gap:10px}.statsGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{background:#f8fafc;border:1px solid var(--line);border-radius:18px;padding:14px}.stat .num{font-size:28px;font-weight:850;letter-spacing:-.04em}.stat .label{color:var(--muted);font-size:12px;font-weight:750;margin-top:3px}.tabs{position:fixed;left:0;right:0;bottom:0;padding:10px 12px calc(10px + var(--safeBottom));background:rgba(248,250,252,.92);border-top:1px solid var(--line);backdrop-filter:blur(16px);z-index:10}.tabInner{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.tab{min-height:48px;border-radius:16px;background:transparent;color:#475569;border:1px solid transparent;font-size:11px;padding:8px 2px}.tab.active{background:#0f172a;color:#fff}.empty{text-align:center;color:var(--muted);line-height:1.65;padding:32px 14px}.listItem{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;border-top:1px solid var(--line);padding:14px 0}.listItem:first-child{border-top:0}.listTitle{font-weight:850;font-size:17px;line-height:1.3;word-break:break-word}.listMeta{color:var(--muted);font-size:12px;margin-top:4px;line-height:1.45}.pill{display:inline-flex;align-items:center;border-radius:999px;background:#f1f5f9;color:#475569;font-weight:750;font-size:12px;padding:6px 9px}.notice,.okBox,.warnBox,.errorBox{border-radius:18px;padding:12px 14px;line-height:1.55;font-size:14px;white-space:pre-wrap}.notice{background:#f1f5f9;color:#334155}.okBox{background:#dcfce7;color:#14532d}.warnBox{background:#fef3c7;color:#78350f}.errorBox{background:#fee2e2;color:#991b1b}.fileInput{display:block;width:100%;border:1px dashed #94a3b8;border-radius:18px;padding:18px;background:#f8fafc;color:#334155}.small{color:var(--muted);font-size:12px;line-height:1.5}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px}.settingsPreview{margin:12px 0 0;padding:14px;border-radius:18px;background:#f8fafc;color:#0f172a;font-weight:800}.modalBackdrop{position:fixed;inset:0;background:rgba(15,23,42,.48);display:flex;align-items:flex-end;justify-content:center;z-index:20;padding:10px}.modalBackdrop--celebration{align-items:center}.modal{width:min(760px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:26px;padding:18px;box-shadow:0 24px 60px rgba(15,23,42,.25)}.celebrationModal{background:linear-gradient(135deg,#fff7ed,#fef3c7 52%,#dbeafe);animation:celebratePop .22s ease-out}.celebrationEyebrow{display:inline-flex;align-items:center;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.7);font-size:12px;font-weight:800;color:#92400e}.celebrationHeadline{margin:12px 0 10px;font-size:clamp(28px,8vw,40px);font-weight:900;letter-spacing:-.05em;line-height:1.05}.celebrationText{margin:0 0 16px;color:#7c2d12;font-weight:700}.modalHeader{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}.modalHeader h2{margin:0;font-size:20px;letter-spacing:-.03em}.toggleLine{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-top:1px solid var(--line)}.checkbox{width:22px;height:22px;accent-color:#0f172a}.searchBar{position:sticky;top:0;background:var(--panel);padding-bottom:10px;z-index:2}@keyframes celebratePop{from{transform:translateY(10px) scale(.98);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}@media(min-width:620px){.reviewButtons{grid-template-columns:repeat(4,1fr)}.statsGrid{grid-template-columns:repeat(4,minmax(0,1fr))}body{padding-left:20px;padding-right:20px}}
+    *{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}body{min-height:100vh;padding:calc(12px + var(--safeTop)) 14px calc(92px + var(--safeBottom))}button,input,textarea,select{font:inherit}button{border:0;border-radius:999px;padding:12px 16px;background:var(--primary);color:#fff;font-weight:750;cursor:pointer;min-height:44px}button.secondary{background:#e2e8f0;color:var(--text)}button.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}button.danger{background:#fee2e2;color:#991b1b}button.warning{background:#fef3c7;color:#78350f}button.success{background:#dcfce7;color:#14532d}button.blue{background:#dbeafe;color:#1d4ed8}button:disabled{opacity:.45}input[type=text],input[type=search],input[type=number],input[type=password],select,textarea{width:100%;border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:#fff;color:var(--text);outline:0;min-height:44px}textarea{resize:vertical;min-height:96px;line-height:1.5}label{display:block;font-size:13px;font-weight:800;color:#334155;margin:16px 0 8px}.app{max-width:760px;margin:0 auto}.header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0 16px}.headerPills{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}.titleBlock h1{margin:0;font-size:24px;line-height:1.15;letter-spacing:-.03em}.titleBlock p{margin:4px 0 0;color:var(--muted);font-size:13px}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin:14px 0}.heroCard{min-height:300px;display:flex;flex-direction:column;justify-content:center;align-items:stretch;text-align:center;gap:20px}.frontText{font-size:clamp(34px,11vw,64px);font-weight:850;line-height:1.05;letter-spacing:-.05em;word-break:break-word}.backText{font-size:clamp(26px,8vw,44px);font-weight:850;line-height:1.18;letter-spacing:-.03em;word-break:break-word}.exampleText{margin-top:16px;padding:14px;border-radius:18px;background:#f1f5f9;color:#334155;font-size:17px;line-height:1.55;text-align:left;white-space:pre-wrap}.noteText{margin-top:12px;color:#475569;text-align:left;white-space:pre-wrap;line-height:1.55}.imageGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:14px}.cardImage{display:block;width:100%;height:auto;object-fit:contain;border-radius:16px;border:1px solid var(--line);background:#f1f5f9}.cardImage--study{max-height:320px}.cardImage--editor{max-height:180px}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.row>button{flex:1 1 auto}.reviewButtons{display:grid;grid-template-columns:1fr 1fr;gap:10px}.statsGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{background:#f8fafc;border:1px solid var(--line);border-radius:18px;padding:14px}.stat .num{font-size:28px;font-weight:850;letter-spacing:-.04em}.stat .label{color:var(--muted);font-size:12px;font-weight:750;margin-top:3px}.deckTable{display:grid;gap:3px}.deckHeader,.deckRow{display:grid;grid-template-columns:minmax(0,1fr)58px58px58px 38px;align-items:center;gap:6px}.deckHeader{padding:0 8px 8px;border-bottom:1px solid var(--line);font-weight:900}.deckHeader div:not(:first-child),.deckCount{text-align:center}.deckRow{min-height:44px;padding:4px 6px;border-radius:16px;cursor:pointer}.deckRow.selected{background:#e5e7eb}.deckName{display:flex;align-items:center;gap:6px;min-width:0;font-size:18px;font-weight:750;line-height:1.2}.deckNameText{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.deckCount{font-size:18px;font-weight:850}.deckCount.new{color:#2997ff}.deckCount.learn{color:#dc2626}.deckCount.due{color:#16a34a}.deckCount.zero{color:#a3a3a3}.deckExpand,.deckGear{background:transparent;color:#475569;border:0;min-height:34px;padding:0}.deckExpand{width:24px;font-size:20px;font-weight:900}.deckGear{width:34px;font-size:20px}.deckToday{text-align:center;font-size:18px;font-weight:750;margin:22px 0 4px}.tabs{position:fixed;left:0;right:0;bottom:0;padding:10px 12px calc(10px + var(--safeBottom));background:rgba(248,250,252,.92);border-top:1px solid var(--line);backdrop-filter:blur(16px);z-index:10}.tabInner{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.tab{min-height:48px;border-radius:16px;background:transparent;color:#475569;border:1px solid transparent;font-size:11px;padding:8px 2px}.tab.active{background:#0f172a;color:#fff}.empty{text-align:center;color:var(--muted);line-height:1.65;padding:32px 14px}.listItem{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;border-top:1px solid var(--line);padding:14px 0}.listItem:first-child{border-top:0}.listTitle{font-weight:850;font-size:17px;line-height:1.3;word-break:break-word}.listMeta{color:var(--muted);font-size:12px;margin-top:4px;line-height:1.45}.pill{display:inline-flex;align-items:center;border-radius:999px;background:#f1f5f9;color:#475569;font-weight:750;font-size:12px;padding:6px 9px}.notice,.okBox,.warnBox,.errorBox{border-radius:18px;padding:12px 14px;line-height:1.55;font-size:14px;white-space:pre-wrap}.notice{background:#f1f5f9;color:#334155}.okBox{background:#dcfce7;color:#14532d}.warnBox{background:#fef3c7;color:#78350f}.errorBox{background:#fee2e2;color:#991b1b}.fileInput{display:block;width:100%;border:1px dashed #94a3b8;border-radius:18px;padding:18px;background:#f8fafc;color:#334155}.small{color:var(--muted);font-size:12px;line-height:1.5}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px}.settingsPreview{margin:12px 0 0;padding:14px;border-radius:18px;background:#f8fafc;color:#0f172a;font-weight:800}.modalBackdrop{position:fixed;inset:0;background:rgba(15,23,42,.48);display:flex;align-items:flex-end;justify-content:center;z-index:20;padding:10px}.modalBackdrop--celebration{align-items:center}.modal{width:min(760px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:26px;padding:18px;box-shadow:0 24px 60px rgba(15,23,42,.25)}.celebrationModal{background:linear-gradient(135deg,#fff7ed,#fef3c7 52%,#dbeafe);animation:celebratePop .22s ease-out}.celebrationEyebrow{display:inline-flex;align-items:center;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.7);font-size:12px;font-weight:800;color:#92400e}.celebrationHeadline{margin:12px 0 10px;font-size:clamp(28px,8vw,40px);font-weight:900;letter-spacing:-.05em;line-height:1.05}.celebrationText{margin:0 0 16px;color:#7c2d12;font-weight:700}.modalHeader{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}.modalHeader h2{margin:0;font-size:20px;letter-spacing:-.03em}.toggleLine{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-top:1px solid var(--line)}.checkbox{width:22px;height:22px;accent-color:#0f172a}.searchBar{position:sticky;top:0;background:var(--panel);padding-bottom:10px;z-index:2}.screenTitle{font-size:20px;font-weight:900;letter-spacing:0;margin:0 0 12px}.compactCard{box-shadow:none;border-radius:16px}.sectionTitle{font-size:15px;font-weight:900;margin:0 0 10px}.progressStrip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.progressItem{border:1px solid var(--line);border-radius:14px;padding:10px;background:#fff}.progressNum{font-size:22px;font-weight:900;line-height:1}.progressLabel{font-size:11px;color:var(--muted);font-weight:800;margin-top:4px}.heatmap{display:grid;grid-template-columns:repeat(14,1fr);gap:5px}.heatDay{aspect-ratio:1;border-radius:5px;background:#eef2f7;border:1px solid #e2e8f0}.heatDay.level1{background:#bfdbfe}.heatDay.level2{background:#60a5fa}.heatDay.level3{background:#2563eb}.heatDay.today{outline:2px solid #111827;outline-offset:1px}.aiPanel{margin-top:16px;text-align:left;border-top:1px solid var(--line);padding-top:16px}.aiResult{margin-top:12px;border-radius:14px;border:1px solid var(--line);padding:12px;background:#f8fafc;line-height:1.55}.aiVerdict{display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:900}.settingsStack{display:grid;gap:12px}.settingsStack .card{margin:0}.tabs .tabInner{grid-template-columns:repeat(4,1fr)}@keyframes celebratePop{from{transform:translateY(10px) scale(.98);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}@media(min-width:620px){.reviewButtons{grid-template-columns:repeat(4,1fr)}.statsGrid{grid-template-columns:repeat(4,minmax(0,1fr))}body{padding-left:20px;padding-right:20px}}
+  </style>
+  <style>
+    /* ===== UX 改善: 共通サーフェス変数 ===== */
+    :root{--surface2:#f1f5f9;--surface3:#f8fafc;--surfaceText:#334155;--heat0:#eef2f7}
+    /* ===== ダークモード ===== */
+    html.dark{--bg:#0b1220;--panel:#111a2e;--text:#e6edf6;--muted:#94a3b8;--line:#26334d;--primary:#3b82f6;--shadow:0 14px 35px rgba(0,0,0,.5);--surface2:#1b2740;--surface3:#16213a;--surfaceText:#cbd5e1;--heat0:#1b2740}
+    html.dark body{background:var(--bg);color:var(--text)}
+    html.dark button.secondary{background:#243049;color:#e6edf6}
+    html.dark button.ghost{color:var(--text);border-color:var(--line)}
+    html.dark input[type=text],html.dark input[type=search],html.dark input[type=number],html.dark input[type=password],html.dark select,html.dark textarea{background:#0e1830;color:var(--text);border-color:var(--line)}
+    html.dark .exampleText{background:var(--surface2);color:var(--surfaceText)}
+    html.dark .stat,html.dark .progressItem,html.dark .settingsPreview,html.dark .aiResult,html.dark .fileInput,html.dark .notice{background:var(--surface3);color:var(--text)}
+    html.dark .pill{background:var(--surface2);color:var(--muted)}
+    html.dark .deckRow.selected{background:#243049}
+    html.dark .tabs{background:rgba(11,18,32,.92)}
+    html.dark .heatDay{background:var(--heat0);border-color:var(--line)}
+    html.dark .heatDay.level1{background:#1e3a8a}html.dark .heatDay.level2{background:#2563eb}html.dark .heatDay.level3{background:#60a5fa}
+    html.dark .modal{background:var(--panel)}
+    html.dark .tab.active{background:#3b82f6}
+    html.dark .noteText{color:var(--muted)}
+    html.dark .celebrationModal{background:linear-gradient(135deg,#1e293b,#3b3413 52%,#172554);color:#fde68a}
+    html.dark .celebrationEyebrow{background:rgba(255,255,255,.12);color:#fcd34d}
+    html.dark .celebrationText{color:#fcd34d}
+    /* ===== フォーカス可視化（アクセシビリティ） ===== */
+    :focus-visible{outline:3px solid #3b82f6;outline-offset:2px}
+    /* ===== カードのめくり ===== */
+    .heroCard{cursor:pointer}
+    .flipHint{font-size:12px;color:var(--muted);font-weight:700;text-align:center;margin-top:4px}
+    /* ===== 評価ボタンの予測間隔 ===== */
+    .reviewButtons button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;line-height:1.12;min-height:56px}
+    .reviewButtons .sub{font-size:11px;font-weight:700;opacity:.72}
+    /* ===== 処理中インジケータ ===== */
+    .busyBar{position:fixed;top:calc(8px + var(--safeTop));left:50%;transform:translateX(-50%);z-index:40;display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 16px;box-shadow:var(--shadow);font-weight:800;font-size:13px;color:var(--text)}
+    .spinner{width:16px;height:16px;border-radius:50%;border:2px solid var(--line);border-top-color:var(--primary);animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    /* ===== スナックバー（元に戻す） ===== */
+    .snackbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(80px + var(--safeBottom));z-index:30;display:flex;align-items:center;gap:12px;background:#0f172a;color:#fff;border-radius:14px;padding:10px 14px;box-shadow:0 14px 35px rgba(0,0,0,.3);max-width:min(560px,94vw)}
+    html.dark .snackbar{background:#1f2a44;border:1px solid var(--line)}
+    .snackbar .sb-msg{flex:1;font-size:13px;font-weight:700}
+    .snackbar button{min-height:36px;padding:6px 14px;background:#3b82f6;color:#fff;flex:0 0 auto}
+    /* ===== 画像ライトボックス ===== */
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px;cursor:zoom-out}
+    .lightbox img{max-width:96vw;max-height:92vh;object-fit:contain;border-radius:12px}
+    .cardImage{cursor:zoom-in}
+    /* ===== AI添削の折りたたみ ===== */
+    .aiToggle{width:100%;text-align:left;background:transparent;color:var(--text);border:1px solid var(--line);font-weight:800}
+    /* ===== データ画面: 曜日バッジ ===== */
+    .weekRow{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:18px}
+    .weekBadge{aspect-ratio:1;max-width:46px;margin:0 auto;width:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;border:2px solid #f6c89a;color:#f97316;background:transparent}
+    .weekBadge.on{background:#f97316;color:#fff;border-color:#f97316}
+    html.dark .weekBadge{border-color:#5a3a1e;color:#fb923c}
+    html.dark .weekBadge.on{background:#f97316;color:#fff;border-color:#f97316}
+    /* ===== データ画面: 棒グラフ ===== */
+    .barChart{position:relative;padding-left:34px}
+    .barPlot{position:relative;height:170px;border-bottom:1px solid var(--line)}
+    .barAxis{position:absolute;left:0;width:100%;border-top:1px dashed var(--line);font-size:11px;color:var(--muted)}
+    .barAxis span{position:absolute;left:-34px;top:-8px;width:30px;text-align:right}
+    .goalLine{position:absolute;left:0;width:100%;border-top:2px dashed #fb923c;z-index:2}
+    .goalLine span{position:absolute;right:2px;top:-16px;font-size:11px;font-weight:800;color:#f97316}
+    .barCols{position:absolute;inset:0;display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:end;z-index:1}
+    .barCol{display:flex;align-items:flex-end;justify-content:center;height:100%}
+    .bar{width:62%;max-width:30px;background:#f97316;border-radius:6px 6px 0 0;min-height:2px;transition:height .2s}
+    .barDates{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:6px;font-size:11px;color:var(--muted);text-align:center}
+    /* ===== データ画面: 統計タイル ===== */
+    .dataGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .dataTile{background:var(--surface3);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+    .dataTile .t-label{font-size:13px;font-weight:800;color:var(--muted);line-height:1.3}
+    .dataTile .t-value{margin-top:14px;font-size:30px;font-weight:900;color:#475569;letter-spacing:-.03em;display:flex;align-items:baseline;gap:5px;flex-wrap:wrap;line-height:1}
+    .dataTile .t-value.time{font-size:22px}
+    .dataTile .t-unit{font-size:14px;font-weight:800;color:var(--muted)}
+    html.dark .dataTile .t-value{color:#e6edf6}
+    /* ===== デッキ表: 色付き列見出し ===== */
+    .deckHeader .hNew{color:#2997ff}
+    .deckHeader .hLearn{color:#dc2626}
+    .deckHeader .hDue{color:#16a34a}
+    .deckToolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+    .deckToolbar h2{margin:0;font-size:18px;letter-spacing:-.03em}
+    /* ===== 単語帖オプションのリスト ===== */
+    .optionList{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+    .optionList button{width:100%;text-align:center}
+    /* ===== タブ（3つ）===== */
+    .tabs .tabInner{grid-template-columns:repeat(3,1fr)}
+    /* ===== 学習画面の上部コントロール ===== */
+    .studyTopBar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:4px}
+    .studyTopBar button{flex:0 0 auto}
+    /* ===== データ画面: 積み上げ棒（単語帖別の色分け） ===== */
+    .barStack{width:62%;max-width:30px;height:100%;display:flex;flex-direction:column-reverse;justify-content:flex-start}
+    .barSeg{width:100%;min-height:1px}
+    .barStack .barSeg:last-child{border-radius:6px 6px 0 0}
+    /* ===== データ画面: 円グラフ＋凡例 ===== */
+    .pieWrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+    .pie{width:136px;height:136px;border-radius:50%;flex:0 0 auto;box-shadow:inset 0 0 0 1px rgba(15,23,42,.05)}
+    .legend{display:flex;flex-direction:column;gap:8px;flex:1 1 160px;min-width:0}
+    .legendItem{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:750}
+    .legendDot{width:14px;height:14px;border-radius:4px;flex:0 0 auto}
+    .legendName{flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .legendVal{color:var(--muted);font-weight:850;flex:0 0 auto}
+    .legendCount{color:var(--muted);font-weight:700;font-size:12px;flex:0 0 auto}
+    /* ===== AI添削: 解説ブロックと評価内訳 ===== */
+    .aiBlock{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);line-height:1.55}
+    .aiBreakdown{margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
+    .aiCat{margin-top:10px}
+    .aiCatHead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-weight:800;font-size:13px}
+    .aiCatScore{color:var(--muted);font-weight:850}
+    .aiCatBar{margin-top:5px;height:7px;border-radius:999px;background:var(--surface2);overflow:hidden}
+    .aiCatFill{height:100%;border-radius:999px;background:#16a34a}
+    .aiNoticeClose{background:transparent!important;color:#cbd5e1!important;min-height:36px;padding:6px 8px;flex:0 0 auto;font-size:16px}
+    .aiNoticeDock,.aiNoticeBox{position:fixed;right:12px;bottom:calc(82px + var(--safeBottom));z-index:32}
+    .aiNoticeDock{left:12px;display:flex;justify-content:flex-end;pointer-events:none}
+    .aiNoticeDock button{pointer-events:auto;box-shadow:0 14px 35px rgba(0,0,0,.22)}
+    .aiNoticeBox{left:12px;margin-left:auto;width:min(440px,calc(100vw - 24px));background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 45px rgba(15,23,42,.22);overflow:hidden;color:var(--text)}
+    .aiNoticeHead{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-bottom:1px solid var(--line)}
+    .aiNoticeTitle{display:flex;align-items:center;gap:8px;min-width:0;font-weight:900}
+    .aiNoticeCount{background:#dbeafe;color:#1d4ed8;border-radius:999px;padding:3px 8px;font-size:12px;font-weight:900}
+    html.dark .aiNoticeCount{background:#1e3a8a;color:#bfdbfe}
+    .aiNoticeMin{background:transparent!important;color:var(--muted)!important;min-height:34px;padding:4px 8px;flex:0 0 auto}
+    .aiNoticeList{display:flex;flex-direction:column;max-height:min(42vh,320px);overflow:auto}
+    .aiNoticeItem{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line)}
+    .aiNoticeItem:last-child{border-bottom:0}
+    .aiNoticeWord{font-weight:850;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .aiNoticeTime{font-size:11px;color:var(--muted);font-weight:750;margin-top:3px}
+    .aiNoticeItem button{min-height:34px;padding:6px 10px;flex:0 0 auto}
+    .aiNoticeDismiss{background:transparent!important;color:var(--muted)!important;font-size:18px}
+    .aiNoticeEmpty{padding:14px 12px;color:var(--muted);font-size:13px;font-weight:750;line-height:1.5}
+    .aiNoticeFoot{padding:10px 12px;border-top:1px solid var(--line);display:flex;justify-content:flex-end}
+    .aiNoticeFoot button{min-height:34px;padding:6px 12px}
+    .aiRateAbove{margin-top:14px}
+    /* ===== AI添削: 修正前/修正例文の比較 ===== */
+    .aiCompare{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:12px;background:var(--surface3)}
+    .aiCmpRow{display:flex;gap:10px;align-items:baseline;padding:11px 12px}
+    .aiCmpRow+.aiCmpRow{border-top:1px solid var(--line)}
+    .aiCmpLabel{flex:0 0 60px;font-size:12px;font-weight:850;color:var(--muted)}
+    .aiCmpText{flex:1 1 auto;font-size:16px;line-height:1.5;word-break:break-word}
+    .aiCmpText.before{color:var(--muted)}
+    .aiCmpText.before.del{text-decoration:line-through}
+    .aiCmpText.after{font-weight:850;color:#15803d}
+    html.dark .aiCmpText.after{color:#4ade80}
   </style>
 </head>
 <body>
@@ -39,26 +176,44 @@
       root.appendChild(box);
     });
     const DB_NAME="personal_flashcards_v2";
-    const DB_VERSION=3;
-    const STORES={cards:"cards",states:"reviewStates",logs:"reviewLogs",images:"images",settings:"settings",completions:"dailyCompletions",tombstones:"syncTombstones"};
+    const DB_VERSION=5;
+    const DEFAULT_DECK_ID="deck_default";
+    const STORES={decks:"decks",cards:"cards",states:"reviewStates",logs:"reviewLogs",images:"images",settings:"settings",completions:"dailyCompletions",aiChecks:"aiExampleChecks",tombstones:"syncTombstones"};
     const DRIVE_SYNC_FILE_NAME="flashcards-sync.json";
     const DRIVE_SYNC_SCOPE="https://www.googleapis.com/auth/drive.appdata";
+    const AI_CHECKS_PER_CARD_LIMIT=2;
+    const AI_READY_NOTICE_LIMIT=20;
+    const AI_CHECK_MAX_ATTEMPTS=3;
+    const AI_CHECK_REQUEST_TIMEOUT_MS=45000;
+    const AI_CHECK_RETRY_BASE_DELAY_MS=1200;
+    const AI_CHECK_RETRY_MAX_DELAY_MS=6000;
     const SYNC_COLLECTIONS=[
+      {store:STORES.decks,collection:"decks",key:"id"},
       {store:STORES.cards,collection:"cards",key:"id"},
       {store:STORES.states,collection:"reviewStates",key:"cardId"},
       {store:STORES.logs,collection:"reviewLogs",key:"id"},
       {store:STORES.completions,collection:"dailyCompletions",key:"dateKey"},
+      {store:STORES.aiChecks,collection:"aiExampleChecks",key:"id"},
       {store:STORES.images,collection:"images",key:"id"}
     ];
     const ratingLabels={again:"もう一度",hard:"難しい",good:"正解",easy:"簡単"};
+    const ANKI_LEARNING_STEPS_MINUTES=[1,10];
+    const ANKI_RELEARNING_STEPS_MINUTES=[10];
+    const ANKI_LEARN_AHEAD_MINUTES=20;
+    const ANKI_GRADUATING_INTERVAL_DAYS=1;
+    const ANKI_EASY_INTERVAL_DAYS=4;
+    const ANKI_HARD_INTERVAL_MULTIPLIER=1.2;
+    const ANKI_EASY_BONUS=1.3;
     const praiseWords=["すごい！","かっこいい！","ワンダフル！","最高！"];
     const appState={
-      tab:"study",
+      tab:"cards",
+      decks:[],
       cards:[],
       reviewStates:[],
       logs:[],
       images:[],
       dailyCompletions:[],
+      aiChecks:[],
       tombstones:[],
       currentCardId:null,
       answerVisible:false,
@@ -67,12 +222,30 @@
       error:null,
       diagnostic:null,
       editorCardId:null,
+      deckEditorId:null,
+      exampleDraft:"",
+      aiCheckResult:null,
+      aiInFlight:[],
+      aiReadyNotices:[],
+      aiNoticeBoxOpen:true,
+      aiResultModalCardId:null,
       search:"",
       importResult:null,
       completionModalState:null,
       sessionReviewedCount:0,
       streakDays:0,
-      settings:{gasUrl:"",autoSyncEnabled:false,autoSyncIntervalHours:12,lastSyncAt:null,nickname:"",nicknameUpdatedAt:null,googleDriveClientId:"",googleDriveAutoSyncEnabled:true,googleDriveAutoSyncIntervalMinutes:5,googleDriveLastSyncAt:null}
+      selectedDeckId:DEFAULT_DECK_ID,
+      busy:null,
+      lastReview:null,
+      lightboxSrc:null,
+      aiPanelOpen:false,
+      cardShownAt:null,
+      deckFormOpen:false,
+      quickAddOpen:false,
+      cardListOpen:false,
+      deckOptionsOpen:false,
+      deckDataOpen:false,
+      settings:{gasUrl:"",autoSyncEnabled:false,autoSyncIntervalHours:12,lastSyncAt:null,nickname:"",nicknameUpdatedAt:null,selectedDeckId:DEFAULT_DECK_ID,openRouterApiKey:"",openRouterModel:"openrouter/free",googleDriveClientId:"",googleDriveAutoSyncEnabled:true,googleDriveAutoSyncIntervalMinutes:5,googleDriveLastSyncAt:null,theme:"auto",dailyGoal:20}
     };
     let dbPromise;
     let googleDriveAccessToken="";
@@ -96,11 +269,19 @@
         const req=indexedDB.open(DB_NAME,DB_VERSION);
         req.onupgradeneeded=()=>{
           const db=req.result;
-          if(!db.objectStoreNames.contains(STORES.cards)){
-            const store=db.createObjectStore(STORES.cards,{keyPath:"id"});
-            store.createIndex("frontText","frontText",{unique:false});
+          if(!db.objectStoreNames.contains(STORES.decks)){
+            const store=db.createObjectStore(STORES.decks,{keyPath:"id"});
             store.createIndex("updatedAt","updatedAt",{unique:false});
           }
+          let cardStore;
+          if(!db.objectStoreNames.contains(STORES.cards)){
+            cardStore=db.createObjectStore(STORES.cards,{keyPath:"id"});
+            cardStore.createIndex("frontText","frontText",{unique:false});
+            cardStore.createIndex("updatedAt","updatedAt",{unique:false});
+          }else{
+            cardStore=req.transaction.objectStore(STORES.cards);
+          }
+          if(!cardStore.indexNames.contains("deckId"))cardStore.createIndex("deckId","deckId",{unique:false});
           if(!db.objectStoreNames.contains(STORES.states)){
             const store=db.createObjectStore(STORES.states,{keyPath:"cardId"});
             store.createIndex("dueAt","dueAt",{unique:false});
@@ -116,6 +297,11 @@
           }
           if(!db.objectStoreNames.contains(STORES.settings))db.createObjectStore(STORES.settings,{keyPath:"key"});
           if(!db.objectStoreNames.contains(STORES.completions))db.createObjectStore(STORES.completions,{keyPath:"dateKey"});
+          if(!db.objectStoreNames.contains(STORES.aiChecks)){
+            const store=db.createObjectStore(STORES.aiChecks,{keyPath:"id"});
+            store.createIndex("cardId","cardId",{unique:false});
+            store.createIndex("checkedAt","checkedAt",{unique:false});
+          }
           if(!db.objectStoreNames.contains(STORES.tombstones)){
             const store=db.createObjectStore(STORES.tombstones,{keyPath:"id"});
             store.createIndex("collection","collection",{unique:false});
@@ -183,24 +369,90 @@
       });
     }
 
+    function defaultDeckRecord(timestamp=nowIso()){
+      return{id:DEFAULT_DECK_ID,name:"基本",collapsed:false,createdAt:timestamp,updatedAt:timestamp};
+    }
+
+    function normalizeDeckName(value){
+      const raw=normalizeText(value).replaceAll("::","/");
+      const parts=raw.split("/").map(part=>normalizeText(part)).filter(Boolean);
+      return parts.join(" / ");
+    }
+
+    function deckPath(deck){
+      if(!deck)return"基本";
+      return normalizeDeckName(deck.name)||"名称未設定";
+    }
+
+    function deckPathParts(deck){
+      return deckPath(deck).split(" / ").filter(Boolean);
+    }
+
+    function deckDisplayName(deck){
+      const parts=deckPathParts(deck);
+      return parts[parts.length-1]||deckPath(deck);
+    }
+
+    function deckDepth(deck){
+      return Math.max(0,deckPathParts(deck).length-1);
+    }
+
+    async function ensureDeckData(decks,cards){
+      const timestamp=nowIso();
+      const normalizedDecks=(decks||[]).filter(deck=>deck?.id).map(deck=>({
+        ...deck,
+        name:normalizeDeckName(deck.name)||(deck.id===DEFAULT_DECK_ID?"基本":"名称未設定"),
+        collapsed:!!deck.collapsed,
+        createdAt:deck.createdAt||timestamp,
+        updatedAt:recordUpdatedAt(deck)
+      }));
+      if(!normalizedDecks.some(deck=>deck.id===DEFAULT_DECK_ID)){
+        const defaultDeck=defaultDeckRecord(timestamp);
+        normalizedDecks.push(defaultDeck);
+        await putItem(STORES.decks,defaultDeck);
+      }
+      const validDeckIds=new Set(normalizedDecks.map(deck=>deck.id));
+      const normalizedCards=[];
+      for(const card of cards||[]){
+        const deckId=validDeckIds.has(card.deckId)?card.deckId:DEFAULT_DECK_ID;
+        if(card.deckId!==deckId){
+          const updated={...card,deckId,updatedAt:timestamp};
+          await putItem(STORES.cards,updated);
+          normalizedCards.push(updated);
+        }else{
+          normalizedCards.push(card);
+        }
+      }
+      return{decks:normalizedDecks,cards:normalizedCards};
+    }
+
     async function loadData(){
-      const [cards,states,logs,images,settingsRows,dailyCompletions,tombstones]=await Promise.all([
+      const [decks,cards,states,logs,images,settingsRows,dailyCompletions,aiChecks,tombstones]=await Promise.all([
+        getAll(STORES.decks),
         getAll(STORES.cards),
         getAll(STORES.states),
         getAll(STORES.logs),
         getAll(STORES.images),
         getAll(STORES.settings),
         getAll(STORES.completions),
+        getAll(STORES.aiChecks),
         getAll(STORES.tombstones)
       ]);
-      appState.cards=cards.sort((a,b)=>(a.createdAt||"").localeCompare(b.createdAt||""));
+      const normalized=await ensureDeckData(decks,cards);
+      appState.decks=normalized.decks.sort((a,b)=>deckPath(a).localeCompare(deckPath(b),"ja"));
+      appState.cards=normalized.cards.sort((a,b)=>(a.createdAt||"").localeCompare(b.createdAt||""));
       appState.reviewStates=states;
       appState.logs=logs;
       appState.images=images;
       appState.dailyCompletions=(dailyCompletions||[]).sort((a,b)=>String(a.dateKey||"").localeCompare(String(b.dateKey||"")));
+      appState.aiChecks=(aiChecks||[]).sort((a,b)=>String(b.checkedAt||"").localeCompare(String(a.checkedAt||"")));
       appState.tombstones=tombstones||[];
       const saved=settingsRows.find(row=>row.key==="settings");
       if(saved)appState.settings={...appState.settings,...saved.value};
+      appState.selectedDeckId=appState.decks.some(deck=>deck.id===appState.settings.selectedDeckId)?appState.settings.selectedDeckId:DEFAULT_DECK_ID;
+      appState.settings.selectedDeckId=appState.selectedDeckId;
+      appState.settings.openRouterModel=normalizeText(appState.settings.openRouterModel||"openrouter/free");
+      appState.settings.openRouterApiKey=normalizeText(appState.settings.openRouterApiKey||"");
       appState.settings.googleDriveAutoSyncEnabled=true;
       appState.settings.googleDriveAutoSyncIntervalMinutes=Math.max(1,Number(appState.settings.googleDriveAutoSyncIntervalMinutes||5));
       appState.streakDays=calculateCurrentStreak(appState.dailyCompletions);
@@ -351,10 +603,12 @@
       if(!payload||typeof payload!=="object")throw new Error("Google Driveの同期ファイル形式が不正です。");
       const data=payload.data&&typeof payload.data==="object"?payload.data:payload;
       return{
+        decks:Array.isArray(data.decks)?data.decks:[],
         cards:Array.isArray(data.cards)?data.cards:[],
         reviewStates:Array.isArray(data.reviewStates)?data.reviewStates:[],
         reviewLogs:Array.isArray(data.reviewLogs)?data.reviewLogs:[],
         dailyCompletions:Array.isArray(data.dailyCompletions)?data.dailyCompletions:[],
+        aiExampleChecks:Array.isArray(data.aiExampleChecks)?data.aiExampleChecks:[],
         images:Array.isArray(data.images)?data.images:[],
         tombstones:Array.isArray(data.tombstones)?data.tombstones:[],
         settings:data.settings&&typeof data.settings==="object"?data.settings:{}
@@ -565,6 +819,7 @@
 
     async function connectGoogleDrive(){
       clearMessages();
+      setBusy("Google Driveに接続中…");
       try{
         readGoogleDriveSettingsFromForm();
         await ensureGoogleDriveToken({interactive:true});
@@ -574,6 +829,8 @@
         if(!appState.error)appState.message="Google Driveと連携し、安全同期しました。";
       }catch(error){
         appState.error=String(error.message||error);
+      }finally{
+        clearBusy();
       }
       render();
     }
@@ -587,9 +844,9 @@
       if(googleDriveSyncInFlight)return;
       if(mode!=="merge")mode="merge";
       googleDriveSyncInFlight=true;
-      if(!isAuto)clearMessages();
+      if(!isAuto){clearMessages();setBusy("Google Driveと同期中…");}
       try{
-        const hadLocalData=appState.cards.length>0||appState.reviewStates.length>0||appState.logs.length>0||appState.images.length>0||appState.dailyCompletions.length>0;
+        const hadLocalData=appState.cards.length>0||appState.reviewStates.length>0||appState.logs.length>0||appState.images.length>0||appState.dailyCompletions.length>0||appState.aiChecks.length>0;
         const interactive=!isAuto;
         let file=await findDriveSyncFile({interactive});
         let merged={upserted:0,deleted:0};
@@ -615,6 +872,7 @@
         }
       }finally{
         googleDriveSyncInFlight=false;
+        clearBusy();
         await loadData();
         render();
       }
@@ -648,11 +906,22 @@
       return `${Math.round(value*100)}%`;
     }
 
-    function calculateCorrectRate(ratings){
+    function answerButtonStats(ratings){
       const list=(ratings||[]).filter(Boolean);
-      if(!list.length)return 0;
-      const correctCount=list.filter(rating=>rating!=="again").length;
-      return correctCount/list.length;
+      const counts={again:0,hard:0,good:0,easy:0};
+      for(const rating of list){
+        if(rating in counts)counts[rating]++;
+      }
+      return{
+        ...counts,
+        total:list.length,
+        passCount:list.length-counts.again,
+        passRate:list.length?(list.length-counts.again)/list.length:0
+      };
+    }
+
+    function calculateCorrectRate(ratings){
+      return answerButtonStats(ratings).passRate;
     }
 
     function createCompletionModalState(completion){
@@ -666,19 +935,21 @@
     }
 
     function createTenQuestionModalState(ratings,{alsoCompleted=false,completionCount=0}={}){
-      const correctRate=calculateCorrectRate(ratings);
+      const answerStats=answerButtonStats(ratings);
+      const correctRate=answerStats.passRate;
       const percent=formatPercent(correctRate);
+      const breakdown=`Again ${answerStats.again}回 / Hard ${answerStats.hard}回`;
       let praiseWord="ワンダフル！";
-      let body=`10問達成。正解率 ${percent}。10問やり切ったのがえらい、このままいこう。`;
+      let body=`10問達成。Anki式正答率 ${percent}（${breakdown}）。10問やり切ったのがえらい、このままいこう。`;
       if(correctRate>=.9){
         praiseWord="最高！";
-        body=`10問達成。正解率 ${percent}。キレがあるよ、この調子！`;
+        body=`10問達成。Anki式正答率 ${percent}（${breakdown}）。キレがあるよ、この調子！`;
       }else if(correctRate>=.7){
         praiseWord="すごい！";
-        body=`10問達成。正解率 ${percent}。いい流れで進められてるよ。`;
+        body=`10問達成。Anki式正答率 ${percent}（${breakdown}）。いい流れで進められてるよ。`;
       }
       if(alsoCompleted)body+=` しかも今ある学習カードも全部終えたよ。`;
-      const pills=[`正解率 ${percent}`,`今回 ${ratings.length}問`];
+      const pills=[`Anki式正答率 ${percent}`,breakdown,`今回 ${ratings.length}問`];
       if(alsoCompleted&&completionCount)pills.push(`今日の完了 ${completionCount}回目`);
       return{
         title:"10問達成",
@@ -750,26 +1021,61 @@
       const japanese=row["日本語"]??row["意味"]??row["和訳"]??row["裏面"]??row.Japanese??"";
       const english=row["英語"]??row["単語"]??row["表面"]??row.English??"";
       const example=row["例文"]??row["例"]??row.sentence??row.Example??"";
+      const deckName=row["単語帖"]??row["デッキ"]??row.deck??row.Deck??row.deckName??row["Deck Name"]??"";
       return{
         externalId:normalizeText(rawId),
         frontText:normalizeText(english),
         backText:normalizeText(japanese),
-        exampleText:String(example??"").trim()
+        exampleText:String(example??"").trim(),
+        deckName:normalizeDeckName(deckName)
       };
     }
 
-    async function createImportedCardId(fields){
-      if(fields.externalId)return "sheet_"+(await sha256(fields.externalId)).slice(0,32);
-      return createCardId(fields.frontText,fields.backText);
+    async function getOrCreateDeckByName(name){
+      const normalized=normalizeDeckName(name);
+      if(!normalized)return appState.selectedDeckId||DEFAULT_DECK_ID;
+      const parts=normalized.split(" / ").filter(Boolean);
+      let targetId=DEFAULT_DECK_ID;
+      for(let index=1;index<=parts.length;index++){
+        const path=parts.slice(0,index).join(" / ");
+        const existing=findDeckByPath(path);
+        if(existing){
+          targetId=existing.id;
+          continue;
+        }
+        const timestamp=nowIso();
+        const deck={id:"deck_"+makeId(),name:path,collapsed:false,createdAt:timestamp,updatedAt:timestamp};
+        await putItem(STORES.decks,deck);
+        appState.decks=[...appState.decks,deck].sort((a,b)=>deckPath(a).localeCompare(deckPath(b),"ja"));
+        targetId=deck.id;
+      }
+      return targetId;
     }
 
-    async function importRows(objects,sourceLabel="インポート"){
+    async function createImportedCardId(fields,deckId,existingById){
+      if(fields.externalId){
+        const legacyId="sheet_"+(await sha256(fields.externalId)).slice(0,32);
+        if(existingById.has(legacyId))return legacyId;
+        return "sheet_"+(await sha256(`${deckId}::${fields.externalId}`)).slice(0,32);
+      }
+      const legacyId=await createCardId(fields.frontText,fields.backText);
+      if(existingById.has(legacyId))return legacyId;
+      return "card_"+(await sha256(`${deckId}::${normalizeText(fields.frontText).toLowerCase()}::${normalizeText(fields.backText)}`)).slice(0,32);
+    }
+
+    function readImportDeckId(){
+      const value=document.getElementById("importDeckId")?.value||appState.selectedDeckId||DEFAULT_DECK_ID;
+      return appState.decks.some(deck=>deck.id===value)?value:DEFAULT_DECK_ID;
+    }
+
+    async function importRows(objects,sourceLabel="インポート",targetDeckId=appState.selectedDeckId){
       let created=0,updated=0,skipped=0;
       const errors=[];
       const existingById=new Map(appState.cards.map(card=>[card.id,card]));
       const seen=new Set();
       for(const [index,row] of objects.entries()){
         const fields=resolveImportedFields(row);
+        const deckId=fields.deckName?await getOrCreateDeckByName(fields.deckName):(appState.decks.some(deck=>deck.id===targetDeckId)?targetDeckId:DEFAULT_DECK_ID);
         const line=row.__line||index+2;
         if(!fields.frontText){
           errors.push(`${line}行目: 英語が空です。`);
@@ -779,7 +1085,7 @@
           errors.push(`${line}行目: 日本語が空です。`);
           continue;
         }
-        const id=await createImportedCardId(fields);
+        const id=await createImportedCardId(fields,deckId,existingById);
         if(seen.has(id)){
           skipped++;
           continue;
@@ -789,17 +1095,17 @@
         const existing=existingById.get(id);
         const timestamp=nowIso();
         if(existing){
-          if(existing.sourceHash===sourceHash){
+          if(existing.sourceHash===sourceHash&&cardDeckId(existing)===deckId){
             skipped++;
             continue;
           }
-          const updatedCard={...existing,externalId:fields.externalId||existing.externalId||"",frontText:fields.frontText,backText:fields.backText,exampleText:fields.exampleText,sourceHash,sourceLabel,updatedAt:timestamp};
+          const updatedCard={...existing,deckId,externalId:fields.externalId||existing.externalId||"",frontText:fields.frontText,backText:fields.backText,exampleText:fields.exampleText,sourceHash,sourceLabel,updatedAt:timestamp};
           await putItem(STORES.cards,updatedCard);
           existingById.set(id,updatedCard);
           updated++;
           continue;
         }
-        const card={id,externalId:fields.externalId,frontText:fields.frontText,backText:fields.backText,exampleText:fields.exampleText,noteText:"",imageIds:[],suspended:false,sourceHash,sourceLabel,createdAt:timestamp,updatedAt:timestamp};
+        const card={id,deckId,externalId:fields.externalId,frontText:fields.frontText,backText:fields.backText,exampleText:fields.exampleText,noteText:"",imageIds:[],suspended:false,sourceHash,sourceLabel,createdAt:timestamp,updatedAt:timestamp};
         const state={cardId:id,dueAt:timestamp,intervalDays:0,easeFactor:2.5,reviewCount:0,lapseCount:0,lastReviewedAt:null,updatedAt:timestamp};
         await putItem(STORES.cards,card);
         await putItem(STORES.states,state);
@@ -815,9 +1121,16 @@
     async function importCsvFile(file){
       clearMessages();
       if(!file)return;
-      const objects=rowsToObjects(parseCsv(await file.text()));
-      const result=await importRows(objects,"CSV");
-      appState.message=`インポート完了: 新規 ${result.created}件 / 更新 ${result.updated}件 / スキップ ${result.skipped}件`;
+      setBusy("CSVを取り込み中…");
+      try{
+        const objects=rowsToObjects(parseCsv(await file.text()));
+        const result=await importRows(objects,"CSV",readImportDeckId());
+        appState.message=`インポート完了: 新規 ${result.created}件 / 更新 ${result.updated}件 / スキップ ${result.skipped}件`;
+      }catch(error){
+        appState.error=`CSVの取り込みに失敗しました。\n${error.message||error}`;
+      }finally{
+        clearBusy();
+      }
       render();
     }
 
@@ -956,10 +1269,482 @@
     async function saveNicknameSettings(){
       clearMessages();
       const nickname=normalizeText(document.getElementById("nicknameInput")?.value||"");
-      appState.settings={...appState.settings,nickname,nicknameUpdatedAt:nowIso()};
+      const dailyGoal=Math.max(1,Math.round(Number(document.getElementById("dailyGoalInput")?.value||appState.settings.dailyGoal||20)));
+      appState.settings={...appState.settings,nickname,nicknameUpdatedAt:nowIso(),dailyGoal};
       await putItem(STORES.settings,{key:"settings",value:appState.settings});
-      appState.message=nickname?"呼び名を保存しました。":"呼び名を空にしました。";
+      appState.message="表示設定を保存しました。";
       queueGoogleDriveAutoSync();
+      render();
+    }
+
+    async function saveAiSettings(){
+      clearMessages();
+      const openRouterApiKey=normalizeText(document.getElementById("openRouterApiKey")?.value||appState.settings.openRouterApiKey||"");
+      const openRouterModel=normalizeText(document.getElementById("openRouterModel")?.value||appState.settings.openRouterModel||"openrouter/free");
+      appState.settings={...appState.settings,openRouterApiKey,openRouterModel};
+      await putItem(STORES.settings,{key:"settings",value:appState.settings});
+      appState.message=openRouterApiKey?"OpenRouter設定を保存しました。":"OpenRouter APIキーを空にしました。";
+      render();
+    }
+
+    function normalizeAiCheckResult(payload){
+      const data=payload&&typeof payload==="object"?payload:{};
+      if(data.error)throw new Error(data.error);
+      const verdict=normalizeText(data.verdict||data.judgement||data.judgment||data.label||"要確認");
+      const score=Number.isFinite(Number(data.score))?Math.max(0,Math.min(100,Math.round(Number(data.score)))):null;
+      const evalSrc=data.evaluations&&typeof data.evaluations==="object"?data.evaluations:{};
+      const category=(key,maxScore)=>{
+        const cell=evalSrc[key]&&typeof evalSrc[key]==="object"?evalSrc[key]:{};
+        const value=Number.isFinite(Number(cell.score))?Math.max(0,Math.min(maxScore,Math.round(Number(cell.score)))):null;
+        const feedback=normalizeText(cell.feedback||"");
+        return value===null&&!feedback?null:{score:value,maxScore,feedback};
+      };
+      const evaluations={
+        spellingAndMechanics:category("spellingAndMechanics",10),
+        syntax:category("syntax",30),
+        semantics:category("semantics",35),
+        pragmatics:category("pragmatics",25)
+      };
+      const hasEvaluations=Object.values(evaluations).some(Boolean);
+      return{
+        verdict,
+        score,
+        reason:normalizeText(data.reason||data.explanation||""),
+        suggestion:normalizeText(data.suggestion||data.tip||""),
+        correctedExample:normalizeText(data.correctedExample||data.corrected||data.example||""),
+        evaluations:hasEvaluations?evaluations:null,
+        nativeReception:normalizeText(data.nativeReception||""),
+        usageExplanation:normalizeText(data.usageExplanation||""),
+        correctedMeaning:normalizeText(data.correctedMeaning||"")
+      };
+    }
+
+    function extractJsonObject(text){
+      const raw=String(text||"").trim().replace(/^```(?:json)?/i,"").replace(/```$/,"").trim();
+      try{return JSON.parse(raw)}catch{}
+      const start=raw.indexOf("{"),end=raw.lastIndexOf("}");
+      if(start>=0&&end>start)return JSON.parse(raw.slice(start,end+1));
+      throw new Error("AIの返答をJSONとして読めませんでした。");
+    }
+
+    const AI_CHECK_SYSTEM_PROMPT=`
+You are an English example-sentence evaluator for Japanese learners.
+
+Evaluate whether the learner uses the target word correctly and appropriately.
+
+Write every explanation in clear Japanese.
+English may be used only for English words, phrases, and example sentences.
+
+Return only one valid JSON object.
+Do not return Markdown, code fences, or text outside the JSON.
+
+Use exactly these top-level keys:
+
+{
+  "verdict": "OK | 少し不自然 | 誤用",
+  "score": 0,
+  "reason": "",
+  "suggestion": "",
+  "correctedExample": "",
+  "evaluations": {
+    "spellingAndMechanics": { "score": 0, "maxScore": 10, "feedback": "" },
+    "syntax": { "score": 0, "maxScore": 30, "feedback": "" },
+    "semantics": { "score": 0, "maxScore": 35, "feedback": "" },
+    "pragmatics": { "score": 0, "maxScore": 25, "feedback": "" }
+  },
+  "nativeReception": "",
+  "usageExplanation": "",
+  "correctedMeaning": ""
+}
+
+The four evaluation categories are mutually exclusive.
+
+1. Spelling and mechanics: 0-10 points
+Evaluate only: spelling, capitalization, punctuation, apostrophes, spacing.
+Do not evaluate grammar, meaning, or appropriateness here.
+
+2. Syntax: 0-30 points
+Evaluate: word order, tense and aspect, verb forms, articles, singular and plural forms, prepositions, objects and complements, infinitives and gerunds, transitive and intransitive usage, sentence structure.
+Do not merely say 文法的に誤りです / 現在形の意図が不明確です / 不自然です.
+Explain what the current grammatical form normally communicates.
+For example, do not write only 「現在形の意図が不明確です。」
+Instead write 「I summarizeという現在形は、今している動作ではなく、普段から繰り返している習慣や仕事として読まれます。」
+
+3. Semantics: 0-35 points
+Evaluate: the meaning of the target word, the meaning of the whole sentence, who is doing what to whom, the direction of an action, ambiguity, contradiction, unintended meanings.
+Explain what the learner probably intended, what the original sentence actually communicates, and whether a native speaker could interpret it differently.
+Do not deduct again for the same error already evaluated under syntax.
+
+4. Pragmatics: 0-25 points
+Evaluate: whether the expression fits the situation, formality, politeness, directness, emotional strength, implied attitude, whether the wording sounds overly formal, blunt, childish, distant, exaggerated, humorous, or sarcastic.
+Do not use pragmatics as a general category for all unnaturalness.
+If the problem is grammatical, deduct mainly under syntax.
+If the problem changes the meaning, deduct mainly under semantics.
+
+Feedback requirements:
+- Start the reason with the most important conclusion.
+- Identify the exact problematic expression.
+- Explain how a native English speaker is likely to understand the original sentence on the first reading.
+- Explain exactly where the reader may hesitate or reinterpret it.
+- Do not merely say that the sentence is unnatural.
+- If the intended meaning can be inferred, explicitly say so.
+- Do not exaggerate and claim that a sentence is incomprehensible when the intention is reasonably inferable.
+- Explain why the correction is better.
+- Explain what the corrected sentence communicates.
+- Use grammatical terminology only when it is immediately explained in ordinary Japanese.
+- Do not deduct the same underlying error heavily in multiple categories.
+
+Correction requirements:
+- Preserve the target word whenever it can correctly express the intended meaning.
+- Preserve the learner's likely intention.
+- If multiple intentions are plausible, mention them in suggestion.
+- If the original is fully correct, correctedExample must be identical to the learner example.
+
+Scoring:
+- spellingAndMechanics maximum: 10
+- syntax maximum: 30
+- semantics maximum: 35
+- pragmatics maximum: 25
+- score must equal the sum of the four category scores
+- maximum total score: 100
+
+Verdict:
+- OK: correct and suitable as a learning example
+- 少し不自然: understandable, but a minor or moderate correction is needed
+- 誤用: a serious structural or semantic problem exists
+`;
+
+    function aiCheckUserMessage(target,meaning,reference,learner){
+      return[
+        `Target word: ${target}`,
+        `Japanese meaning: ${meaning}`,
+        `Reference example: ${reference||"(none)"}`,
+        `Learner example: ${learner}`
+      ].join("\n");
+    }
+
+    const AI_CHECK_FEWSHOT=[
+      {
+        user:aiCheckUserMessage("summarize","要約する","Please summarize the article in one sentence.","Please summarize the article in one sentence."),
+        assistant:{
+          verdict:"OK",score:100,
+          reason:"修正は必要ありません。summarizeの後ろに、要約する対象であるthe articleが正しく置かれています。",
+          suggestion:"このまま学習用の例文として使用できます。",
+          correctedExample:"Please summarize the article in one sentence.",
+          evaluations:{
+            spellingAndMechanics:{score:10,maxScore:10,feedback:"スペル、大文字、句読点に問題はありません。"},
+            syntax:{score:30,maxScore:30,feedback:"summarizeの後ろに目的語the articleが置かれ、in one sentenceも自然につながっています。"},
+            semantics:{score:35,maxScore:35,feedback:"「その記事を一文で要約してください」という意味が明確です。"},
+            pragmatics:{score:25,maxScore:25,feedback:"授業、仕事、AIへの指示などで自然に使える依頼です。"}
+          },
+          nativeReception:"母語話者には、記事の重要な内容を一つの文にまとめるよう求める依頼として、迷いなく伝わります。",
+          usageExplanation:"summarizeは、summarize + 要約する対象、という形で使えます。",
+          correctedMeaning:"その記事を一文で要約してください、という意味です。"
+        }
+      },
+      {
+        user:aiCheckUserMessage("adapt","適応する","It took me some time to adapt to my new environment.","I am adapting new environment."),
+        assistant:{
+          verdict:"誤用",score:65,
+          reason:"「環境に適応する」はadapt to + 名詞と表します。また、environmentは数えられる名詞なので、1つの環境ならa new environmentとします。",
+          suggestion:"自分が環境に適応する場合はadapt to somethingを使ってください。",
+          correctedExample:"I am adapting to a new environment.",
+          evaluations:{
+            spellingAndMechanics:{score:10,maxScore:10,feedback:"adaptのスペルや文末の表記に問題はありません。"},
+            syntax:{score:12,maxScore:30,feedback:"adapt toのtoと、a new environmentのaが必要です。adaptの直後に目的語を置くと、環境そのものを変更する構造になります。"},
+            semantics:{score:20,maxScore:35,feedback:"「新しい環境に適応している」という意図は推測できますが、現在の形では「新しい環境を変更している」という意味にも読めます。"},
+            pragmatics:{score:23,maxScore:25,feedback:"新しい学校、職場、国などに慣れている場面としては適切な内容です。"}
+          },
+          nativeReception:"母語話者は意図を推測できますが、adaptの直後にnew environmentが来るため、最初は「環境そのものを変更している」と読み始める可能性があります。",
+          usageExplanation:"adapt to somethingは「何かに適応する」、adapt somethingは「何かを目的に合わせて変更する」という意味です。",
+          correctedMeaning:"私は今、新しい環境に適応しているところです、という意味になります。"
+        }
+      },
+      {
+        user:aiCheckUserMessage("summarize","要約する","Please summarize the article in one sentence.","I summarize new book."),
+        assistant:{
+          verdict:"少し不自然",score:67,
+          reason:"bookは数えられる名詞なので、1冊ならa new bookとします。また、I summarizeという現在形は、今している動作ではなく、普段から行う習慣や仕事として読まれます。",
+          suggestion:"今、1冊の本を要約しているならI am summarizing a new book.とします。習慣ならI summarize new books.とします。",
+          correctedExample:"I am summarizing a new book.",
+          evaluations:{
+            spellingAndMechanics:{score:10,maxScore:10,feedback:"スペル、大文字、句読点に問題はありません。"},
+            syntax:{score:15,maxScore:30,feedback:"new bookの前に冠詞aが必要です。また、現在形のI summarizeは、進行中の動作ではなく、習慣を表します。"},
+            semantics:{score:31,maxScore:35,feedback:"「新しい本を要約する」という意図は推測できます。ただし、今しているのか、普段しているのかは元の文だけでは決まりません。"},
+            pragmatics:{score:11,maxScore:25,feedback:"習慣の説明として読むと、目的語が単数のnew bookであるため、普段どの本を要約するのか少しちぐはぐに聞こえます。"}
+          },
+          nativeReception:"母語話者はまず「私は普段、新しい本を要約する」という習慣として読もうとします。しかし、new bookに冠詞がなく、習慣なのに目的語が単数なので、状況を判断しにくくなります。",
+          usageExplanation:"現在形は習慣、現在進行形は今進行している動作を表します。",
+          correctedMeaning:"I am summarizing a new book.なら、私は今、1冊の新しい本を要約しているところです、という意味になります。"
+        }
+      },
+      {
+        user:aiCheckUserMessage("borrow","借りる","I borrowed a book from my friend.","I borrowed him my book."),
+        assistant:{
+          verdict:"誤用",score:52,
+          reason:"borrowは「借りる側」の動作ですが、この文では「彼に本を貸した」という反対方向の動作を表そうとしています。",
+          suggestion:"対象単語を残すならI let him borrow my book.とします。直接「貸した」と言うならI lent him my book.です。",
+          correctedExample:"I let him borrow my book.",
+          evaluations:{
+            spellingAndMechanics:{score:10,maxScore:10,feedback:"スペルや句読点に問題はありません。"},
+            syntax:{score:15,maxScore:30,feedback:"borrowの後ろにhimとmy bookをこの順番で直接置くことはできません。"},
+            semantics:{score:8,maxScore:35,feedback:"borrowは「借りる」ですが、元の文では「貸す」という反対方向の意味を表そうとしています。"},
+            pragmatics:{score:19,maxScore:25,feedback:"本を貸し借りする場面自体は自然ですが、現在の文では誰が借りる側なのかが明確に伝わりません。"}
+          },
+          nativeReception:"母語話者はborrowを読んだ時点で「私は何かを借りた」と予想します。その後にhim my bookが続くため、彼を借りたのか、彼から本を借りたのかと関係を取りにくく感じます。",
+          usageExplanation:"borrowは借りる側、lendは貸す側の動作を表します。",
+          correctedMeaning:"I let him borrow my book.なら、私は彼に自分の本を貸し、彼が借りられるようにした、という意味です。"
+        }
+      }
+    ];
+
+    async function requestAiCheckViaOpenRouter(payload,{onRetry=null}={}){
+      const apiKey=normalizeText(appState.settings.openRouterApiKey||"");
+      const model=normalizeText(appState.settings.openRouterModel||"openrouter/free");
+      if(!apiKey)throw new Error("OpenRouter APIキーを設定してください。");
+      const messages=[{role:"system",content:AI_CHECK_SYSTEM_PROMPT}];
+      for(const shot of AI_CHECK_FEWSHOT){
+        messages.push({role:"user",content:shot.user});
+        messages.push({role:"assistant",content:JSON.stringify(shot.assistant)});
+      }
+      messages.push({role:"user",content:aiCheckUserMessage(payload.frontText,payload.backText,payload.referenceExample,payload.userExample)});
+      return requestAiCheckWithRetry({
+        model,
+        messages,
+        onRetry
+      });
+    }
+
+    function delay(ms){
+      return new Promise(resolve=>setTimeout(resolve,Math.max(0,Number(ms)||0)));
+    }
+
+    function createAiRequestError(message,{status=0,retryable=null,retryAfterMs=0}={}){
+      const error=new Error(message);
+      error.status=status;
+      if(retryable!==null)error.retryable=!!retryable;
+      if(retryAfterMs)error.retryAfterMs=retryAfterMs;
+      return error;
+    }
+
+    function isRetryableAiStatus(status){
+      return [408,409,425,429,500,502,503,504].includes(Number(status));
+    }
+
+    function parseRetryAfterMs(value,nowMs=Date.now()){
+      const raw=normalizeText(value);
+      if(!raw)return 0;
+      const seconds=Number(raw);
+      if(Number.isFinite(seconds))return Math.max(0,seconds*1000);
+      const dateMs=new Date(raw).getTime();
+      return Number.isFinite(dateMs)?Math.max(0,dateMs-nowMs):0;
+    }
+
+    function isRetryableAiError(error){
+      if(error?.retryable!==undefined)return !!error.retryable;
+      const status=Number(error?.status||0);
+      if(status)return isRetryableAiStatus(status);
+      return true;
+    }
+
+    function aiRetryDelayMs(attempt,error){
+      const retryAfter=Math.min(Number(error?.retryAfterMs||0),AI_CHECK_RETRY_MAX_DELAY_MS);
+      if(retryAfter>0)return retryAfter;
+      const backoff=AI_CHECK_RETRY_BASE_DELAY_MS*Math.pow(2,Math.max(0,attempt-1));
+      return Math.min(AI_CHECK_RETRY_MAX_DELAY_MS,backoff);
+    }
+
+    function briefAiError(error){
+      const text=String(error?.message||error||"不明なエラー");
+      return text.length>160?`${text.slice(0,160)}...`:text;
+    }
+
+    async function withAiRetry(operation,onRetry=null){
+      let lastError=null;
+      for(let attempt=1;attempt<=AI_CHECK_MAX_ATTEMPTS;attempt++){
+        try{
+          return await operation(attempt);
+        }catch(error){
+          lastError=error;
+          const retryable=isRetryableAiError(error);
+          if(!retryable||attempt>=AI_CHECK_MAX_ATTEMPTS)throw error;
+          const waitMs=aiRetryDelayMs(attempt,error);
+          if(onRetry)onRetry({attempt,nextAttempt:attempt+1,maxAttempts:AI_CHECK_MAX_ATTEMPTS,waitMs,error});
+          await delay(waitMs);
+        }
+      }
+      throw lastError;
+    }
+
+    async function requestAiCheckWithRetry({model,messages,onRetry=null}){
+      const apiKey=normalizeText(appState.settings.openRouterApiKey||"");
+      const body=JSON.stringify({
+        model,
+        messages,
+        temperature:.1,
+        max_completion_tokens:1500,
+        response_format:{type:"json_object"}
+      });
+      return withAiRetry(async()=>{
+        const controller=new AbortController();
+        const timer=setTimeout(()=>controller.abort(),AI_CHECK_REQUEST_TIMEOUT_MS);
+        try{
+          const res=await fetch("https://openrouter.ai/api/v1/chat/completions",{
+            method:"POST",
+            headers:{
+              "Authorization":`Bearer ${apiKey}`,
+              "Content-Type":"application/json",
+              "HTTP-Referer":location.origin,
+              "X-Title":"Flash Cards"
+            },
+            body,
+            cache:"no-store",
+            signal:controller.signal
+          });
+          const text=await res.text();
+          if(!res.ok){
+            throw createAiRequestError(`OpenRouter HTTP ${res.status}: ${text.slice(0,500)}`,{
+              status:res.status,
+              retryable:isRetryableAiStatus(res.status),
+              retryAfterMs:parseRetryAfterMs(res.headers.get("Retry-After"))
+            });
+          }
+          let data;
+          try{
+            data=JSON.parse(text);
+          }catch(error){
+            throw createAiRequestError(`OpenRouterの応答をJSONとして読めませんでした: ${text.slice(0,200)}`,{retryable:true});
+          }
+          const content=data?.choices?.[0]?.message?.content||"";
+          if(!content)throw createAiRequestError("OpenRouterの応答に添削結果がありませんでした。",{retryable:true});
+          try{
+            return normalizeAiCheckResult(extractJsonObject(content));
+          }catch(error){
+            error.retryable=true;
+            throw error;
+          }
+        }catch(error){
+          if(error?.name==="AbortError")throw createAiRequestError("OpenRouterの応答がタイムアウトしました。",{retryable:true});
+          if(error instanceof TypeError)error.retryable=true;
+          throw error;
+        }finally{
+          clearTimeout(timer);
+        }
+      },onRetry);
+    }
+
+    function staleAiChecksForPerCardLimit(checks,keep=AI_CHECKS_PER_CARD_LIMIT){
+      const byCard=new Map();
+      for(const check of checks||[]){
+        const key=check?.cardId||check?.frontText||check?.id;
+        if(!key)continue;
+        if(!byCard.has(key))byCard.set(key,[]);
+        byCard.get(key).push(check);
+      }
+      const stale=[];
+      for(const group of byCard.values()){
+        group.sort((left,right)=>String(right.checkedAt||right.createdAt||"").localeCompare(String(left.checkedAt||left.createdAt||"")));
+        stale.push(...group.slice(Math.max(0,keep)));
+      }
+      return stale;
+    }
+
+    async function pruneAiChecks(keep=AI_CHECKS_PER_CARD_LIMIT){
+      const all=await getAll(STORES.aiChecks);
+      for(const check of staleAiChecksForPerCardLimit(all,keep)){
+        await deleteItem(STORES.aiChecks,check.id);
+        await putSyncTombstone("aiExampleChecks",check.id);
+      }
+    }
+
+    async function checkCurrentExampleWithAi(){
+      clearMessages();
+      const card=currentCard();
+      if(!card)return;
+      const userExample=normalizeText(document.getElementById("userExampleInput")?.value||appState.exampleDraft||"");
+      if(!userExample){
+        appState.error="例文を入力してください。";
+        render();
+        return;
+      }
+      if(!normalizeText(appState.settings.openRouterApiKey||"")){
+        appState.error="設定でOpenRouter APIキーを保存してください。";
+        render();
+        return;
+      }
+      if(appState.aiInFlight.includes(card.id))return;
+      const cardId=card.id;
+      const frontText=card.frontText;
+      const backText=card.backText;
+      const deckId=cardDeckId(card);
+      appState.exampleDraft=userExample;
+      appState.aiInFlight=[...appState.aiInFlight,cardId];
+      appState.aiCheckResult=null;
+      appState.message="AI添削を生成中です。終わるまで他のカードを学習して大丈夫です。";
+      render();
+      const payload={frontText,backText,referenceExample:card.exampleText||"",userExample};
+      try{
+        const result=await requestAiCheckViaOpenRouter(payload,{
+          onRetry:({nextAttempt,maxAttempts,error})=>{
+            appState.message=`AI添削に失敗したため自動再試行中です（${nextAttempt}/${maxAttempts}）。\n${briefAiError(error)}`;
+            render();
+          }
+        });
+        const timestamp=nowIso();
+        const check={id:"ai_"+makeId(),cardId,deckId,frontText,backText,userExample,result,checkedAt:timestamp,createdAt:timestamp,updatedAt:timestamp};
+        await putItem(STORES.aiChecks,check);
+        await pruneAiChecks(AI_CHECKS_PER_CARD_LIMIT);
+        await loadData();
+        if(appState.currentCardId===cardId){
+          appState.aiCheckResult=result;
+          appState.aiPanelOpen=true;
+          appState.message="AI添削が完了しました。";
+        }else{
+          addAiReadyNotice(cardId,frontText);
+          appState.message=null;
+        }
+        queueGoogleDriveAutoSync();
+      }catch(error){
+        appState.message=null;
+        const retryNote=isRetryableAiError(error)?"自動リトライ後も完了できませんでした。":"設定またはリクエスト内容を確認してください。";
+        appState.error=`AI判定に失敗しました（${frontText}）。\n${retryNote}\n${error.message||error}`;
+      }finally{
+        appState.aiInFlight=appState.aiInFlight.filter(id=>id!==cardId);
+        render();
+      }
+    }
+
+    function addAiReadyNotice(cardId,frontText){
+      if(!cardId)return;
+      const notice={cardId,frontText:normalizeText(frontText)||"AI添削",readyAt:nowIso()};
+      const existing=Array.isArray(appState.aiReadyNotices)?appState.aiReadyNotices:[];
+      appState.aiReadyNotices=[notice,...existing.filter(item=>item?.cardId!==cardId)].slice(0,AI_READY_NOTICE_LIMIT);
+      appState.aiNoticeBoxOpen=true;
+    }
+
+    function removeAiReadyNotice(cardId){
+      appState.aiReadyNotices=(appState.aiReadyNotices||[]).filter(item=>item?.cardId!==cardId);
+    }
+
+    function openAiResultModal(cardId){
+      appState.aiResultModalCardId=cardId;
+      removeAiReadyNotice(cardId);
+      render();
+    }
+
+    function closeAiResultModal(){
+      appState.aiResultModalCardId=null;
+      render();
+    }
+
+    function dismissAiReadyNotice(cardId=null){
+      if(cardId)removeAiReadyNotice(cardId);
+      else appState.aiReadyNotices=[];
+      render();
+    }
+
+    function toggleAiNoticeBox(){
+      appState.aiNoticeBoxOpen=!appState.aiNoticeBoxOpen;
       render();
     }
 
@@ -971,10 +1756,11 @@
         render();
         return;
       }
+      if(!isAuto)setBusy("スプレッドシートと同期中…");
       try{
         const normalizedUrl=normalizeGasUrl(inputUrl);
         const rows=await fetchGasRows(normalizedUrl);
-        const result=await importRows(rows,"Google Spreadsheet / GAS");
+        const result=await importRows(rows,"Google Spreadsheet / GAS",readImportDeckId());
         appState.settings={...appState.settings,gasUrl:normalizedUrl,lastSyncAt:nowIso()};
         await putItem(STORES.settings,{key:"settings",value:appState.settings});
         appState.message=`${isAuto?"自動":"手動"}同期完了: 新規 ${result.created}件 / 更新 ${result.updated}件 / スキップ ${result.skipped}件`;
@@ -982,22 +1768,25 @@
         console.error(error);
         appState.warning=String(error.message||error);
       }
+      clearBusy();
       await loadData();
       render();
     }
 
     async function syncFromPastedGasJson(){
       clearMessages();
+      setBusy("JSONを取り込み中…");
       const text=document.getElementById("gasJsonPaste")?.value||"";
       try{
         const rows=normalizeGasRows(parseGasJsonText(text));
-        const result=await importRows(rows,"Google Spreadsheet / GAS JSON Paste");
+        const result=await importRows(rows,"Google Spreadsheet / GAS JSON Paste",readImportDeckId());
         appState.settings={...appState.settings,lastSyncAt:nowIso()};
         await putItem(STORES.settings,{key:"settings",value:appState.settings});
         appState.message=`貼り付けJSON同期完了: 新規 ${result.created}件 / 更新 ${result.updated}件 / スキップ ${result.skipped}件`;
       }catch(error){
         appState.error=`貼り付けJSONの同期に失敗しました。\n${error.message||error}`;
       }
+      clearBusy();
       render();
     }
 
@@ -1011,6 +1800,7 @@
 
     async function testGasConnection(){
       clearMessages();
+      setBusy("接続テスト中…");
       const inputUrl=document.getElementById("gasUrl")?.value.trim()||appState.settings.gasUrl||"";
       try{
         const rows=await fetchGasRows(normalizeGasUrl(inputUrl));
@@ -1020,6 +1810,7 @@
         appState.diagnostic=["GAS直接接続テスト: 失敗",String(error.message||error),"","JSON貼り付け同期でも反映できます。"].join("\n");
         appState.warning="直接接続に失敗しました。JSON貼り付け同期を使うと反映できます。";
       }
+      clearBusy();
       render();
     }
 
@@ -1055,57 +1846,199 @@
       return new Date(state.dueAt).getTime()<=Date.now();
     }
 
-    function dueCards(){
-      return appState.cards
+    function isLearningState(state){
+      return Number(state?.reviewCount||0)>0&&Number(state?.intervalDays||0)===0;
+    }
+
+    function sortedDecks(){
+      return [...appState.decks].sort((left,right)=>deckPath(left).localeCompare(deckPath(right),"ja"));
+    }
+
+    function findDeckByPath(path){
+      const normalized=normalizeDeckName(path);
+      return appState.decks.find(deck=>deckPath(deck)===normalized)||null;
+    }
+
+    function deckHasChildren(deck){
+      const path=deckPath(deck);
+      return appState.decks.some(other=>other.id!==deck.id&&deckPath(other).startsWith(`${path} / `));
+    }
+
+    function deckAncestorsCollapsed(deck){
+      const parts=deckPathParts(deck);
+      for(let index=1;index<parts.length;index++){
+        const ancestor=findDeckByPath(parts.slice(0,index).join(" / "));
+        if(ancestor?.collapsed)return true;
+      }
+      return false;
+    }
+
+    function visibleDecks(){
+      return sortedDecks().filter(deck=>!deckAncestorsCollapsed(deck));
+    }
+
+    function selectedDeck(){
+      return appState.decks.find(deck=>deck.id===appState.selectedDeckId)||appState.decks.find(deck=>deck.id===DEFAULT_DECK_ID)||defaultDeckRecord();
+    }
+
+    function cardDeckId(card){
+      return appState.decks.some(deck=>deck.id===card.deckId)?card.deckId:DEFAULT_DECK_ID;
+    }
+
+    function deckDescendantIds(deckId=appState.selectedDeckId){
+      const deck=appState.decks.find(current=>current.id===deckId)||selectedDeck();
+      const path=deckPath(deck);
+      return new Set(appState.decks.filter(current=>deckPath(current)===path||deckPath(current).startsWith(`${path} / `)).map(current=>current.id));
+    }
+
+    function cardsForDeck(deckId=appState.selectedDeckId){
+      const deckIds=deckDescendantIds(deckId);
+      return appState.cards.filter(card=>deckIds.has(cardDeckId(card)));
+    }
+
+    function logsForDeck(deckId=appState.selectedDeckId){
+      const cardIds=new Set(cardsForDeck(deckId).map(card=>card.id));
+      return appState.logs.filter(log=>cardIds.has(log.cardId));
+    }
+
+    function deckReviewCounts(deckId=appState.selectedDeckId){
+      const counts={new:0,learn:0,due:0};
+      for(const card of cardsForDeck(deckId).filter(current=>!current.suspended)){
+        const state=getReviewState(card.id);
+        if(!isDue(state))continue;
+        if((state.reviewCount||0)===0)counts.new++;
+        else if(Number(state.intervalDays||0)===0)counts.learn++;
+        else counts.due++;
+      }
+      return counts;
+    }
+
+    function activeCardEntries(deckId=appState.selectedDeckId){
+      return cardsForDeck(deckId)
         .filter(card=>!card.suspended)
-        .map(card=>({card,state:getReviewState(card.id)}))
-        .filter(({state})=>isDue(state))
-        .sort((left,right)=>{
-          const leftNew=left.state.reviewCount===0?1:0,rightNew=right.state.reviewCount===0?1:0;
-          if(leftNew!==rightNew)return leftNew-rightNew;
-          return new Date(left.state.dueAt)-new Date(right.state.dueAt);
-        })
+        .map(card=>({card,state:getReviewState(card.id)}));
+    }
+
+    function sortStudyEntries(entries){
+      return [...entries].sort((left,right)=>{
+        const leftNew=left.state.reviewCount===0?1:0,rightNew=right.state.reviewCount===0?1:0;
+        if(leftNew!==rightNew)return leftNew-rightNew;
+        return new Date(left.state.dueAt)-new Date(right.state.dueAt);
+      });
+    }
+
+    function dueCardEntries(deckId=appState.selectedDeckId){
+      return sortStudyEntries(activeCardEntries(deckId).filter(({state})=>isDue(state)));
+    }
+
+    function learningAheadEntries(deckId=appState.selectedDeckId){
+      const cutoff=Date.now()+ANKI_LEARN_AHEAD_MINUTES*60000;
+      return sortStudyEntries(activeCardEntries(deckId).filter(({state})=>!isDue(state)&&isLearningState(state)&&new Date(state.dueAt).getTime()<=cutoff));
+    }
+
+    function studyCardEntries(deckId=appState.selectedDeckId){
+      const due=dueCardEntries(deckId);
+      return due.length?due:learningAheadEntries(deckId);
+    }
+
+    function dueCards(deckId=appState.selectedDeckId){
+      return dueCardEntries(deckId)
+        .map(({card})=>card);
+    }
+
+    function studyCards(deckId=appState.selectedDeckId){
+      return studyCardEntries(deckId)
         .map(({card})=>card);
     }
 
     function selectNextCard(){
-      const due=dueCards();
+      const due=studyCards();
+      const previousCardId=appState.currentCardId;
       if(!due.some(card=>card.id===appState.currentCardId))appState.currentCardId=due[0]?.id||null;
-      appState.answerVisible=false;
+      if(previousCardId!==appState.currentCardId){
+        appState.answerVisible=false;
+        appState.exampleDraft="";
+        appState.aiCheckResult=null;
+        appState.cardShownAt=appState.currentCardId?Date.now():null;
+      }
     }
 
     function currentCard(){
       return appState.cards.find(card=>card.id===appState.currentCardId)||null;
     }
 
+    function reviewStateResult(state,{dueAt,intervalDays,easeFactor,lapseCount,reviewedAt,learningStep=null,learningKind=""}){
+      const result={cardId:state.cardId,dueAt:dueAt.toISOString(),intervalDays,easeFactor,reviewCount:Number(state.reviewCount||0)+1,lapseCount,lastReviewedAt:reviewedAt,updatedAt:reviewedAt};
+      if(learningStep!==null)result.learningStep=learningStep;
+      if(learningKind)result.learningKind=learningKind;
+      return result;
+    }
+
+    function learningStepsForState(state){
+      return state?.learningKind==="relearning"?ANKI_RELEARNING_STEPS_MINUTES:ANKI_LEARNING_STEPS_MINUTES;
+    }
+
+    function normalizedLearningStep(state,steps){
+      const value=Math.round(Number(state?.learningStep||0));
+      if(!Number.isFinite(value))return 0;
+      return Math.max(0,Math.min(value,Math.max(0,steps.length-1)));
+    }
+
+    function ankiHardLearningDelayMinutes(step,steps){
+      if(step===0&&steps.length>1)return Math.round((steps[0]+steps[1])/2);
+      if(steps.length===1)return Math.round(steps[0]*1.5);
+      return steps[Math.min(step,steps.length-1)]||steps[0]||1;
+    }
+
     function calculateNextReview(state,rating){
       const now=new Date();
-      let intervalDays=Number(state.intervalDays||0);
+      const oldIntervalDays=Number(state.intervalDays||0);
+      let intervalDays=oldIntervalDays;
       let easeFactor=Number(state.easeFactor||2.5);
       let lapseCount=Number(state.lapseCount||0);
-      let dueAt;
-      if(rating==="again"){
-        intervalDays=0;
-        easeFactor=Math.max(1.3,easeFactor-.2);
-        lapseCount++;
-        dueAt=addMinutes(now,10);
+      const reviewedAt=now.toISOString();
+
+      if(oldIntervalDays>0){
+        if(rating==="again"){
+          intervalDays=0;
+          easeFactor=Math.max(1.3,easeFactor-.2);
+          lapseCount++;
+          return reviewStateResult(state,{dueAt:addMinutes(now,ANKI_RELEARNING_STEPS_MINUTES[0]||10),intervalDays,easeFactor,lapseCount,reviewedAt,learningStep:0,learningKind:"relearning"});
+        }
+        if(rating==="hard"){
+          intervalDays=Math.max(oldIntervalDays+1,Math.round(oldIntervalDays*ANKI_HARD_INTERVAL_MULTIPLIER));
+          easeFactor=Math.max(1.3,easeFactor-.15);
+          return reviewStateResult(state,{dueAt:addDays(now,intervalDays),intervalDays,easeFactor,lapseCount,reviewedAt});
+        }
+        if(rating==="easy"){
+          intervalDays=Math.max(oldIntervalDays+1,Math.round(oldIntervalDays*easeFactor*ANKI_EASY_BONUS));
+          easeFactor=Math.min(3.4,easeFactor+.15);
+          return reviewStateResult(state,{dueAt:addDays(now,intervalDays),intervalDays,easeFactor,lapseCount,reviewedAt});
+        }
+        intervalDays=Math.max(oldIntervalDays+1,Math.round(oldIntervalDays*easeFactor));
+        return reviewStateResult(state,{dueAt:addDays(now,intervalDays),intervalDays,easeFactor,lapseCount,reviewedAt});
       }
-      if(rating==="hard"){
-        intervalDays=intervalDays===0?1:Math.max(1,Math.round(intervalDays*1.2));
-        easeFactor=Math.max(1.3,easeFactor-.15);
-        dueAt=addDays(now,intervalDays);
+
+      const learningKind=state.learningKind==="relearning"?"relearning":"learning";
+      const steps=learningStepsForState({learningKind});
+      const step=normalizedLearningStep(state,steps);
+      if(rating==="again"){
+        return reviewStateResult(state,{dueAt:addMinutes(now,steps[0]||1),intervalDays:0,easeFactor,lapseCount,reviewedAt,learningStep:0,learningKind});
       }
       if(rating==="good"){
-        intervalDays=intervalDays===0?2:Math.max(2,Math.round(intervalDays*easeFactor));
-        dueAt=addDays(now,intervalDays);
+        if(step<steps.length-1){
+          const nextStep=step+1;
+          return reviewStateResult(state,{dueAt:addMinutes(now,steps[nextStep]),intervalDays:0,easeFactor,lapseCount,reviewedAt,learningStep:nextStep,learningKind});
+        }
+        intervalDays=ANKI_GRADUATING_INTERVAL_DAYS;
+        return reviewStateResult(state,{dueAt:addDays(now,intervalDays),intervalDays,easeFactor,lapseCount,reviewedAt});
       }
       if(rating==="easy"){
-        intervalDays=intervalDays===0?4:Math.max(4,Math.round(intervalDays*easeFactor*1.4));
-        easeFactor=Math.min(3.4,easeFactor+.15);
-        dueAt=addDays(now,intervalDays);
+        intervalDays=learningKind==="relearning"?ANKI_GRADUATING_INTERVAL_DAYS:ANKI_EASY_INTERVAL_DAYS;
+        return reviewStateResult(state,{dueAt:addDays(now,intervalDays),intervalDays,easeFactor,lapseCount,reviewedAt});
       }
-      const reviewedAt=now.toISOString();
-      return{cardId:state.cardId,dueAt:dueAt.toISOString(),intervalDays,easeFactor,reviewCount:Number(state.reviewCount||0)+1,lapseCount,lastReviewedAt:reviewedAt,updatedAt:reviewedAt};
+
+      return reviewStateResult(state,{dueAt:addMinutes(now,ankiHardLearningDelayMinutes(step,steps)),intervalDays:0,easeFactor,lapseCount,reviewedAt,learningStep:step,learningKind});
     }
 
     async function rateCurrentCard(rating){
@@ -1113,18 +2046,25 @@
       if(!card)return;
       stopSpeaking();
       const oldState=getReviewState(card.id);
+      const hadState=appState.reviewStates.some(state=>state.cardId===card.id);
+      const prevStateSnapshot=hadState?{...oldState}:null;
       const newState=calculateNextReview(oldState,rating);
       const reviewedAt=nowIso();
-      const log={id:makeId(),cardId:card.id,reviewedAt,rating,previousIntervalDays:oldState.intervalDays||0,nextIntervalDays:newState.intervalDays||0,updatedAt:reviewedAt};
+      const durationMs=appState.cardShownAt?Math.min(Math.max(0,Date.now()-appState.cardShownAt),120000):0;
+      const log={id:makeId(),cardId:card.id,reviewedAt,rating,previousIntervalDays:oldState.intervalDays||0,nextIntervalDays:newState.intervalDays||0,durationMs,updatedAt:reviewedAt};
+      appState.cardShownAt=null;
       appState.sessionReviewedCount+=1;
+      appState.lastReview={cardId:card.id,prevState:prevStateSnapshot,hadState,logId:log.id,rating};
       await putItem(STORES.states,newState);
       await putItem(STORES.logs,log);
+      appState.currentCardId=null;
       await loadData();
       const dueCount=dueCards().length;
-      const ratingsToday=todayRatings();
+      const studyCount=studyCards().length;
+      const ratingsToday=todayRatings(appState.selectedDeckId);
       const reviewedTodayCount=ratingsToday.length;
       const reachedTenQuestionMilestone=reviewedTodayCount>0&&reviewedTodayCount%10===0;
-      if(appState.sessionReviewedCount>0&&dueCount===0){
+      if(appState.sessionReviewedCount>0&&studyCount===0){
         const completion=await recordDailyCompletion();
         await loadData();
         if(reachedTenQuestionMilestone){
@@ -1137,31 +2077,70 @@
         appState.completionModalState=createTenQuestionModalState(ratingsToday.slice(-10));
         appState.message=null;
       }else{
-        appState.message=`${ratingLabels[rating]}: 次回は${rating==="again"?"10分後":`${newState.intervalDays}日後`}`;
+        const learningAhead=dueCount===0&&studyCount>0;
+        appState.message=learningAhead
+          ? "他に出すカードがないため、20分以内の学習中カードを先に出します。"
+          : `${ratingLabels[rating]}: 次回は${formatReviewDelayMs(new Date(newState.dueAt).getTime()-new Date(reviewedAt).getTime())}`;
       }
+      selectNextCard();
       queueGoogleDriveAutoSync();
       render();
     }
 
-    function todayLogs(){
+    function todayLogs(deckId=null){
       const start=startOfToday().getTime();
-      return appState.logs.filter(log=>new Date(log.reviewedAt).getTime()>=start);
+      const source=deckId?logsForDeck(deckId):appState.logs;
+      return source.filter(log=>new Date(log.reviewedAt).getTime()>=start);
     }
 
-    function todayRatings(){
-      return [...todayLogs()].sort((left,right)=>new Date(left.reviewedAt)-new Date(right.reviewedAt)).map(log=>log.rating);
+    function todayRatings(deckId=null){
+      return [...todayLogs(deckId)].sort((left,right)=>new Date(left.reviewedAt)-new Date(right.reviewedAt)).map(log=>log.rating);
     }
 
-    function stats(){
-      const activeCards=appState.cards.filter(card=>!card.suspended).length;
+    function stats(deckId=appState.selectedDeckId){
+      const scopedCards=cardsForDeck(deckId);
+      const activeCards=scopedCards.filter(card=>!card.suspended).length;
       return{
         activeCards,
-        suspendedCards:appState.cards.filter(card=>card.suspended).length,
-        due:dueCards().length,
-        reviewedToday:todayLogs().length,
-        newCards:appState.reviewStates.filter(state=>(state.reviewCount||0)===0).length,
-        total:appState.cards.length
+        suspendedCards:scopedCards.filter(card=>card.suspended).length,
+        due:dueCards(deckId).length,
+        reviewedToday:todayLogs(deckId).length,
+        newCards:scopedCards.filter(card=>(getReviewState(card.id).reviewCount||0)===0).length,
+        total:scopedCards.length
       };
+    }
+
+    function dateKeyFromOffset(offset){
+      const date=new Date();
+      date.setHours(0,0,0,0);
+      date.setDate(date.getDate()+offset);
+      return localDateKey(date);
+    }
+
+    function reviewCountByDate(logs=appState.logs){
+      const map=new Map();
+      for(const log of logs||[]){
+        const key=localDateKey(log.reviewedAt);
+        map.set(key,(map.get(key)||0)+1);
+      }
+      return map;
+    }
+
+    function reviewsSince(days,logs=appState.logs){
+      const start=new Date();
+      start.setHours(0,0,0,0);
+      start.setDate(start.getDate()-Math.max(0,days-1));
+      const startMs=start.getTime();
+      return logs.filter(log=>new Date(log.reviewedAt).getTime()>=startMs).length;
+    }
+
+    function activeStudyDays(days=28,logs=appState.logs){
+      const counts=reviewCountByDate(logs);
+      let active=0;
+      for(let offset=-(days-1);offset<=0;offset++){
+        if((counts.get(dateKeyFromOffset(offset))||0)>0)active++;
+      }
+      return active;
     }
 
     function cardImages(card,side){
@@ -1250,16 +2229,157 @@
       stopSpeaking();
       appState.tab=tab;
       appState.editorCardId=null;
+      appState.deckEditorId=null;
       appState.completionModalState=null;
+      appState.deckFormOpen=false;
+      appState.quickAddOpen=false;
+      appState.cardListOpen=false;
+      appState.deckOptionsOpen=false;
+      appState.deckDataOpen=false;
       clearMessages();
       selectNextCard();
+      if(tab==="study"&&appState.currentCardId)appState.cardShownAt=Date.now();
+      render();
+    }
+
+    async function persistSelectedDeck(){
+      appState.settings={...appState.settings,selectedDeckId:appState.selectedDeckId};
+      await putItem(STORES.settings,{key:"settings",value:appState.settings});
+    }
+
+    async function selectDeck(deckId,goStudy=false){
+      const target=appState.decks.some(deck=>deck.id===deckId)?deckId:DEFAULT_DECK_ID;
+      appState.selectedDeckId=target;
+      appState.currentCardId=null;
+      appState.answerVisible=false;
+      await persistSelectedDeck();
+      selectNextCard();
+      if(goStudy)appState.tab="study";
+      render();
+    }
+
+    async function toggleDeckCollapse(deckId){
+      const deck=appState.decks.find(current=>current.id===deckId);
+      if(!deck||!deckHasChildren(deck))return;
+      const updated={...deck,collapsed:!deck.collapsed,updatedAt:nowIso()};
+      await putItem(STORES.decks,updated);
+      await loadData();
+      queueGoogleDriveAutoSync();
+      render();
+    }
+
+    async function createDeckFromForm(){
+      clearMessages();
+      const input=document.getElementById("newDeckName");
+      const name=normalizeDeckName(input?.value||"");
+      if(!name){
+        appState.error="単語帖名を入力してください。";
+        render();
+        return;
+      }
+      if(findDeckByPath(name)){
+        appState.error="同じ名前の単語帖がすでにあります。";
+        render();
+        return;
+      }
+      appState.selectedDeckId=await getOrCreateDeckByName(name);
+      await persistSelectedDeck();
+      await loadData();
+      if(input)input.value="";
+      appState.deckFormOpen=false;
+      appState.message="単語帖を作成しました。";
+      queueGoogleDriveAutoSync();
+      render();
+    }
+
+    function openDeckForm(){appState.deckFormOpen=true;render();}
+    function closeDeckForm(){appState.deckFormOpen=false;render();}
+    function openQuickAdd(){appState.quickAddOpen=true;render();}
+    function closeQuickAdd(){appState.quickAddOpen=false;render();}
+    function openCardList(){appState.cardListOpen=true;appState.search="";render();}
+    function closeCardList(){appState.cardListOpen=false;render();}
+    function openDeckData(){appState.deckDataOpen=true;render();}
+    function closeDeckData(){appState.deckDataOpen=false;render();}
+    async function openDeckOptions(deckId){
+      if(appState.decks.some(deck=>deck.id===deckId)&&deckId!==appState.selectedDeckId){
+        appState.selectedDeckId=deckId;
+        appState.currentCardId=null;
+        appState.answerVisible=false;
+        await persistSelectedDeck();
+        selectNextCard();
+      }
+      appState.deckOptionsOpen=true;
+      render();
+    }
+    function closeDeckOptions(){appState.deckOptionsOpen=false;render();}
+
+    function openDeckEditor(deckId){
+      appState.deckEditorId=deckId;
+      render();
+    }
+
+    function closeDeckEditor(){
+      appState.deckEditorId=null;
+      render();
+    }
+
+    async function saveDeckFromEditor(deckId){
+      clearMessages();
+      const deck=appState.decks.find(current=>current.id===deckId);
+      if(!deck)return;
+      const name=normalizeDeckName(document.getElementById("editDeckName")?.value||"");
+      if(!name){
+        appState.error="単語帖名を入力してください。";
+        render();
+        return;
+      }
+      const duplicate=appState.decks.find(current=>current.id!==deckId&&deckPath(current)===name);
+      if(duplicate){
+        appState.error="同じ名前の単語帖がすでにあります。";
+        render();
+        return;
+      }
+      await putItem(STORES.decks,{...deck,name,updatedAt:nowIso()});
+      await loadData();
+      appState.deckEditorId=null;
+      appState.message="単語帖を保存しました。";
+      queueGoogleDriveAutoSync();
+      render();
+    }
+
+    async function deleteDeck(deckId){
+      clearMessages();
+      const deck=appState.decks.find(current=>current.id===deckId);
+      if(!deck||deck.id===DEFAULT_DECK_ID)return;
+      if(deckHasChildren(deck)){
+        appState.error="子単語帖があるため削除できません。先に子単語帖を名前変更または削除してください。";
+        render();
+        return;
+      }
+      const directCards=appState.cards.filter(card=>cardDeckId(card)===deck.id);
+      if(!confirm(`単語帖「${deckPath(deck)}」を削除しますか？\n中のカード ${directCards.length}枚は「基本」に移動します。`))return;
+      const timestamp=nowIso();
+      for(const card of directCards){
+        await putItem(STORES.cards,{...card,deckId:DEFAULT_DECK_ID,updatedAt:timestamp});
+      }
+      await putSyncTombstone("decks",deck.id,timestamp);
+      await deleteItem(STORES.decks,deck.id);
+      if(appState.selectedDeckId===deck.id){
+        appState.selectedDeckId=DEFAULT_DECK_ID;
+        await persistSelectedDeck();
+      }
+      await loadData();
+      appState.deckEditorId=null;
+      appState.message="単語帖を削除し、カードを基本へ移動しました。";
+      queueGoogleDriveAutoSync();
       render();
     }
 
     async function saveCardFromEditor(cardId){
       const card=appState.cards.find(current=>current.id===cardId);
       if(!card)return;
-      const updated={...card,frontText:normalizeText(document.getElementById("editFront").value),backText:normalizeText(document.getElementById("editBack").value),exampleText:document.getElementById("editExample").value.trim(),noteText:document.getElementById("editNote").value.trim(),suspended:document.getElementById("editSuspended").checked,updatedAt:nowIso()};
+      const selectedDeckId=document.getElementById("editDeckId")?.value||cardDeckId(card);
+      const updated={...card,deckId:appState.decks.some(deck=>deck.id===selectedDeckId)?selectedDeckId:DEFAULT_DECK_ID,frontText:normalizeText(document.getElementById("editFront").value),backText:normalizeText(document.getElementById("editBack").value),exampleText:document.getElementById("editExample").value.trim(),noteText:document.getElementById("editNote").value.trim(),suspended:document.getElementById("editSuspended").checked,updatedAt:nowIso()};
       if(!updated.frontText||!updated.backText){
         appState.error="表面テキストと裏面テキストは必須です。";
         render();
@@ -1315,6 +2435,10 @@
         await putSyncTombstone("reviewLogs",log.id);
         await deleteItem(STORES.logs,log.id);
       }
+      for(const check of appState.aiChecks.filter(current=>current.cardId===cardId)){
+        await putSyncTombstone("aiExampleChecks",check.id);
+        await deleteItem(STORES.aiChecks,check.id);
+      }
       for(const image of appState.images.filter(current=>current.cardId===cardId)){
         await putSyncTombstone("images",image.id);
         await deleteItem(STORES.images,image.id);
@@ -1331,14 +2455,18 @@
     async function resetAllData(){
       if(!confirm("この端末内のカード、画像、学習履歴をすべて削除します。この操作はGoogle Drive同期後に他端末にも反映されます。続けますか？"))return;
       if(!confirm("本当に全データを削除しますか？ 間違えて押した場合はキャンセルしてください。"))return;
+      await putSyncTombstonesForRows("decks",appState.decks.filter(deck=>deck.id!==DEFAULT_DECK_ID),"id");
       await putSyncTombstonesForRows("cards",appState.cards,"id");
       await putSyncTombstonesForRows("reviewStates",appState.reviewStates,"cardId");
       await putSyncTombstonesForRows("reviewLogs",appState.logs,"id");
       await putSyncTombstonesForRows("dailyCompletions",appState.dailyCompletions,"dateKey");
+      await putSyncTombstonesForRows("aiExampleChecks",appState.aiChecks,"id");
       await putSyncTombstonesForRows("images",appState.images,"id");
-      await Promise.all([clearStore(STORES.cards),clearStore(STORES.states),clearStore(STORES.logs),clearStore(STORES.images),clearStore(STORES.completions)]);
+      await Promise.all([clearStore(STORES.decks),clearStore(STORES.cards),clearStore(STORES.states),clearStore(STORES.logs),clearStore(STORES.images),clearStore(STORES.completions),clearStore(STORES.aiChecks)]);
       appState.sessionReviewedCount=0;
       appState.completionModalState=null;
+      appState.selectedDeckId=DEFAULT_DECK_ID;
+      await persistSelectedDeck();
       await loadData();
       appState.message="すべてのデータを削除しました。";
       queueGoogleDriveAutoSync();
@@ -1381,17 +2509,103 @@
         const preferredVoice=pickEnglishVoice([{lang:"ja-JP",name:"Japanese Voice"},{lang:"en-GB",name:"English UK"},{lang:"en-US",name:"English US"}]);
         assert("pickEnglishVoice prefers en-US",preferredVoice?.name==="English US",JSON.stringify(preferredVoice));
         assert("buildPraiseHeadline includes nickname",buildPraiseHeadline("ワンダフル！","Yuki")==="Yuki、ワンダフル！");
-        assert("calculateCorrectRate treats non-again as correct",calculateCorrectRate(["good","hard","again","easy"])===0.75);
+        const answerStats=answerButtonStats(["good","hard","again","easy"]);
+        assert("Anki pass rate treats only Again as failed",answerStats.passRate===0.75&&answerStats.hard===1&&calculateCorrectRate(["good","hard","again","easy"])===0.75,JSON.stringify(answerStats));
+        assert("normalizeDeckName accepts Anki style separators",normalizeDeckName("英語::教科書 / Unit 1")==="英語 / 教科書 / Unit 1");
+        assert("deckDisplayName returns final path part",deckDisplayName({name:"英語 / 教科書"})==="教科書");
+        assert("deckDepth counts hierarchy levels",deckDepth({name:"英語 / 教科書 / Unit 1"})===2);
+        assert("extractJsonObject accepts fenced JSON",extractJsonObject('```json\n{"verdict":"OK","score":90}\n```').verdict==="OK");
+        assert("normalizeAiCheckResult reads score",normalizeAiCheckResult({verdict:"OK",score:88}).score===88);
+        assert("AI retry status classification",isRetryableAiStatus(429)&&isRetryableAiStatus(503)&&!isRetryableAiStatus(401));
+        assert("AI Retry-After seconds parses",parseRetryAfterMs("2",0)===2000);
+        assert("AI auth errors are not retried",!isRetryableAiError(createAiRequestError("auth",{status:401,retryable:isRetryableAiStatus(401)})));
+        assert("AI network errors are retried",isRetryableAiError(new TypeError("Failed to fetch")));
+        {
+          const checks=[
+            {id:"old_a",cardId:"card_a",checkedAt:"2026-04-24T00:00:00.000Z"},
+            {id:"mid_a",cardId:"card_a",checkedAt:"2026-04-25T00:00:00.000Z"},
+            {id:"new_a",cardId:"card_a",checkedAt:"2026-04-26T00:00:00.000Z"},
+            {id:"one_b",cardId:"card_b",checkedAt:"2026-04-24T00:00:00.000Z"}
+          ];
+          const stale=staleAiChecksForPerCardLimit(checks,2).map(check=>check.id).sort();
+          assert("AI checks keep two per card",stale.length===1&&stale[0]==="old_a",JSON.stringify(stale));
+        }
+        {
+          const savedNotices=appState.aiReadyNotices;
+          const savedOpen=appState.aiNoticeBoxOpen;
+          try{
+            appState.aiReadyNotices=[];
+            appState.aiNoticeBoxOpen=false;
+            addAiReadyNotice("card_a","alpha");
+            addAiReadyNotice("card_b","beta");
+            addAiReadyNotice("card_a","alpha updated");
+            assert("AI ready notices queue multiple cards",appState.aiReadyNotices.length===2&&appState.aiReadyNotices[0].cardId==="card_a"&&appState.aiReadyNotices[0].frontText==="alpha updated",JSON.stringify(appState.aiReadyNotices));
+            removeAiReadyNotice("card_a");
+            assert("AI ready notices remove one card",appState.aiReadyNotices.length===1&&appState.aiReadyNotices[0].cardId==="card_b",JSON.stringify(appState.aiReadyNotices));
+          }finally{
+            appState.aiReadyNotices=savedNotices;
+            appState.aiNoticeBoxOpen=savedOpen;
+          }
+        }
+        {
+          const savedDecks=appState.decks;
+          const savedCards=appState.cards;
+          const savedStates=appState.reviewStates;
+          const savedSelected=appState.selectedDeckId;
+          const savedCurrent=appState.currentCardId;
+          const savedAnswerVisible=appState.answerVisible;
+          const savedCardShownAt=appState.cardShownAt;
+          try{
+            appState.decks=[defaultDeckRecord()];
+            appState.selectedDeckId=DEFAULT_DECK_ID;
+            appState.cards=[{id:"learn_a",deckId:DEFAULT_DECK_ID,frontText:"adapt",backText:"適応する",suspended:false}];
+            appState.reviewStates=[{cardId:"learn_a",dueAt:addMinutes(new Date(),10).toISOString(),intervalDays:0,easeFactor:2.3,reviewCount:1,lapseCount:1,lastReviewedAt:nowIso()}];
+            appState.currentCardId=null;
+            assert("dueCards excludes future 10-minute learning cards",dueCards().length===0);
+            assert("studyCards learns ahead when no due cards exist",studyCards().length===1&&studyCards()[0].id==="learn_a");
+            selectNextCard();
+            assert("selectNextCard can pick a learning-ahead card",appState.currentCardId==="learn_a");
+            appState.reviewStates=[{cardId:"learn_a",dueAt:addMinutes(new Date(),25).toISOString(),intervalDays:0,easeFactor:2.3,reviewCount:1,lapseCount:1,lastReviewedAt:nowIso()}];
+            appState.currentCardId=null;
+            assert("studyCards does not learn ahead beyond Anki lookahead",studyCards().length===0);
+          }finally{
+            appState.decks=savedDecks;
+            appState.cards=savedCards;
+            appState.reviewStates=savedStates;
+            appState.selectedDeckId=savedSelected;
+            appState.currentCardId=savedCurrent;
+            appState.answerVisible=savedAnswerVisible;
+            appState.cardShownAt=savedCardShownAt;
+          }
+        }
+        {
+          const minutesUntil=state=>Math.round((new Date(state.dueAt).getTime()-Date.now())/60000);
+          const fresh={cardId:"new_a",dueAt:nowIso(),intervalDays:0,easeFactor:2.5,reviewCount:0,lapseCount:0,lastReviewedAt:null};
+          const again=calculateNextReview(fresh,"again");
+          const hard=calculateNextReview(fresh,"hard");
+          const good=calculateNextReview(fresh,"good");
+          const easy=calculateNextReview(fresh,"easy");
+          assert("Anki new Again repeats first learning step",again.intervalDays===0&&again.learningStep===0&&minutesUntil(again)===1,JSON.stringify(again));
+          assert("Anki new Hard stays in learning near first-step average",hard.intervalDays===0&&hard.learningStep===0&&minutesUntil(hard)===6,JSON.stringify(hard));
+          assert("Anki new Good moves to next learning step",good.intervalDays===0&&good.learningStep===1&&minutesUntil(good)===10,JSON.stringify(good));
+          assert("Anki new Easy graduates to easy interval",easy.intervalDays===ANKI_EASY_INTERVAL_DAYS&&!easy.learningKind,JSON.stringify(easy));
+          const graduated=calculateNextReview({...good,dueAt:nowIso()},"good");
+          assert("Anki final learning Good graduates",graduated.intervalDays===ANKI_GRADUATING_INTERVAL_DAYS&&!graduated.learningKind,JSON.stringify(graduated));
+          const reviewAgain=calculateNextReview({cardId:"rev_a",dueAt:nowIso(),intervalDays:8,easeFactor:2.5,reviewCount:3,lapseCount:0,lastReviewedAt:nowIso()},"again");
+          assert("Anki review Again enters relearning",reviewAgain.intervalDays===0&&reviewAgain.learningKind==="relearning"&&reviewAgain.lapseCount===1&&minutesUntil(reviewAgain)===10,JSON.stringify(reviewAgain));
+          const reviewHard=calculateNextReview({cardId:"rev_b",dueAt:nowIso(),intervalDays:8,easeFactor:2.5,reviewCount:3,lapseCount:0,lastReviewedAt:nowIso()},"hard");
+          assert("Anki review Hard keeps interval above previous",reviewHard.intervalDays>=9&&reviewHard.easeFactor<2.5,JSON.stringify(reviewHard));
+        }
         const milestoneState=createTenQuestionModalState(["good","good","hard","easy","good","good","easy","good","hard","good"]);
-        assert("createTenQuestionModalState rewards high accuracy",milestoneState.headline.includes("最高！"),JSON.stringify(milestoneState));
+        assert("createTenQuestionModalState rewards high Anki pass rate",milestoneState.headline.includes("最高！")&&milestoneState.body.includes("Anki式正答率")&&milestoneState.body.includes("Hard 2回"),JSON.stringify(milestoneState));
         assert("calculateCurrentStreak counts unique completed days",calculateCurrentStreak([{dateKey:"2026-04-24"},{dateKey:"2026-04-25"},{dateKey:"2026-04-25"},{dateKey:"2026-04-26"}],"2026-04-26")===3);
         assert("calculateCurrentStreak resets after a missed day",calculateCurrentStreak([{dateKey:"2026-04-24"}],"2026-04-26")===0);
         assert("tombstoneId includes collection and key",tombstoneId("cards","abc")==="cards:abc");
         assert("recordUpdatedAt falls back to reviewedAt",recordUpdatedAt({reviewedAt:"2026-04-26T00:00:00.000Z"})==="2026-04-26T00:00:00.000Z");
         const tombstones=latestTombstoneMap([{collection:"cards",key:"1",updatedAt:"2026-04-24T00:00:00.000Z"}],[{collection:"cards",key:"1",updatedAt:"2026-04-25T00:00:00.000Z"}]);
         assert("latestTombstoneMap keeps newest tombstone",tombstones.get("cards:1").updatedAt==="2026-04-25T00:00:00.000Z");
-        const driveSnapshot=normalizeDriveSnapshot({data:{cards:[{id:"1"}],reviewStates:[],reviewLogs:[],dailyCompletions:[],images:[],tombstones:[],settings:{nickname:"Yuki"}}});
-        assert("normalizeDriveSnapshot reads Drive sync payload",driveSnapshot.cards.length===1&&driveSnapshot.settings.nickname==="Yuki");
+        const driveSnapshot=normalizeDriveSnapshot({data:{decks:[{id:"deck_default",name:"基本"}],cards:[{id:"1"}],reviewStates:[],reviewLogs:[],dailyCompletions:[],aiExampleChecks:[{id:"ai_1"}],images:[],tombstones:[],settings:{nickname:"Yuki"}}});
+        assert("normalizeDriveSnapshot reads Drive sync payload",driveSnapshot.decks.length===1&&driveSnapshot.cards.length===1&&driveSnapshot.aiExampleChecks.length===1&&driveSnapshot.settings.nickname==="Yuki");
       }catch(error){
         tests.push({name:"Self-test crashed",ok:false,detail:String(error.message||error)});
       }
@@ -1409,9 +2623,36 @@
       return date.toLocaleString("ja-JP",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"});
     }
 
+    function renderDeckOptions(selectedId=appState.selectedDeckId){
+      return sortedDecks().map(deck=>{
+        const indent="　".repeat(deckDepth(deck));
+        return`<option value="${escapeHtml(deck.id)}" ${deck.id===selectedId?"selected":""}>${escapeHtml(indent+deckDisplayName(deck))}</option>`;
+      }).join("");
+    }
+
+    function renderDeckCount(value,kind){
+      const classes=["deckCount",kind];
+      if(!value)classes.push("zero");
+      return`<div class="${classes.join(" ")}">${Number(value||0)}</div>`;
+    }
+
+    function renderDeckTable(){
+      const rows=visibleDecks();
+      const studiedToday=todayLogs().length;
+      const rowHtml=rows.map(deck=>{
+        const counts=deckReviewCounts(deck.id);
+        const hasChildren=deckHasChildren(deck);
+        const selected=deck.id===appState.selectedDeckId;
+        const indent=deckDepth(deck)*22;
+        const ariaLabel=`${deckDisplayName(deck)}。新規${counts.new}、学習中${counts.learn}、復習${counts.due}。タップで学習`;
+        return`<div class="deckRow ${selected?"selected":""}" role="button" tabindex="0" aria-label="${escapeHtml(ariaLabel)}" aria-pressed="${selected}" onclick="selectDeck('${deck.id}',true)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectDeck('${deck.id}',true);}"><div class="deckName" style="padding-left:${indent}px"><button class="deckExpand" aria-label="${hasChildren?(deck.collapsed?"展開":"折りたたみ"):"子単語帖なし"}" onclick="event.stopPropagation();toggleDeckCollapse('${deck.id}')" ${hasChildren?"":"disabled"}>${hasChildren?(deck.collapsed?"+":"-"):""}</button><span class="deckNameText">${escapeHtml(deckDisplayName(deck))}</span></div>${renderDeckCount(counts.new,"new")}${renderDeckCount(counts.learn,"learn")}${renderDeckCount(counts.due,"due")}<button class="deckGear" title="単語帖のオプション" aria-label="${escapeHtml(deckDisplayName(deck))}のオプション" onclick="event.stopPropagation();openDeckOptions('${deck.id}')">&#9881;</button></div>`;
+      }).join("");
+      return`<div class="card"><div class="deckToolbar"><h2>単語帖</h2><button class="secondary" style="flex:0 0 auto" onclick="openDeckForm()">＋ 単語帖を追加</button></div><div class="deckTable"><div class="deckHeader"><div></div><div class="hNew">新規</div><div class="hLearn">学習中</div><div class="hDue">復習</div><div></div></div>${rowHtml}</div><div class="deckToday">今日 ${studiedToday}枚 学習</div><p class="small" style="text-align:center;margin:10px 0 0">単語帖をタップすると学習を開始します。⚙ から単語の追加・一覧・学習データを開けます。</p></div>`;
+    }
+
     function renderAppHeader(){
       const summary=stats();
-      return`<div class="header"><div class="titleBlock"><h1>Flash Cards</h1><p>英語を表面、日本語と例文を裏面に表示</p></div><div class="headerPills"><span class="pill">連続達成 ${appState.streakDays}日</span><span class="pill">期限 ${summary.due}</span></div></div>`;
+      return`<div class="header"><div class="titleBlock"><h1>Flash Cards</h1><p>${escapeHtml(deckPath(selectedDeck()))} / 英語を表面、日本語と例文を裏面に表示</p></div><div class="headerPills"><span class="pill">連続達成 ${appState.streakDays}日</span><span class="pill">期限 ${summary.due}</span></div></div>`;
     }
 
     function renderMessages(){
@@ -1424,63 +2665,184 @@
       return html;
     }
 
+    function latestAiCheckForCard(cardId){
+      return appState.aiChecks.find(check=>check.cardId===cardId)||null;
+    }
+
+    const AI_CATEGORY_LABELS={spellingAndMechanics:"スペル・表記",syntax:"統語",semantics:"意味",pragmatics:"語用論"};
+
+    function renderAiResult(result,originalExample=""){
+      if(!result)return"";
+      const score=result.score===null||result.score===undefined?"":`<span class="pill">${escapeHtml(result.score)} / 100</span>`;
+      const block=(title,text)=>text?`<div class="aiBlock"><strong>${title}</strong><br>${escapeHtml(text)}</div>`:"";
+      const before=normalizeText(originalExample);
+      const after=normalizeText(result.correctedExample||"");
+      const unchanged=before&&after&&before===after;
+      let compare="";
+      if(before||after){
+        compare=`<div class="aiCompare">${before?`<div class="aiCmpRow"><span class="aiCmpLabel">修正前</span><span class="aiCmpText before ${unchanged?"":"del"}">${escapeHtml(before)}</span></div>`:""}${after?`<div class="aiCmpRow"><span class="aiCmpLabel">修正例文</span><span class="aiCmpText after">${escapeHtml(after)}</span></div>`:""}${unchanged?`<div class="small" style="padding:0 12px 10px">修正は不要です。このまま使えます。</div>`:""}</div>`;
+      }
+      let breakdown="";
+      if(result.evaluations){
+        const rows=Object.keys(AI_CATEGORY_LABELS).map(key=>{
+          const cell=result.evaluations[key];
+          if(!cell)return"";
+          const max=Number(cell.maxScore||0);
+          const value=cell.score===null||cell.score===undefined?null:Number(cell.score);
+          const pct=max&&value!==null?Math.round((value/max)*100):0;
+          return`<div class="aiCat"><div class="aiCatHead"><span>${AI_CATEGORY_LABELS[key]}</span><span class="aiCatScore">${value===null?"–":value} / ${max}</span></div><div class="aiCatBar"><div class="aiCatFill" style="width:${pct}%"></div></div>${cell.feedback?`<div class="small" style="margin-top:4px">${escapeHtml(cell.feedback)}</div>`:""}</div>`;
+        }).join("");
+        if(rows)breakdown=`<div class="aiBreakdown"><strong>評価内訳</strong>${rows}</div>`;
+      }
+      return`<div class="aiResult">${compare}<div class="aiVerdict"><span>${escapeHtml(result.verdict||"判定")}</span>${score}</div>${result.reason?`<div style="margin-top:8px">${escapeHtml(result.reason)}</div>`:""}${result.suggestion?`<div class="small" style="margin-top:8px">${escapeHtml(result.suggestion)}</div>`:""}${block("この文が伝わる印象",result.nativeReception)}${block("使い方のポイント",result.usageExplanation)}${block("修正文の意味",result.correctedMeaning)}${breakdown}</div>`;
+    }
+
+    function renderAiExamplePanel(card,ratingButtonsHtml=""){
+      const inFlight=appState.aiInFlight.includes(card.id);
+      const sessionResult=appState.aiCheckResult;
+      const hasStored=!!latestAiCheckForCard(card.id);
+      const open=appState.aiPanelOpen;
+      const toggle=`<button class="aiToggle" aria-expanded="${open}" onclick="event.stopPropagation();appState.aiPanelOpen=!appState.aiPanelOpen;render();">✍️ 自分の例文をAIで添削 ${open?"▲":"▼"}</button>`;
+      if(!open)return`<div class="aiPanel">${toggle}</div>`;
+      const inFlightNote=inFlight?`<div class="small" style="margin-top:8px">バックグラウンドで生成中です。先に進んでも、完了したら通知します。</div>`:"";
+      let resultBlock="";
+      if(sessionResult)resultBlock=`<div class="aiRateAbove">${ratingButtonsHtml}</div>${renderAiResult(sessionResult,appState.exampleDraft)}`;
+      else if(hasStored)resultBlock=`<button class="ghost" style="margin-top:10px;width:100%" onclick="openAiResultModal('${card.id}')">前回の添削を見る</button>`;
+      return`<div class="aiPanel">${toggle}<label for="userExampleInput" style="margin-top:14px">自分の例文</label><textarea id="userExampleInput" placeholder="${escapeHtml(card.frontText)} を使って英文を書く" oninput="appState.exampleDraft=this.value">${escapeHtml(appState.exampleDraft||"")}</textarea><div class="row" style="margin-top:10px"><button class="blue" onclick="checkCurrentExampleWithAi()" ${inFlight?"disabled":""}>${inFlight?"生成中…":"AIで判定"}</button><button class="ghost" onclick="appState.exampleDraft='';appState.aiCheckResult=null;render();">クリア</button></div>${inFlightNote}${resultBlock}</div>`;
+    }
+
+    function renderAiReadyNotice(){
+      const notices=(appState.aiReadyNotices||[]).filter(item=>item?.cardId);
+      if(!appState.aiNoticeBoxOpen){
+        return`<div class="aiNoticeDock" role="status" aria-live="polite"><button class="blue" onclick="toggleAiNoticeBox()">AI添削 ${notices.length}件</button></div>`;
+      }
+      const rows=notices.length
+        ? notices.map(item=>`<div class="aiNoticeItem"><div><div class="aiNoticeWord">「${escapeHtml(item.frontText||"AI添削")}」の添削</div><div class="aiNoticeTime">${escapeHtml(formatDateTime(item.readyAt))}</div></div><button class="blue" onclick="openAiResultModal('${escapeHtml(item.cardId)}')">見る</button><button class="aiNoticeDismiss" aria-label="通知を閉じる" onclick="dismissAiReadyNotice('${escapeHtml(item.cardId)}')">×</button></div>`).join("")
+        : `<div class="aiNoticeEmpty">完了待ちのAI添削はありません。</div>`;
+      const foot=notices.length?`<div class="aiNoticeFoot"><button class="ghost" onclick="dismissAiReadyNotice()">すべて閉じる</button></div>`:"";
+      return`<div class="aiNoticeBox" role="region" aria-live="polite" aria-label="AI添削通知"><div class="aiNoticeHead"><div class="aiNoticeTitle"><span>AI添削</span><span class="aiNoticeCount">${notices.length}件</span></div><button class="aiNoticeMin" onclick="toggleAiNoticeBox()">最小化</button></div><div class="aiNoticeList">${rows}</div>${foot}</div>`;
+    }
+
+    function renderAiResultModal(){
+      if(!appState.aiResultModalCardId)return"";
+      const check=latestAiCheckForCard(appState.aiResultModalCardId);
+      const card=appState.cards.find(current=>current.id===appState.aiResultModalCardId);
+      const title=escapeHtml(check?.frontText||card?.frontText||"AI添削");
+      const body=check?renderAiResult(check.result,check.userExample):`<p class="small">結果が見つかりませんでした。</p>`;
+      return`<div class="modalBackdrop" onclick="if(event.target.className==='modalBackdrop')closeAiResultModal();"><div class="modal"><div class="modalHeader"><h2>${title} の添削</h2><button class="secondary" onclick="closeAiResultModal()">閉じる</button></div>${body}</div></div>`;
+    }
+
     function renderStudy(){
       const card=currentCard();
       const summary=stats();
-      if(!appState.cards.length)return`<div class="card empty"><strong>カードがありません。</strong><br>まず「インポート」からカードを読み込んでください。</div>`;
-      if(!card)return`<div class="card empty"><strong>今日の復習はありません。</strong><br>現在の有効カード: ${summary.activeCards}枚</div>${renderStatsCard()}`;
+      const scopedCards=cardsForDeck();
+      const deckName=deckPath(selectedDeck());
+      const topBar=`<div class="studyTopBar"><button class="ghost" onclick="setTab('cards')">← 単語帖</button><button class="ghost" aria-label="単語帖のオプション" onclick="openDeckOptions(appState.selectedDeckId)">⚙ オプション</button></div>`;
+      if(!appState.cards.length)return`${topBar}<div class="card empty"><strong>ようこそ！まだカードがありません。</strong><br>サンプルですぐ試すか、手入力・CSV取り込みで始められます。<div class="row" style="justify-content:center;margin-top:16px"><button class="blue" style="flex:0 0 auto" onclick="loadSampleCards()">サンプルを試す</button><button style="flex:0 0 auto" onclick="openQuickAdd()">手入力で追加</button><button class="ghost" style="flex:0 0 auto" onclick="setTab('settings')">CSV・同期で取り込み</button></div></div>`;
+      if(!scopedCards.length)return`${topBar}<div class="card empty"><strong>「${escapeHtml(deckName)}」にカードがありません。</strong><br>単語を追加して学習を始めましょう。<div class="row" style="justify-content:center;margin-top:16px"><button class="blue" style="flex:0 0 auto" onclick="openQuickAdd()">＋ 単語を追加</button></div></div>`;
+      if(!card)return`${topBar}<div class="card empty"><strong>「${escapeHtml(deckName)}」の復習はありません。</strong><br>今日の分は完了です。現在の有効カード: ${summary.activeCards}枚</div>`;
       const state=getReviewState(card.id);
-      const imageHtml=images=>images.length?`<div class="imageGrid">${images.map(image=>`<img class="cardImage cardImage--study" src="${imageUrl(image)}" alt="${escapeHtml(image.name||"カード画像")}">`).join("")}</div>`:"";
-      return`<div class="card heroCard"><div><div class="frontText">${escapeHtml(card.frontText)}</div><div class="row" style="justify-content:center;margin-top:12px"><button class="ghost" style="flex:0 0 auto" onclick="speakCurrentCard()">発音</button></div>${imageHtml(cardImages(card,"front"))}</div>${appState.answerVisible?`<div><div class="backText">${escapeHtml(card.backText)}</div>${card.exampleText?`<div class="exampleText"><strong>例文</strong><br>${escapeHtml(card.exampleText)}</div>`:""}${card.noteText?`<div class="noteText"><strong>メモ</strong><br>${escapeHtml(card.noteText)}</div>`:""}${imageHtml(cardImages(card,"back"))}</div>`:""}${appState.answerVisible?`<div class="reviewButtons"><button class="danger" onclick="rateCurrentCard('again')">もう一度</button><button class="warning" onclick="rateCurrentCard('hard')">難しい</button><button class="success" onclick="rateCurrentCard('good')">正解</button><button class="blue" onclick="rateCurrentCard('easy')">簡単</button></div>`:`<button onclick="appState.answerVisible=true;render();">裏面を表示</button>`}</div><div class="card"><div class="row"><span class="pill">復習回数 ${state.reviewCount||0}</span><span class="pill">間隔 ${state.intervalDays||0}日</span><span class="pill">次回 ${formatDateTime(state.dueAt)}</span></div><div class="row" style="margin-top:12px"><button class="ghost" onclick="openEditor('${card.id}')">このカードを編集</button><button class="secondary" onclick="skipCurrentCard()">今はスキップ</button></div></div>${renderStatsCard()}`;
+      const canSkip=studyCards().length>1;
+      const imageHtml=images=>images.length?`<div class="imageGrid">${images.map(image=>`<img class="cardImage cardImage--study" src="${imageUrl(image)}" alt="${escapeHtml(image.name||"カード画像")}" onclick="event.stopPropagation();openLightbox(this.src)">`).join("")}</div>`:"";
+      const ratingButton=(cls,rating)=>`<button class="${cls}" aria-label="${escapeHtml(ratingLabels[rating])} 次回${predictIntervalLabel(state,rating)}" onclick="rateCurrentCard('${rating}')"><span>${escapeHtml(ratingLabels[rating])}</span><span class="sub">${predictIntervalLabel(state,rating)}</span></button>`;
+      const flipHint=appState.answerVisible?`<div class="flipHint">スワイプ: ← もう一度 ／ 正解 →　・　キー 1–4 で評価</div>`:`<div class="flipHint">カードをタップ／Space キーで裏面を表示</div>`;
+      const reviewButtonsHtml=`<div class="reviewButtons">${ratingButton("danger","again")}${ratingButton("warning","hard")}${ratingButton("success","good")}${ratingButton("blue","easy")}</div>`;
+      return`${topBar}<div class="card heroCard" id="heroCard" role="button" tabindex="0" aria-label="カード。タップで裏面を表示" onclick="onHeroClick(event)"><div><span class="pill">${escapeHtml(deckName)}</span><div class="frontText" style="margin-top:12px">${escapeHtml(card.frontText)}</div><div class="row" style="justify-content:center;margin-top:12px"><button class="ghost" style="flex:0 0 auto" aria-label="英語を読み上げ" onclick="speakCurrentCard()">発音</button></div>${imageHtml(cardImages(card,"front"))}</div>${appState.answerVisible?`<div><div class="backText">${escapeHtml(card.backText)}</div>${card.exampleText?`<div class="exampleText"><strong>例文</strong><br>${escapeHtml(card.exampleText)}</div>`:""}${card.noteText?`<div class="noteText"><strong>メモ</strong><br>${escapeHtml(card.noteText)}</div>`:""}${imageHtml(cardImages(card,"back"))}${renderAiExamplePanel(card,reviewButtonsHtml)}</div>`:""}${appState.answerVisible?reviewButtonsHtml:`<button onclick="appState.answerVisible=true;render();">裏面を表示</button>`}${flipHint}</div><div class="card compactCard"><div class="row"><span class="pill">復習 ${state.reviewCount||0}</span><span class="pill">間隔 ${state.intervalDays||0}日</span><span class="pill">次回 ${formatDateTime(state.dueAt)}</span></div><div class="row" style="margin-top:12px"><button class="ghost" onclick="openEditor('${card.id}')">編集</button><button class="secondary" ${canSkip?"":"disabled"} title="${canSkip?"次のカードへ":"他に対象カードがありません"}" onclick="skipCurrentCard()">スキップ</button><button class="ghost" ${appState.lastReview?"":"disabled"} title="${appState.lastReview?"直前の評価を取り消します":"取り消せる評価がありません"}" onclick="undoLastReview()">↩ 元に戻す</button></div></div>`;
     }
 
     function skipCurrentCard(){
-      const due=dueCards();
+      const due=studyCards();
       if(due.length<=1)return;
       stopSpeaking();
       const currentIndex=due.findIndex(card=>card.id===appState.currentCardId);
       appState.currentCardId=due[(currentIndex+1)%due.length].id;
       appState.answerVisible=false;
+      appState.cardShownAt=Date.now();
       render();
-    }
-
-    function renderStatsCard(){
-      const summary=stats();
-      return`<div class="card"><div class="statsGrid"><div class="stat"><div class="num">${summary.due}</div><div class="label">今日の対象</div></div><div class="stat"><div class="num">${summary.reviewedToday}</div><div class="label">今日の学習</div></div><div class="stat"><div class="num">${summary.activeCards}</div><div class="label">有効カード</div></div><div class="stat"><div class="num">${summary.newCards}</div><div class="label">未学習</div></div></div></div>`;
     }
 
     function renderDriveSync(){
       const linked=googleDriveTokenValid();
       const lastSync=appState.settings.googleDriveLastSyncAt?formatDateTime(appState.settings.googleDriveLastSyncAt):"未同期";
-      return`<div class="card"><h2 style="margin:0 0 10px;letter-spacing:-.03em">Google Drive 同期</h2><div class="notice">カード、学習状態、学習履歴、達成日、画像をGoogle Driveのアプリデータ領域に保存します。同期時は必ずDrive側を読み込んでから端末内データとマージし、その結果だけをアップロードします。</div><label for="googleDriveClientId">Google OAuth クライアントID</label><input id="googleDriveClientId" type="text" placeholder="000000000000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com" value="${escapeHtml(appState.settings.googleDriveClientId||"")}"/><div class="notice" style="margin-top:14px"><strong>自動同期: ON</strong><br>連携後は学習・編集・画像変更・削除のたびに安全同期します。</div><label for="googleDriveAutoSyncIntervalMinutes">定期確認の間隔（分）</label><input id="googleDriveAutoSyncIntervalMinutes" type="number" inputmode="numeric" min="1" value="${escapeHtml(appState.settings.googleDriveAutoSyncIntervalMinutes||5)}"/><p class="small">状態: ${linked?"連携中":"未連携"} / 最終同期: ${lastSync}</p><div class="row"><button onclick="connectGoogleDrive()">設定して連携</button><button class="blue" onclick="syncGoogleDriveFromForm()">今すぐ安全同期</button><button class="secondary" onclick="disconnectGoogleDrive()">連携解除</button></div></div>`;
+      return`<div class="card compactCard"><h2 class="sectionTitle">Google Drive</h2><label for="googleDriveClientId">OAuth クライアントID</label><input id="googleDriveClientId" type="text" placeholder="000000000000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com" value="${escapeHtml(appState.settings.googleDriveClientId||"")}"/><label for="googleDriveAutoSyncIntervalMinutes">同期間隔（分）</label><input id="googleDriveAutoSyncIntervalMinutes" type="number" inputmode="numeric" min="1" value="${escapeHtml(appState.settings.googleDriveAutoSyncIntervalMinutes||5)}"/><p class="small">状態: ${linked?"連携中":"未連携"} / 最終同期: ${lastSync}</p><div class="row"><button onclick="connectGoogleDrive()">連携</button><button class="blue" onclick="syncGoogleDriveFromForm()">同期</button><button class="secondary" onclick="disconnectGoogleDrive()">解除</button></div></div>`;
     }
 
-    function renderImport(){
-      return`${renderDriveSync()}<div class="card"><h2 style="margin:0 0 10px;letter-spacing:-.03em">Google Spreadsheet 同期</h2><div class="notice">GitHub PagesなどのHTTPS公開環境では直接同期を試せます。失敗した場合はJSON貼り付け同期で反映できます。<br>対応列: <strong>id</strong>任意, <strong>日本語</strong>, <strong>英語</strong>, <strong>例文</strong></div><label for="gasUrl">GAS WebアプリURL</label><input id="gasUrl" type="text" placeholder="https://script.google.com/macros/s/.../exec" value="${escapeHtml(appState.settings.gasUrl||"")}"/><div class="toggleLine"><div><strong>アプリ起動時に直接同期を試す</strong><div class="small">直接同期がブロックされる環境では警告だけ表示します。</div></div><input id="autoSyncEnabled" class="checkbox" type="checkbox" ${appState.settings.autoSyncEnabled?"checked":""}/></div><label for="autoSyncIntervalHours">自動同期を試す間隔（時間）</label><input id="autoSyncIntervalHours" type="number" inputmode="numeric" value="${escapeHtml(appState.settings.autoSyncIntervalHours||12)}"/><p class="small">最終同期: ${appState.settings.lastSyncAt?formatDateTime(appState.settings.lastSyncAt):"未同期"}</p><div class="row"><button onclick="saveSyncSettings()">同期設定を保存</button><button class="blue" onclick="saveSyncSettings().then(()=>syncFromGas(false))">直接同期を試す</button><button class="ghost" onclick="testGasConnection()">接続テスト</button><button class="secondary" onclick="openGasUrlForCheck()">GAS URLを開く</button><button class="secondary" onclick="copyGasUrl()">URLをコピー</button></div></div><div class="card"><h2 style="margin:0 0 10px;letter-spacing:-.03em">JSON貼り付け同期</h2><div class="notice">直接同期が失敗する場合の確実な反映方法です。GAS URLを開いて表示されたJSON全体をここに貼ってください。</div><label for="gasJsonPaste">GASで表示されたJSON</label><textarea id="gasJsonPaste" placeholder='{"cards":[{"id":"001","日本語":"切羽詰まった","英語":"hard-pressed","例文":"..."}]}'></textarea><button class="blue" onclick="syncFromPastedGasJson()">貼り付けJSONを同期</button></div><div class="card"><h2 style="margin:0 0 10px;letter-spacing:-.03em">CSVインポート</h2><div class="notice">CSVファイルからの手動追加も使えます。対応列: <strong>id</strong>任意, <strong>日本語</strong>, <strong>英語</strong>, <strong>例文</strong></div><label for="csvFile">CSVファイル</label><input id="csvFile" class="fileInput" type="file" accept=".csv,text/csv" onchange="importCsvFile(this.files[0])"/></div><div class="card"><h3 style="margin-top:0">テスト</h3><button class="ghost" onclick="runSelfTests()">内蔵テストを実行</button></div><div class="card"><h3 style="margin-top:0">Spreadsheet / CSV例</h3><pre class="notice mono" style="overflow:auto;white-space:pre-wrap;">id,日本語,英語,例文\n001,切羽詰まった,hard-pressed,you will be hard-pressed to find anything cheaper in this location.\n002,勉強になる,enlightening,I'm glad that you found it enlightening</pre></div>`;
+    function renderImportTools(){
+      const deckSelector=`<label for="importDeckId">取り込み先単語帖</label><select id="importDeckId">${renderDeckOptions(appState.selectedDeckId)}</select><p class="small">CSVやSpreadsheetに「単語帖」「デッキ」「Deck」列がある場合は、その列の名前を優先します。</p>`;
+      return`<div class="card compactCard"><h2 class="sectionTitle">カード追加</h2>${deckSelector}<label for="csvFile">CSV</label><input id="csvFile" class="fileInput" type="file" accept=".csv,text/csv" onchange="importCsvFile(this.files[0])"/><label for="gasUrl">GAS URL</label><input id="gasUrl" type="text" placeholder="https://script.google.com/macros/s/.../exec" value="${escapeHtml(appState.settings.gasUrl||"")}"/><div class="toggleLine"><div><strong>起動時同期</strong><div class="small">最終同期: ${appState.settings.lastSyncAt?formatDateTime(appState.settings.lastSyncAt):"未同期"}</div></div><input id="autoSyncEnabled" class="checkbox" type="checkbox" ${appState.settings.autoSyncEnabled?"checked":""}/></div><label for="autoSyncIntervalHours">同期間隔（時間）</label><input id="autoSyncIntervalHours" type="number" inputmode="numeric" value="${escapeHtml(appState.settings.autoSyncIntervalHours||12)}"/><div class="row" style="margin-top:12px"><button onclick="saveSyncSettings()">保存</button><button class="blue" onclick="saveSyncSettings().then(()=>syncFromGas(false))">同期</button><button class="ghost" onclick="testGasConnection()">テスト</button></div><label for="gasJsonPaste">JSON貼り付け</label><textarea id="gasJsonPaste" placeholder='{"cards":[{"id":"001","日本語":"切羽詰まった","英語":"hard-pressed","単語帖":"英語 / 教科書"}]}'></textarea><button class="blue" onclick="syncFromPastedGasJson()">JSON同期</button></div>`;
     }
 
     function renderSettings(){
       const nickname=getNickname();
       const preview=buildPraiseHeadline("ワンダフル！",nickname);
-      return`<div class="card"><h2 style="margin:0 0 10px;letter-spacing:-.03em">設定</h2><div class="notice">呼び名は、学習カードを全部終えたときの称賛モーダルで使います。</div><label for="nicknameInput">呼び名</label><input id="nicknameInput" type="text" maxlength="24" placeholder="例: Yuki" value="${escapeHtml(appState.settings.nickname||"")}"/><p class="settingsPreview">プレビュー: ${escapeHtml(preview)}</p><div class="row"><button onclick="saveNicknameSettings()">呼び名を保存</button></div></div>`;
+      const theme=appState.settings.theme||"auto";
+      const themeOption=(value,label)=>`<option value="${value}" ${theme===value?"selected":""}>${label}</option>`;
+      return`<div class="settingsStack"><div class="card compactCard"><h2 class="sectionTitle">表示</h2><label for="themeSelect">テーマ</label><select id="themeSelect" onchange="setTheme(this.value)">${themeOption("auto","自動（端末の設定に合わせる）")}${themeOption("light","ライト")}${themeOption("dark","ダーク")}</select><label for="nicknameInput">呼び名</label><input id="nicknameInput" type="text" maxlength="24" placeholder="例: Yuki" value="${escapeHtml(appState.settings.nickname||"")}"/><label for="dailyGoalInput">1日の目標（問）</label><input id="dailyGoalInput" type="number" inputmode="numeric" min="1" value="${escapeHtml(appState.settings.dailyGoal||20)}"/><p class="small" style="margin:6px 0 0">データ画面のグラフに目標ラインとして表示されます。</p><p class="settingsPreview">プレビュー: ${escapeHtml(preview)}</p><button onclick="saveNicknameSettings()">保存</button></div><div class="card compactCard"><h2 class="sectionTitle">OpenRouter</h2><label for="openRouterApiKey">APIキー</label><input id="openRouterApiKey" type="password" placeholder="sk-or-v1-..." value="${escapeHtml(appState.settings.openRouterApiKey||"")}"/><label for="openRouterModel">モデル</label><input id="openRouterModel" type="text" value="${escapeHtml(appState.settings.openRouterModel||"openrouter/free")}"/><button class="blue" onclick="saveAiSettings()">保存</button></div>${renderDriveSync()}${renderImportTools()}<div class="card compactCard"><h2 class="sectionTitle">メンテナンス</h2><div class="row"><button class="ghost" onclick="runSelfTests()">内蔵テスト</button><button class="ghost" onclick="exportData()">JSONバックアップ</button></div></div><div class="card compactCard"><h2 class="sectionTitle">危険な操作</h2><p class="small" style="margin:0 0 10px">全データ削除は取り消せません。先にJSONバックアップを取ることをおすすめします。</p><button class="danger" onclick="resetAllData()">全データ削除</button></div></div>`;
     }
 
     function filteredCards(){
       const query=normalizeText(appState.search).toLowerCase();
-      let cards=[...appState.cards];
+      let cards=cardsForDeck(appState.selectedDeckId);
       if(query)cards=cards.filter(card=>[card.frontText,card.backText,card.exampleText,card.noteText].some(value=>String(value||"").toLowerCase().includes(query)));
       return cards.sort((left,right)=>left.frontText.localeCompare(right.frontText));
     }
 
-    function renderCards(){
+    function renderCardListBody(){
       const cards=filteredCards();
-      if(!appState.cards.length)return`<div class="card empty">カードがありません。インポートから読み込んでください。</div>`;
-      return`<div class="card"><div class="searchBar"><input type="search" placeholder="カードを検索" value="${escapeHtml(appState.search)}" oninput="appState.search=this.value;render();"/></div>${cards.length?cards.map(renderCardListItem).join(""):`<div class="empty">該当するカードがありません。</div>`}</div>`;
+      return`<div class="searchBar" style="margin-top:14px"><input type="search" placeholder="カードを検索" value="${escapeHtml(appState.search)}" oninput="onSearchInput(this.value)"/></div>${cards.length?cards.map(renderCardListItem).join(""):`<div class="empty">該当するカードがありません。</div>`}`;
+    }
+
+    function renderCards(){
+      return`${renderDeckTable()}`;
+    }
+
+    function renderDeckOptionsSheet(){
+      if(!appState.deckOptionsOpen)return"";
+      const deck=selectedDeck();
+      const name=deckPath(deck);
+      const cardCount=cardsForDeck(deck.id).length;
+      return`<div class="modalBackdrop" onclick="if(event.target.className==='modalBackdrop')closeDeckOptions();"><div class="modal"><div class="modalHeader"><h2>${escapeHtml(name)}</h2><button class="secondary" onclick="closeDeckOptions()">閉じる</button></div><div class="optionList"><button class="blue" onclick="appState.deckOptionsOpen=false;openQuickAdd()">＋ 単語を追加</button><button class="secondary" onclick="appState.deckOptionsOpen=false;openCardList()">カードを見る（${cardCount}枚）</button><button class="secondary" onclick="appState.deckOptionsOpen=false;openDeckData()">この単語帖の学習データ</button><button class="ghost" onclick="appState.deckOptionsOpen=false;openDeckEditor('${deck.id}')">単語帖名の変更・削除</button></div></div></div>`;
+    }
+
+    function renderCardListModal(){
+      if(!appState.cardListOpen)return"";
+      const name=deckPath(selectedDeck());
+      return`<div class="modalBackdrop" onclick="if(event.target.className==='modalBackdrop')closeCardList();"><div class="modal"><div class="modalHeader"><h2>${escapeHtml(name)} のカード</h2><button class="secondary" onclick="closeCardList()">閉じる</button></div><div class="row" style="margin-bottom:6px"><button class="blue" style="flex:0 0 auto" onclick="closeCardList();openQuickAdd()">＋ 単語を追加</button></div>${renderCardListBody()}</div></div>`;
+    }
+
+    function renderDeckDataModal(){
+      if(!appState.deckDataOpen)return"";
+      const deck=selectedDeck();
+      const name=deckPath(deck);
+      const summary=stats(deck.id);
+      const deckCardIds=new Set(cardsForDeck(deck.id).map(card=>card.id));
+      const matured=appState.reviewStates.filter(state=>deckCardIds.has(state.cardId)&&Number(state.intervalDays||0)>=21).length;
+      const studied=appState.reviewStates.filter(state=>deckCardIds.has(state.cardId)&&Number(state.reviewCount||0)>0).length;
+      const reviews=logsForDeck(deck.id).length;
+      const todayReviews=todayLogs(deck.id).length;
+      const num=value=>Number(value||0).toLocaleString("ja-JP");
+      const masteryPie=pieCard("習得状況",[
+        {name:"覚えた",count:matured,color:"#7cb342"},
+        {name:"学習中",count:Math.max(0,studied-matured),color:"#f5a623"},
+        {name:"未学習",count:summary.newCards,color:"#cbd5e1"}
+      ]);
+      return`<div class="modalBackdrop" onclick="if(event.target.className==='modalBackdrop')closeDeckData();"><div class="modal"><div class="modalHeader"><h2>${escapeHtml(name)} の学習データ</h2><button class="secondary" onclick="closeDeckData()">閉じる</button></div>${masteryPie}<div class="dataGrid">${dataTile("カード数",num(summary.total),"枚")}${dataTile("今日の学習",num(todayReviews),"問")}${dataTile("学習した単語",num(studied),"単語")}${dataTile("覚えた単語",num(matured),"単語")}${dataTile("未学習",num(summary.newCards),"単語")}${dataTile("復習待ち",num(summary.due),"枚")}${dataTile("累計学習問題数",num(reviews),"問")}</div></div></div>`;
+    }
+
+    function renderDeckFormModal(){
+      if(!appState.deckFormOpen)return"";
+      return`<div class="modalBackdrop" onclick="if(event.target.className==='modalBackdrop')closeDeckForm();"><div class="modal"><div class="modalHeader"><h2>単語帖を追加</h2><button class="secondary" onclick="closeDeckForm()">閉じる</button></div><label for="newDeckName">単語帖名</label><input id="newDeckName" type="text" placeholder="例: 英語 / 教科書 Unit 1"/><p class="small">スラッシュで区切ると階層表示できます。例: 英語 / TOEIC</p><button onclick="createDeckFromForm()">作成</button></div></div>`;
+    }
+
+    function renderQuickAddModal(){
+      if(!appState.quickAddOpen)return"";
+      const deckName=deckPath(selectedDeck());
+      return`<div class="modalBackdrop" onclick="if(event.target.className==='modalBackdrop')closeQuickAdd();"><div class="modal"><div class="modalHeader"><h2>単語を追加</h2><button class="secondary" onclick="closeQuickAdd()">閉じる</button></div><p class="small" style="margin:0 0 6px">追加先: ${escapeHtml(deckName)}</p><label for="quickFront">表面（英語）</label><input id="quickFront" type="text" placeholder="例: challenge"/><label for="quickBack">裏面（日本語）</label><input id="quickBack" type="text" placeholder="例: 挑戦"/><label for="quickExample">例文（任意）</label><textarea id="quickExample" placeholder="例: Learning new words can be a fun challenge."></textarea><div class="row" style="margin-top:12px"><button class="blue" onclick="addQuickCard()">追加して続ける</button><button class="ghost" onclick="closeQuickAdd()">完了</button></div></div></div>`;
     }
 
     function renderCardListItem(card){
       const state=getReviewState(card.id);
-      return`<div class="listItem"><div><div class="listTitle">${escapeHtml(card.frontText)}</div><div class="listMeta">${escapeHtml(card.backText)}${card.exampleText?`<br>例文: ${escapeHtml(card.exampleText.slice(0,80))}${card.exampleText.length>80?"...":""}`:""}<br>次回: ${formatDateTime(state.dueAt)} / 復習 ${state.reviewCount||0}回 / 画像 ${(card.imageIds||[]).length}枚${card.suspended?`<br><strong>一時停止中</strong>`:""}</div></div><div class="row" style="justify-content:flex-end"><button class="ghost" style="flex:0 0 auto" onclick="speakCardFrontText('${card.id}')">発音</button><button class="ghost" style="flex:0 0 auto" onclick="openEditor('${card.id}')">編集</button></div></div>`;
+      return`<div class="listItem"><div><div class="listTitle">${escapeHtml(card.frontText)}</div><div class="listMeta">${escapeHtml(card.backText)}${card.exampleText?`<br>例文: ${escapeHtml(card.exampleText.slice(0,80))}${card.exampleText.length>80?"...":""}`:""}<br>単語帖: ${escapeHtml(deckPath(appState.decks.find(deck=>deck.id===cardDeckId(card))))} / 次回: ${formatDateTime(state.dueAt)} / 復習 ${state.reviewCount||0}回 / 画像 ${(card.imageIds||[]).length}枚${card.suspended?`<br><strong>一時停止中</strong>`:""}</div></div><div class="row" style="justify-content:flex-end"><button class="ghost" style="flex:0 0 auto" onclick="speakCardFrontText('${card.id}')">発音</button><button class="ghost" style="flex:0 0 auto" onclick="openEditor('${card.id}')">編集</button></div></div>`;
     }
 
     function openEditor(id){
@@ -1496,9 +2858,17 @@
     function renderEditor(){
       const card=appState.cards.find(current=>current.id===appState.editorCardId);
       if(!card)return"";
-      const imageRows=images=>images.map(image=>`<div class="listItem"><div><img class="cardImage cardImage--editor" src="${imageUrl(image)}" alt="${escapeHtml(image.name||"画像")}"/><div class="listMeta">${escapeHtml(image.name||"画像")} / ${image.side==="front"?"表面":"裏面"}</div></div><button class="danger" onclick="removeImage('${card.id}','${image.id}')">削除</button></div>`).join("");
+      const imageRows=images=>images.map(image=>`<div class="listItem"><div><img class="cardImage cardImage--editor" src="${imageUrl(image)}" alt="${escapeHtml(image.name||"画像")}" onclick="openLightbox(this.src)"/><div class="listMeta">${escapeHtml(image.name||"画像")} / ${image.side==="front"?"表面":"裏面"}</div></div><button class="danger" onclick="removeImage('${card.id}','${image.id}')">削除</button></div>`).join("");
       const frontImages=cardImages(card,"front"),backImages=cardImages(card,"back");
-      return`<div class="modalBackdrop" onclick="if(event.target.className==='modalBackdrop')closeEditor();"><div class="modal"><div class="modalHeader"><h2>カード編集</h2><button class="secondary" onclick="closeEditor()">閉じる</button></div><label>表面テキスト（英語）</label><input id="editFront" type="text" value="${escapeHtml(card.frontText)}"/><div class="row" style="margin-top:10px"><button class="ghost" onclick="speakEditorFrontText()">入力中の英語を読み上げ</button></div><label>裏面テキスト（日本語）</label><input id="editBack" type="text" value="${escapeHtml(card.backText)}"/><label>例文（裏面に表示）</label><textarea id="editExample">${escapeHtml(card.exampleText||"")}</textarea><label>補足メモ（裏面に表示）</label><textarea id="editNote">${escapeHtml(card.noteText||"")}</textarea><div class="toggleLine"><div><strong>一時停止</strong><div class="small">オンにすると学習対象から外します。</div></div><input id="editSuspended" class="checkbox" type="checkbox" ${card.suspended?"checked":""}/></div><div class="row" style="margin:12px 0 18px"><button onclick="saveCardFromEditor('${card.id}')">保存</button><button class="danger" onclick="deleteCard('${card.id}')">削除</button></div><div class="card" style="box-shadow:none;margin:12px 0"><h3 style="margin-top:0">画像</h3><label>表面に画像を追加</label><input class="fileInput" type="file" accept="image/*" onchange="addImageToCard('${card.id}',this,'front')"/><label>裏面に画像を追加</label><input class="fileInput" type="file" accept="image/*" onchange="addImageToCard('${card.id}',this,'back')"/><h4>表面画像</h4>${frontImages.length?imageRows(frontImages):`<p class="small">表面画像はありません。</p>`}<h4>裏面画像</h4>${backImages.length?imageRows(backImages):`<p class="small">裏面画像はありません。</p>`}</div></div></div>`;
+      return`<div class="modalBackdrop" onclick="if(event.target.className==='modalBackdrop')closeEditor();"><div class="modal"><div class="modalHeader"><h2>カード編集</h2><button class="secondary" onclick="closeEditor()">閉じる</button></div><label>所属単語帖</label><select id="editDeckId">${renderDeckOptions(cardDeckId(card))}</select><label>表面テキスト（英語）</label><input id="editFront" type="text" value="${escapeHtml(card.frontText)}"/><div class="row" style="margin-top:10px"><button class="ghost" onclick="speakEditorFrontText()">入力中の英語を読み上げ</button></div><label>裏面テキスト（日本語）</label><input id="editBack" type="text" value="${escapeHtml(card.backText)}"/><label>例文（裏面に表示）</label><textarea id="editExample">${escapeHtml(card.exampleText||"")}</textarea><label>補足メモ（裏面に表示）</label><textarea id="editNote">${escapeHtml(card.noteText||"")}</textarea><div class="toggleLine"><div><strong>一時停止</strong><div class="small">オンにすると学習対象から外します。</div></div><input id="editSuspended" class="checkbox" type="checkbox" ${card.suspended?"checked":""}/></div><div class="row" style="margin:12px 0 18px"><button onclick="saveCardFromEditor('${card.id}')">保存</button><button class="danger" onclick="deleteCard('${card.id}')">削除</button></div><div class="card" style="box-shadow:none;margin:12px 0"><h3 style="margin-top:0">画像</h3><label>表面に画像を追加</label><input class="fileInput" type="file" accept="image/*" onchange="addImageToCard('${card.id}',this,'front')"/><label>裏面に画像を追加</label><input class="fileInput" type="file" accept="image/*" onchange="addImageToCard('${card.id}',this,'back')"/><h4>表面画像</h4>${frontImages.length?imageRows(frontImages):`<p class="small">表面画像はありません。</p>`}<h4>裏面画像</h4>${backImages.length?imageRows(backImages):`<p class="small">裏面画像はありません。</p>`}</div></div></div>`;
+    }
+
+    function renderDeckEditor(){
+      const deck=appState.decks.find(current=>current.id===appState.deckEditorId);
+      if(!deck)return"";
+      const counts=deckReviewCounts(deck.id);
+      const cardCount=cardsForDeck(deck.id).length;
+      return`<div class="modalBackdrop" onclick="if(event.target.className==='modalBackdrop')closeDeckEditor();"><div class="modal"><div class="modalHeader"><h2>単語帖設定</h2><button class="secondary" onclick="closeDeckEditor()">閉じる</button></div><label for="editDeckName">単語帖名</label><input id="editDeckName" type="text" value="${escapeHtml(deckPath(deck))}"/><p class="small">カード ${cardCount}枚 / New ${counts.new} / Learn ${counts.learn} / Due ${counts.due}</p><div class="row" style="margin-top:14px"><button onclick="saveDeckFromEditor('${deck.id}')">保存</button><button class="blue" onclick="selectDeck('${deck.id}',true)">この単語帖を学習</button>${deck.id===DEFAULT_DECK_ID?"":`<button class="danger" onclick="deleteDeck('${deck.id}')">削除</button>`}</div></div></div>`;
     }
 
     function renderCompletionModal(){
@@ -1507,34 +2877,431 @@
       return`<div class="modalBackdrop modalBackdrop--celebration" onclick="if(event.target.classList.contains('modalBackdrop--celebration'))closeCompletionModal();"><div class="modal celebrationModal"><div class="modalHeader"><h2>${escapeHtml(completion.title||"おめでとう")}</h2><button class="secondary" onclick="closeCompletionModal()">閉じる</button></div><div class="celebrationEyebrow">${escapeHtml(completion.eyebrow||"達成")}</div><div class="celebrationHeadline">${escapeHtml(completion.headline)}</div><p class="celebrationText">${escapeHtml(completion.body)}</p><div class="row">${(completion.pills||[]).map(pill=>`<span class="pill">${escapeHtml(pill)}</span>`).join("")}</div></div></div>`;
     }
 
+    function formatStudyDuration(ms){
+      const totalSec=Math.floor((Number(ms)||0)/1000);
+      if(totalSec<=0)return"0秒";
+      const hours=Math.floor(totalSec/3600);
+      const minutes=Math.floor((totalSec%3600)/60);
+      const seconds=totalSec%60;
+      let out="";
+      if(hours)out+=`${hours}時間`;
+      if(minutes)out+=`${minutes}分`;
+      if(seconds||!out)out+=`${seconds}秒`;
+      return out;
+    }
+
+    function studyDayKeys(){
+      return [...new Set(appState.logs.map(log=>localDateKey(log.reviewedAt)))];
+    }
+
+    function completionDateKeys(){
+      return [...new Set((appState.dailyCompletions||[]).map(row=>row.dateKey).filter(Boolean))];
+    }
+
+    function computeBestStreak(keys){
+      const unique=[...new Set(keys)].filter(Boolean).sort();
+      if(!unique.length)return 0;
+      let best=1,run=1;
+      for(let index=1;index<unique.length;index++){
+        if(daysBetweenDateKeys(unique[index],unique[index-1])===1)run++;else run=1;
+        if(run>best)best=run;
+      }
+      return best;
+    }
+
+    function studyTimeMs(todayOnly=false){
+      const start=startOfToday().getTime();
+      return appState.logs.reduce((sum,log)=>{
+        if(todayOnly&&new Date(log.reviewedAt).getTime()<start)return sum;
+        return sum+(Number(log.durationMs)||0);
+      },0);
+    }
+
+    function maturedWordCount(){
+      return appState.reviewStates.filter(state=>Number(state.intervalDays||0)>=21).length;
+    }
+
+    function studiedWordCount(){
+      return appState.reviewStates.filter(state=>Number(state.reviewCount||0)>0).length;
+    }
+
+    const WEEKDAY_CHARS=["日","月","火","水","木","金","土"];
+
+    function niceCeil(value){
+      if(value<=0)return 10;
+      const power=Math.pow(10,Math.floor(Math.log10(value)));
+      const steps=[1,2,3,4,5,6,8,10];
+      const normalized=value/power;
+      const step=steps.find(candidate=>candidate>=normalized-1e-9)||10;
+      return step*power;
+    }
+
+    function dataTile(label,value,unit="",extraClass=""){
+      const unitHtml=unit?`<span class="t-unit">${unit}</span>`:"";
+      return`<div class="dataTile"><div class="t-label">${label}</div><div class="t-value ${extraClass}">${value}${unitHtml}</div></div>`;
+    }
+
+    const DECK_PALETTE=["#7cb342","#f5a623","#2997ff","#e0533d","#26a69a","#9c6ade","#ec407a","#8d6e63","#5c6bc0","#00897b"];
+    const OTHER_GROUP_NAME="その他";
+
+    function cardTopDeckMap(){
+      const map=new Map();
+      for(const card of appState.cards){
+        const deck=appState.decks.find(current=>current.id===cardDeckId(card));
+        map.set(card.id,deckPathParts(deck)[0]||deckPath(deck));
+      }
+      return map;
+    }
+
+    function deckShareData(logs=appState.logs){
+      const cardMap=cardTopDeckMap();
+      const totals=new Map();
+      for(const log of logs||[]){
+        const name=cardMap.get(log.cardId)||OTHER_GROUP_NAME;
+        totals.set(name,(totals.get(name)||0)+1);
+      }
+      return [...totals.entries()]
+        .sort((left,right)=>right[1]-left[1])
+        .map(([name,count],index)=>({name,count,color:DECK_PALETTE[index%DECK_PALETTE.length]}));
+    }
+
+    function pieCard(title,data,note=""){
+      const segments=(data||[]).filter(item=>Number(item.count||0)>0);
+      const total=segments.reduce((sum,item)=>sum+Number(item.count||0),0);
+      const noteHtml=note?`<p class="small" style="margin:0 0 10px">${escapeHtml(note)}</p>`:"";
+      if(!total)return`<div class="card compactCard"><h2 class="sectionTitle">${escapeHtml(title)}</h2>${noteHtml}<p class="small">まだデータがありません。</p></div>`;
+      let acc=0;
+      const stops=segments.map(item=>{
+        const start=(acc/total)*360;
+        acc+=Number(item.count||0);
+        return`${item.color} ${start}deg ${(acc/total)*360}deg`;
+      }).join(",");
+      const legend=segments.map(item=>{
+        const pct=Math.round((Number(item.count||0)/total)*100);
+        return`<div class="legendItem"><span class="legendDot" style="background:${item.color}"></span><span class="legendName">${escapeHtml(item.name)}</span><span class="legendCount">${Number(item.count||0).toLocaleString("ja-JP")}</span><span class="legendVal">${pct}%</span></div>`;
+      }).join("");
+      return`<div class="card compactCard"><h2 class="sectionTitle">${escapeHtml(title)}</h2>${noteHtml}<div class="pieWrap"><div class="pie" style="background:conic-gradient(${stops})"></div><div class="legend">${legend}</div></div></div>`;
+    }
+
+    function renderWeeklyChart(){
+      const share=deckShareData();
+      const colorByName=new Map(share.map(item=>[item.name,item.color]));
+      const order=share.map(item=>item.name);
+      const cardMap=cardTopDeckMap();
+      const goal=Math.max(1,Number(appState.settings.dailyGoal||20));
+      const days=[];
+      for(let offset=-6;offset<=0;offset++){
+        const key=dateKeyFromOffset(offset);
+        const date=parseDateKey(key)||new Date();
+        days.push({key,total:0,seg:new Map(),weekday:WEEKDAY_CHARS[date.getUTCDay()],label:`${date.getUTCMonth()+1}/${date.getUTCDate()}`});
+      }
+      const dayIndex=new Map(days.map((day,index)=>[day.key,index]));
+      for(const log of appState.logs){
+        const index=dayIndex.get(localDateKey(log.reviewedAt));
+        if(index===undefined)continue;
+        const name=cardMap.get(log.cardId)||OTHER_GROUP_NAME;
+        days[index].seg.set(name,(days[index].seg.get(name)||0)+1);
+        days[index].total++;
+      }
+      const maxCount=Math.max(...days.map(day=>day.total),goal,1);
+      const top=niceCeil(maxCount);
+      const mid=top/2;
+      const goalPct=Math.min(100,(goal/top)*100);
+      const badges=days.map(day=>`<div class="weekBadge ${day.total>0?"on":""}" title="${escapeHtml(day.label)}: ${day.total}回">${day.weekday}</div>`).join("");
+      const bars=days.map(day=>{
+        const segs=order.filter(name=>(day.seg.get(name)||0)>0).map(name=>{
+          const count=day.seg.get(name)||0;
+          return`<div class="barSeg" style="height:${(count/top)*100}%;background:${colorByName.get(name)||"#94a3b8"}" title="${escapeHtml(name)} ${escapeHtml(day.label)}: ${count}回"></div>`;
+        }).join("");
+        return`<div class="barCol"><div class="barStack">${segs}</div></div>`;
+      }).join("");
+      const dates=days.map(day=>`<div>${escapeHtml(day.label)}</div>`).join("");
+      return`<div class="card"><div class="weekRow">${badges}</div><div class="barChart"><div class="barPlot"><div class="barAxis" style="top:0"><span>${top}</span></div><div class="barAxis" style="top:50%"><span>${mid}</span></div><div class="barAxis" style="bottom:0;border:0"><span>0</span></div><div class="goalLine" style="bottom:${goalPct}%"><span>目標</span></div><div class="barCols">${bars}</div></div></div><div class="barDates">${dates}</div></div>`;
+    }
+
     function renderHistory(){
-      const logs=[...appState.logs].sort((left,right)=>new Date(right.reviewedAt)-new Date(left.reviewedAt)).slice(0,100);
-      return`${renderStatsCard()}<div class="card"><h2 style="margin-top:0">学習履歴</h2>${logs.length?logs.map(log=>{const card=appState.cards.find(current=>current.id===log.cardId);return`<div class="listItem"><div><div class="listTitle">${escapeHtml(card?.frontText||"削除済みカード")}</div><div class="listMeta">${formatDateTime(log.reviewedAt)} / ${ratingLabels[log.rating]||log.rating}<br>間隔: ${log.previousIntervalDays||0}日 → ${log.nextIntervalDays||0}日</div></div></div>`}).join(""):`<div class="empty">履歴はまだありません。</div>`}</div><div class="card"><h2 style="margin-top:0">データ管理</h2><p class="small">学習データはこの端末のブラウザデータとして保存され、Google Drive同期を有効にするとDriveにも反映されます。</p><div class="row"><button class="ghost" onclick="exportData()">JSONバックアップ</button><button class="danger" onclick="resetAllData()">全データ削除</button></div></div>`;
+      const currentStreak=appState.streakDays;
+      const bestStreak=Math.max(currentStreak,computeBestStreak(completionDateKeys()));
+      const totalDays=studyDayKeys().length;
+      const last7=reviewsSince(7);
+      const todayTime=formatStudyDuration(studyTimeMs(true));
+      const totalTime=formatStudyDuration(studyTimeMs(false));
+      const matured=maturedWordCount();
+      const studiedWords=studiedWordCount();
+      const totalReviews=appState.logs.length;
+      const todayAnswerStats=answerButtonStats(todayRatings());
+      const num=value=>Number(value||0).toLocaleString("ja-JP");
+      const streakTiles=`<div class="dataGrid" style="margin-top:14px">${dataTile("現在の連続日数",num(currentStreak),"日")}${dataTile("最長連続日数",num(bestStreak),"日")}</div>`;
+      const answerTiles=`<div class="card compactCard"><h2 class="sectionTitle">今日の回答</h2><div class="dataGrid">${dataTile("Anki式正答率",formatPercent(todayAnswerStats.passRate))}${dataTile("Again",num(todayAnswerStats.again),"回")}${dataTile("Hard",num(todayAnswerStats.hard),"回")}${dataTile("Good / Easy",num(todayAnswerStats.good+todayAnswerStats.easy),"回")}</div></div>`;
+      const countTiles=`<div class="card compactCard"><h2 class="sectionTitle">学習数</h2><div class="dataGrid">${dataTile("累計学習単語数",num(studiedWords),"単語")}${dataTile("直近7日間学習問題数",num(last7),"問")}${dataTile("覚えた単語数",num(matured),"単語")}${dataTile("累計学習問題数",num(totalReviews),"問")}</div></div>`;
+      const timeTiles=`<div class="card compactCard"><h2 class="sectionTitle">学習時間・日数</h2><div class="dataGrid">${dataTile("学習した日数",num(totalDays),"日")}${dataTile("本日の学習時間",todayTime,"","time")}${dataTile("合計学習時間",totalTime,"","time")}</div></div>`;
+      const sharePie=pieCard("単語帖の割合（累計）",deckShareData(),"学習した問題数を単語帖（最上位）ごとに集計しています。");
+      return`${renderWeeklyChart()}${answerTiles}${sharePie}${streakTiles}${countTiles}${timeTiles}`;
     }
 
     function renderTabs(){
-      const tabs=[["study","学習"],["import","インポート"],["cards","カード"],["history","履歴"],["settings","設定"]];
-      return`<div class="tabs"><div class="tabInner">${tabs.map(([key,label])=>`<button class="tab ${appState.tab===key?"active":""}" onclick="setTab('${key}')">${label}</button>`).join("")}</div></div>`;
+      const tabs=[["cards","単語帖"],["history","データ"],["settings","設定"]];
+      const isActive=key=>appState.tab===key||(key==="cards"&&appState.tab==="study");
+      return`<div class="tabs"><div class="tabInner">${tabs.map(([key,label])=>`<button class="tab ${isActive(key)?"active":""}" onclick="setTab('${key}')">${label}</button>`).join("")}</div></div>`;
+    }
+
+    function renderBusyBar(){
+      if(!appState.busy)return"";
+      return`<div class="busyBar" role="status" aria-live="polite"><span class="spinner" aria-hidden="true"></span><span>${escapeHtml(appState.busy)}</span></div>`;
+    }
+
+    function renderLightbox(){
+      if(!appState.lightboxSrc)return"";
+      return`<div class="lightbox" onclick="closeLightbox()" role="dialog" aria-label="画像プレビュー"><img src="${escapeHtml(appState.lightboxSrc)}" alt="拡大画像"></div>`;
+    }
+
+    let messageClearTimer=null;
+    let undoClearTimer=null;
+    function scheduleTransientClear(){
+      if(messageClearTimer){clearTimeout(messageClearTimer);messageClearTimer=null;}
+      if(appState.message||appState.warning){
+        messageClearTimer=setTimeout(()=>{
+          if(appState.message||appState.warning){appState.message=null;appState.warning=null;render();}
+        },appState.warning?6000:3500);
+      }
+      if(undoClearTimer){clearTimeout(undoClearTimer);undoClearTimer=null;}
+      if(appState.lastReview&&appState.tab==="study"){
+        undoClearTimer=setTimeout(()=>{appState.lastReview=null;render();},8000);
+      }
     }
 
     function render(){
       const root=document.getElementById("app");
+      const active=document.activeElement;
+      const activeId=active&&active.id?active.id:null;
+      const selStart=active&&"selectionStart"in active?active.selectionStart:null;
+      const selEnd=active&&"selectionEnd"in active?active.selectionEnd:null;
       let main="";
       if(appState.tab==="study")main=renderStudy();
-      if(appState.tab==="import")main=renderImport();
       if(appState.tab==="cards")main=renderCards();
       if(appState.tab==="history")main=renderHistory();
       if(appState.tab==="settings")main=renderSettings();
-      root.innerHTML=`${renderAppHeader()}${renderMessages()}${main}${renderEditor()}${renderCompletionModal()}${renderTabs()}`;
+      root.innerHTML=`${renderBusyBar()}${renderAppHeader()}${renderMessages()}${main}${renderEditor()}${renderDeckEditor()}${renderDeckFormModal()}${renderQuickAddModal()}${renderDeckOptionsSheet()}${renderCardListModal()}${renderDeckDataModal()}${renderCompletionModal()}${renderAiResultModal()}${renderAiReadyNotice()}${renderLightbox()}${renderTabs()}`;
+      if(activeId){
+        const el=document.getElementById(activeId);
+        if(el){
+          try{
+            el.focus({preventScroll:true});
+            if(selStart!=null&&typeof el.setSelectionRange==="function")el.setSelectionRange(selStart,selEnd);
+          }catch{}
+        }
+      }
+      scheduleTransientClear();
     }
 
-    Object.assign(window,{appState,render,setTab,importCsvFile,saveSyncSettings,saveNicknameSettings,saveGoogleDriveSettings,connectGoogleDrive,syncGoogleDrive,syncGoogleDriveFromForm,disconnectGoogleDrive,syncFromGas,testGasConnection,openGasUrlForCheck,copyGasUrl,syncFromPastedGasJson,runSelfTests,rateCurrentCard,skipCurrentCard,speakCardFrontText,speakCurrentCard,speakEditorFrontText,openEditor,closeEditor,closeCompletionModal,saveCardFromEditor,addImageToCard,removeImage,deleteCard,resetAllData,exportData});
+    /* ===== テーマ（ダークモード） ===== */
+    function applyTheme(){
+      const theme=appState.settings.theme||"auto";
+      const prefersDark=typeof window!=="undefined"&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const dark=theme==="dark"||(theme==="auto"&&prefersDark);
+      document.documentElement.classList.toggle("dark",!!dark);
+      document.querySelector('meta[name="theme-color"]')?.setAttribute("content",dark?"#0b1220":"#0f172a");
+    }
+    async function setTheme(value){
+      const theme=["auto","light","dark"].includes(value)?value:"auto";
+      appState.settings={...appState.settings,theme};
+      await putItem(STORES.settings,{key:"settings",value:appState.settings});
+      applyTheme();
+      render();
+    }
+    if(window.matchMedia){
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change",()=>{
+        if((appState.settings.theme||"auto")==="auto")applyTheme();
+      });
+    }
+
+    /* ===== 処理中インジケータ ===== */
+    function setBusy(label){
+      appState.busy=label||"処理中…";
+      render();
+    }
+    function clearBusy(){
+      appState.busy=null;
+    }
+
+    /* ===== 次回間隔の予測表示 ===== */
+    function formatIntervalDays(days){
+      const d=Math.max(0,Math.round(Number(days)||0));
+      if(d<1)return"1日未満";
+      if(d<30)return`${d}日`;
+      if(d<365)return`${Math.round(d/30)}か月`;
+      const years=d/365;
+      return`${years.toFixed(years%1?1:0)}年`;
+    }
+    function formatReviewDelayMs(ms){
+      const minutes=Math.max(0,Math.round(Number(ms||0)/60000));
+      if(minutes<1)return"すぐ";
+      if(minutes<60)return`${minutes}分`;
+      const hours=Math.round(minutes/60);
+      if(hours<24)return`${hours}時間`;
+      return formatIntervalDays(Math.round(hours/24));
+    }
+    function predictIntervalLabel(state,rating){
+      const next=calculateNextReview(state,rating);
+      return formatReviewDelayMs(new Date(next.dueAt).getTime()-Date.now());
+    }
+
+    /* ===== 直前の評価を取り消す ===== */
+    async function undoLastReview(){
+      const undo=appState.lastReview;
+      if(!undo)return;
+      appState.lastReview=null;
+      await deleteItem(STORES.logs,undo.logId);
+      if(undo.hadState&&undo.prevState)await putItem(STORES.states,undo.prevState);
+      else await deleteItem(STORES.states,undo.cardId);
+      appState.sessionReviewedCount=Math.max(0,appState.sessionReviewedCount-1);
+      appState.completionModalState=null;
+      await loadData();
+      appState.currentCardId=undo.cardId;
+      appState.answerVisible=true;
+      appState.message="評価を取り消しました。";
+      queueGoogleDriveAutoSync();
+      render();
+    }
+
+    /* ===== 画像ライトボックス ===== */
+    function openLightbox(src){
+      if(!src)return;
+      appState.lightboxSrc=src;
+      render();
+    }
+    function closeLightbox(){
+      appState.lightboxSrc=null;
+      render();
+    }
+
+    /* ===== カードのめくり（タップ） ===== */
+    function onHeroClick(event){
+      if(event.target.closest("button,a,input,textarea,select,label,img"))return;
+      if(appState.answerVisible)return;
+      appState.answerVisible=true;
+      render();
+    }
+
+    /* ===== 手入力でカードを1枚追加 ===== */
+    async function addQuickCard(){
+      clearMessages();
+      const front=normalizeText(document.getElementById("quickFront")?.value||"");
+      const back=normalizeText(document.getElementById("quickBack")?.value||"");
+      const example=(document.getElementById("quickExample")?.value||"").trim();
+      if(!front||!back){
+        appState.error="表面（英語）と裏面（日本語）を入力してください。";
+        render();
+        return;
+      }
+      const deckId=appState.decks.some(deck=>deck.id===appState.selectedDeckId)?appState.selectedDeckId:DEFAULT_DECK_ID;
+      const timestamp=nowIso();
+      const id="card_"+(await sha256(`${deckId}::${front.toLowerCase()}::${back}::${timestamp}`)).slice(0,32);
+      const card={id,deckId,externalId:"",frontText:front,backText:back,exampleText:example,noteText:"",imageIds:[],suspended:false,sourceHash:await createSourceHash({front,back,example}),sourceLabel:"手入力",createdAt:timestamp,updatedAt:timestamp};
+      const state={cardId:id,dueAt:timestamp,intervalDays:0,easeFactor:2.5,reviewCount:0,lapseCount:0,lastReviewedAt:null,updatedAt:timestamp};
+      await putItem(STORES.cards,card);
+      await putItem(STORES.states,state);
+      await loadData();
+      for(const fieldId of["quickFront","quickBack","quickExample"]){const el=document.getElementById(fieldId);if(el)el.value="";}
+      appState.message="カードを追加しました。";
+      queueGoogleDriveAutoSync();
+      render();
+    }
+
+    /* ===== サンプルカードの読み込み（オンボーディング） ===== */
+    async function loadSampleCards(){
+      clearMessages();
+      const samples=[
+        {日本語:"挑戦",英語:"challenge",例文:"Learning new words can be a fun challenge."},
+        {日本語:"一貫した",英語:"consistent",例文:"He made consistent progress every week."},
+        {日本語:"自信がある",英語:"confident",例文:"She feels confident before the presentation."},
+        {日本語:"集中した",英語:"focused",例文:"Stay focused on one card at a time."},
+        {日本語:"徐々に",英語:"gradually",例文:"Your vocabulary will grow gradually."},
+        {日本語:"ためらう",英語:"hesitate",例文:"Do not hesitate to ask questions in class."},
+        {日本語:"維持する",英語:"maintain",例文:"It is important to maintain a steady pace."},
+        {日本語:"改善する",英語:"improve",例文:"Daily practice will improve your pronunciation."}
+      ].map((row,index)=>({...row,__line:index+2}));
+      try{
+        setBusy("サンプルを読み込み中…");
+        const result=await importRows(samples,"サンプル",appState.selectedDeckId);
+        appState.message=`サンプルを${result.created}件読み込みました。さっそく学習を始めましょう。`;
+      }catch(error){
+        appState.error=`サンプルの読み込みに失敗しました。\n${error.message||error}`;
+      }finally{
+        clearBusy();
+        selectNextCard();
+        render();
+      }
+    }
+
+    /* ===== 検索のデバウンス（IME・カーソル飛び対策） ===== */
+    let searchDebounceTimer=null;
+    function onSearchInput(value){
+      appState.search=value;
+      if(searchDebounceTimer)clearTimeout(searchDebounceTimer);
+      searchDebounceTimer=setTimeout(()=>render(),250);
+    }
+
+    /* ===== キーボード・スワイプ操作 ===== */
+    function isTypingTarget(){
+      const el=document.activeElement;
+      return !!el&&(el.tagName==="INPUT"||el.tagName==="TEXTAREA"||el.isContentEditable);
+    }
+    function studyInteractive(){
+      return appState.tab==="study"&&!appState.editorCardId&&!appState.deckEditorId&&!appState.completionModalState&&!appState.lightboxSrc&&!appState.deckOptionsOpen&&!appState.deckDataOpen&&!appState.cardListOpen&&!appState.quickAddOpen&&!appState.deckFormOpen&&!!currentCard();
+    }
+    document.addEventListener("keydown",event=>{
+      if(appState.lightboxSrc&&event.key==="Escape"){closeLightbox();return;}
+      if(isTypingTarget())return;
+      if(!studyInteractive())return;
+      if(event.key===" "||event.key==="Enter"){
+        event.preventDefault();
+        appState.answerVisible=!appState.answerVisible;
+        if(!appState.answerVisible)stopSpeaking();
+        render();
+        return;
+      }
+      if(!appState.answerVisible)return;
+      const ratingByKey={"1":"again","2":"hard","3":"good","4":"easy"};
+      if(ratingByKey[event.key]){
+        event.preventDefault();
+        rateCurrentCard(ratingByKey[event.key]);
+        return;
+      }
+      if(event.key.toLowerCase()==="u"&&appState.lastReview){
+        event.preventDefault();
+        undoLastReview();
+      }
+    });
+    let touchStartX=0,touchStartY=0,touchTracking=false;
+    document.addEventListener("touchstart",event=>{
+      if(!studyInteractive())return;
+      const hero=event.target.closest("#heroCard");
+      if(!hero||event.target.closest("button,a,input,textarea,select,img"))return;
+      const touch=event.touches[0];
+      touchStartX=touch.clientX;
+      touchStartY=touch.clientY;
+      touchTracking=true;
+    },{passive:true});
+    document.addEventListener("touchend",event=>{
+      if(!touchTracking)return;
+      touchTracking=false;
+      if(!appState.answerVisible)return;
+      const touch=event.changedTouches[0];
+      const dx=touch.clientX-touchStartX,dy=touch.clientY-touchStartY;
+      if(Math.abs(dx)<50||Math.abs(dx)<=Math.abs(dy))return;
+      rateCurrentCard(dx>0?"good":"again");
+    },{passive:true});
+
+    Object.assign(window,{appState,render,setTab,selectDeck,toggleDeckCollapse,createDeckFromForm,openDeckEditor,closeDeckEditor,saveDeckFromEditor,deleteDeck,importCsvFile,saveSyncSettings,saveNicknameSettings,saveAiSettings,saveGoogleDriveSettings,connectGoogleDrive,syncGoogleDrive,syncGoogleDriveFromForm,disconnectGoogleDrive,syncFromGas,testGasConnection,openGasUrlForCheck,copyGasUrl,syncFromPastedGasJson,checkCurrentExampleWithAi,openAiResultModal,closeAiResultModal,dismissAiReadyNotice,toggleAiNoticeBox,runSelfTests,rateCurrentCard,skipCurrentCard,speakCardFrontText,speakCurrentCard,speakEditorFrontText,openEditor,closeEditor,closeCompletionModal,saveCardFromEditor,addImageToCard,removeImage,deleteCard,resetAllData,exportData,setTheme,applyTheme,undoLastReview,openLightbox,closeLightbox,onHeroClick,addQuickCard,loadSampleCards,onSearchInput,openDeckForm,closeDeckForm,openQuickAdd,closeQuickAdd,openCardList,closeCardList,openDeckData,closeDeckData,openDeckOptions,closeDeckOptions});
 
     if("serviceWorker" in navigator){
       window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").then(registration=>registration.update()).catch(error=>console.warn("Service Worker registration failed:",error)));
     }
 
+    applyTheme();
     loadData().then(async()=>{
+      applyTheme();
       render();
       startGoogleDriveAutoSync();
       await maybeAutoSyncFromGas();
