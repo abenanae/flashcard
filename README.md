@@ -104,12 +104,12 @@ PWA単体ではGoogleの長期更新トークンを安全に保持しないた�
 
 直接同期が失敗する環境では、`GAS URLを開く` → 表示されたJSONをコピー → `JSON貼り付け同期` で反映してください。
 
-## AI例文チェック
+## AI例文添削
 
-AI例文チェックはOpenRouterを使います。
-アプリの `設定` → `OpenRouter` にAPIキーを保存すると、学習画面で裏面表示後に自分の例文を入力して判定できます。
+AI例文添削はOpenRouterを使います。
+アプリの `設定` → `OpenRouter` にAPIキーを保存すると、学習画面で裏面表示後に自分の例文を入力して添削できます。
 
 - API endpoint: `https://openrouter.ai/api/v1/chat/completions`
-- 初期モデル: `openai/gpt-5.2`
+- 初期モデル: `openrouter/free`
 - APIキーはこの端末のIndexedDB設定にだけ保存されます
 - Google Drive同期データとJSONバックアップにはAPIキーを含めません

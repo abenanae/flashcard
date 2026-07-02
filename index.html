@@ -110,14 +110,28 @@
     .legendName{flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .legendVal{color:var(--muted);font-weight:850;flex:0 0 auto}
     .legendCount{color:var(--muted);font-weight:700;font-size:12px;flex:0 0 auto}
-    /* ===== AI添削: 解説ブロックと評価内訳 ===== */
-    .aiBlock{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);line-height:1.55}
-    .aiBreakdown{margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
-    .aiCat{margin-top:10px}
-    .aiCatHead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-weight:800;font-size:13px}
-    .aiCatScore{color:var(--muted);font-weight:850}
-    .aiCatBar{margin-top:5px;height:7px;border-radius:999px;background:var(--surface2);overflow:hidden}
-    .aiCatFill{height:100%;border-radius:999px;background:#16a34a}
+    /* ===== AI添削: 単語プロフィールと例文添削 ===== */
+    .aiWord{font-size:24px;font-weight:900;letter-spacing:0;line-height:1.15;word-break:break-word}
+    .aiSection{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);line-height:1.6}
+    .aiSectionTitle{font-size:13px;font-weight:900;color:var(--muted);margin:0 0 8px}
+    .aiFrequency{display:grid;gap:6px;margin-top:8px}
+    .aiFreqRow{display:grid;grid-template-columns:110px minmax(0,1fr);gap:10px;align-items:center}
+    .aiFreqLabel{font-weight:800;color:var(--surfaceText)}
+    .aiFreqStars{font-weight:900;letter-spacing:0;color:#d97706}
+    .aiMiniCard{border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px 12px}
+    html.dark .aiMiniCard{background:var(--surface2)}
+    .aiList{display:grid;gap:10px}
+    .aiCorrection,.aiUsagePoint,.aiAlternative{border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px 12px}
+    html.dark .aiCorrection,html.dark .aiUsagePoint,html.dark .aiAlternative{background:var(--surface2)}
+    .aiCorrectionParts{display:grid;gap:4px;margin-bottom:8px}
+    .aiPartBefore{color:#92400e;font-weight:850;word-break:break-word}
+    .aiPartAfter{color:#15803d;font-weight:900;word-break:break-word}
+    .aiArrow{color:var(--muted);font-weight:900}
+    .aiPattern{font-weight:900;word-break:break-word}
+    .aiExampleLine{margin-top:6px;color:#15803d;font-weight:850;word-break:break-word}
+    html.dark .aiFreqLabel{color:var(--text)}
+    html.dark .aiPartBefore{color:#fbbf24}
+    html.dark .aiPartAfter,html.dark .aiExampleLine{color:#4ade80}
     .aiNoticeClose{background:transparent!important;color:#cbd5e1!important;min-height:36px;padding:6px 8px;flex:0 0 auto;font-size:16px}
     .aiNoticeDock,.aiNoticeBox{position:fixed;right:12px;bottom:calc(82px + var(--safeBottom));z-index:32}
     .aiNoticeDock{left:12px;display:flex;justify-content:flex-end;pointer-events:none}
@@ -136,19 +150,28 @@
     .aiNoticeItem button{min-height:34px;padding:6px 10px;flex:0 0 auto}
     .aiNoticeDismiss{background:transparent!important;color:var(--muted)!important;font-size:18px}
     .aiNoticeEmpty{padding:14px 12px;color:var(--muted);font-size:13px;font-weight:750;line-height:1.5}
-    .aiNoticeFoot{padding:10px 12px;border-top:1px solid var(--line);display:flex;justify-content:flex-end}
+    .aiNoticeFoot{padding:10px 12px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px}
     .aiNoticeFoot button{min-height:34px;padding:6px 12px}
     .aiRateAbove{margin-top:14px}
-    /* ===== AI添削: 修正前/修正例文の比較 ===== */
-    .aiCompare{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:12px;background:var(--surface3)}
+    /* ===== AI添削: 修正前/修正後の比較 ===== */
+    .aiCompare{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:14px;background:var(--surface3)}
     .aiCmpRow{display:flex;gap:10px;align-items:baseline;padding:11px 12px}
     .aiCmpRow+.aiCmpRow{border-top:1px solid var(--line)}
-    .aiCmpLabel{flex:0 0 60px;font-size:12px;font-weight:850;color:var(--muted)}
+    .aiCmpRow.before{background:#fffbeb}
+    .aiCmpRow.after{background:#f0fdf4}
+    html.dark .aiCmpRow.before{background:#332713}
+    html.dark .aiCmpRow.after{background:#102a1b}
+    .aiCmpLabel{flex:0 0 66px;font-size:12px;font-weight:900;color:var(--muted)}
     .aiCmpText{flex:1 1 auto;font-size:16px;line-height:1.5;word-break:break-word}
     .aiCmpText.before{color:var(--muted)}
     .aiCmpText.before.del{text-decoration:line-through}
     .aiCmpText.after{font-weight:850;color:#15803d}
     html.dark .aiCmpText.after{color:#4ade80}
+    .aiVerdict{margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:900}
+    .aiVerdictBadge{display:inline-flex;align-items:center;border-radius:999px;padding:7px 10px;font-size:13px;font-weight:900}
+    .aiVerdictBadge.ok{background:#dcfce7;color:#14532d}
+    .aiVerdictBadge.minor{background:#fef3c7;color:#78350f}
+    .aiVerdictBadge.needs{background:#fee2e2;color:#991b1b}
   </style>
 </head>
 <body>
@@ -185,7 +208,7 @@
     const AI_READY_NOTICE_LIMIT=20;
     const AI_CHECK_MAX_ATTEMPTS=3;
     const AI_CHECK_REQUEST_TIMEOUT_MS=45000;
-    const AI_CHECK_RETRY_BASE_DELAY_MS=1200;
+    const AI_CHECK_RETRY_BASE_DELAY_MS=1000;
     const AI_CHECK_RETRY_MAX_DELAY_MS=6000;
     const SYNC_COLLECTIONS=[
       {store:STORES.decks,collection:"decks",key:"id"},
@@ -228,7 +251,9 @@
       aiInFlight:[],
       aiReadyNotices:[],
       aiNoticeBoxOpen:true,
+      aiListOpen:false,
       aiResultModalCardId:null,
+      aiResultModalCheckId:null,
       search:"",
       importResult:null,
       completionModalState:null,
@@ -507,6 +532,15 @@
         .replaceAll(">","&gt;")
         .replaceAll('"',"&quot;")
         .replaceAll("'","&#039;");
+    }
+
+    function jsString(value){
+      return JSON.stringify(String(value??"")).replace(/[<>&']/g,char=>({
+        "<":"\\u003C",
+        ">":"\\u003E",
+        "&":"\\u0026",
+        "'":"\\u0027"
+      })[char]);
     }
 
     function normalizeText(value){
@@ -1287,35 +1321,90 @@
       render();
     }
 
-    function normalizeAiCheckResult(payload){
-      const data=payload&&typeof payload==="object"?payload:{};
-      if(data.error)throw new Error(data.error);
-      const verdict=normalizeText(data.verdict||data.judgement||data.judgment||data.label||"要確認");
-      const score=Number.isFinite(Number(data.score))?Math.max(0,Math.min(100,Math.round(Number(data.score)))):null;
-      const evalSrc=data.evaluations&&typeof data.evaluations==="object"?data.evaluations:{};
-      const category=(key,maxScore)=>{
-        const cell=evalSrc[key]&&typeof evalSrc[key]==="object"?evalSrc[key]:{};
-        const value=Number.isFinite(Number(cell.score))?Math.max(0,Math.min(maxScore,Math.round(Number(cell.score)))):null;
-        const feedback=normalizeText(cell.feedback||"");
-        return value===null&&!feedback?null:{score:value,maxScore,feedback};
-      };
-      const evaluations={
-        spellingAndMechanics:category("spellingAndMechanics",10),
-        syntax:category("syntax",30),
-        semantics:category("semantics",35),
-        pragmatics:category("pragmatics",25)
-      };
-      const hasEvaluations=Object.values(evaluations).some(Boolean);
+    const AI_FREQUENCY_LABELS={
+      casualConversation:"日常会話",
+      business:"ビジネス",
+      news:"ニュース・報道",
+      academic:"学術・専門",
+      literary:"文学作品"
+    };
+    const AI_ALLOWED_VERDICTS=new Set(["OK","少し修正するとよい","修正が必要"]);
+
+    function clampFrequency(value){
+      if(value===null||value===undefined||value==="")return 3;
+      const number=Number(value);
+      if(!Number.isFinite(number))return 3;
+      return Math.max(1,Math.min(5,Math.round(number)));
+    }
+
+    function toStars(value){
+      const stars=Math.max(1,Math.min(5,Math.round(Number(value)||3)));
+      return "★".repeat(stars)+"☆".repeat(5-stars);
+    }
+
+    function normalizeFrequency(rawFrequency){
+      const data=rawFrequency&&typeof rawFrequency==="object"?rawFrequency:{};
       return{
-        verdict,
-        score,
-        reason:normalizeText(data.reason||data.explanation||""),
-        suggestion:normalizeText(data.suggestion||data.tip||""),
-        correctedExample:normalizeText(data.correctedExample||data.corrected||data.example||""),
-        evaluations:hasEvaluations?evaluations:null,
-        nativeReception:normalizeText(data.nativeReception||""),
-        usageExplanation:normalizeText(data.usageExplanation||""),
-        correctedMeaning:normalizeText(data.correctedMeaning||"")
+        casualConversation:clampFrequency(data.casualConversation),
+        business:clampFrequency(data.business),
+        news:clampFrequency(data.news),
+        academic:clampFrequency(data.academic),
+        literary:clampFrequency(data.literary),
+        note:normalizeText(data.note||data.explanation||"")
+      };
+    }
+
+    function normalizeObjectList(items,keys){
+      if(!Array.isArray(items))return[];
+      return items.map(item=>{
+        const source=item&&typeof item==="object"?item:{};
+        const row={};
+        for(const key of keys)row[key]=normalizeText(source[key]||"");
+        return row;
+      }).filter(row=>keys.some(key=>row[key]));
+    }
+
+    function normalizeCorrections(rawCorrections){
+      return normalizeObjectList(rawCorrections,["originalPart","correctedPart","explanation"]);
+    }
+
+    function normalizeUsagePoints(rawUsagePoints){
+      return normalizeObjectList(rawUsagePoints,["pattern","meaning","example","translation"]);
+    }
+
+    function normalizeAlternatives(rawAlternatives){
+      return normalizeObjectList(rawAlternatives,["intendedMeaning","example","explanation"]);
+    }
+
+    function normalizeVerdict(value,originalExample,correctedExample,corrections){
+      const raw=normalizeText(value);
+      if(AI_ALLOWED_VERDICTS.has(raw))return raw;
+      if(raw==="誤用")return"修正が必要";
+      if(raw==="少し不自然")return"少し修正するとよい";
+      if(originalExample&&correctedExample&&originalExample===correctedExample&&!(corrections||[]).length)return"OK";
+      return"修正が必要";
+    }
+
+    function normalizeAiCheckResult(raw,payload={}){
+      const data=raw&&typeof raw==="object"?raw:{};
+      if(data.error)throw new Error(normalizeText(data.error)||"AI添削でエラーが発生しました。");
+      const targetWord=normalizeText(data.targetWord||payload.frontText||"");
+      const originalExample=normalizeText(data.originalExample||payload.userExample||"");
+      const correctedExample=normalizeText(data.correctedExample||data.corrected||data.example||originalExample);
+      const corrections=normalizeCorrections(data.corrections);
+      return{
+        version:2,
+        targetWord,
+        partOfSpeechAndMeaning:normalizeText(data.partOfSpeechAndMeaning||data.partOfSpeech||data.meaning||payload.backText||""),
+        frequency:normalizeFrequency(data.frequency),
+        nuance:normalizeText(data.nuance||""),
+        originalExample,
+        correctedExample:correctedExample||originalExample,
+        verdict:normalizeVerdict(data.verdict||data.judgement||data.judgment||data.label,originalExample,correctedExample,corrections),
+        corrections,
+        usagePoints:normalizeUsagePoints(data.usagePoints),
+        correctedMeaning:normalizeText(data.correctedMeaning||""),
+        alternatives:normalizeAlternatives(data.alternatives)
       };
     }
 
@@ -1328,90 +1417,99 @@
     }
 
     const AI_CHECK_SYSTEM_PROMPT=`
-You are an English example-sentence evaluator for Japanese learners.
+You are an English vocabulary and example-sentence tutor for a Japanese learner.
 
-Evaluate whether the learner uses the target word correctly and appropriately.
+Your task has two parts:
 
-Write every explanation in clear Japanese.
-English may be used only for English words, phrases, and example sentences.
+1. Explain how frequently the target word is used in different real-world contexts.
+2. Correct the learner's example sentence and explain the exact usage problems.
+
+Write all explanations in clear Japanese.
+Use English only for English words, phrases, patterns, and example sentences.
 
 Return only one valid JSON object.
-Do not return Markdown, code fences, or text outside the JSON.
+Do not return Markdown, code fences, commentary, or any text outside the JSON.
 
 Use exactly these top-level keys:
 
 {
-  "verdict": "OK | 少し不自然 | 誤用",
-  "score": 0,
-  "reason": "",
-  "suggestion": "",
-  "correctedExample": "",
-  "evaluations": {
-    "spellingAndMechanics": { "score": 0, "maxScore": 10, "feedback": "" },
-    "syntax": { "score": 0, "maxScore": 30, "feedback": "" },
-    "semantics": { "score": 0, "maxScore": 35, "feedback": "" },
-    "pragmatics": { "score": 0, "maxScore": 25, "feedback": "" }
+  "targetWord": "",
+  "partOfSpeechAndMeaning": "",
+  "frequency": {
+    "casualConversation": 1,
+    "business": 1,
+    "news": 1,
+    "academic": 1,
+    "literary": 1,
+    "note": ""
   },
-  "nativeReception": "",
-  "usageExplanation": "",
-  "correctedMeaning": ""
+  "nuance": "",
+  "originalExample": "",
+  "correctedExample": "",
+  "verdict": "OK | 少し修正するとよい | 修正が必要",
+  "corrections": [],
+  "usagePoints": [],
+  "correctedMeaning": "",
+  "alternatives": []
 }
 
-The four evaluation categories are mutually exclusive.
+## Frequency
 
-1. Spelling and mechanics: 0-10 points
-Evaluate only: spelling, capitalization, punctuation, apostrophes, spacing.
-Do not evaluate grammar, meaning, or appropriateness here.
+Rate the relative usage frequency of the target word in each context using an integer from 1 to 5.
 
-2. Syntax: 0-30 points
-Evaluate: word order, tense and aspect, verb forms, articles, singular and plural forms, prepositions, objects and complements, infinitives and gerunds, transitive and intransitive usage, sentence structure.
-Do not merely say 文法的に誤りです / 現在形の意図が不明確です / 不自然です.
-Explain what the current grammatical form normally communicates.
-For example, do not write only 「現在形の意図が不明確です。」
-Instead write 「I summarizeという現在形は、今している動作ではなく、普段から繰り返している習慣や仕事として読まれます。」
+1 = almost never used
+2 = uncommon
+3 = sometimes used
+4 = commonly used
+5 = very commonly used
 
-3. Semantics: 0-35 points
-Evaluate: the meaning of the target word, the meaning of the whole sentence, who is doing what to whom, the direction of an action, ambiguity, contradiction, unintended meanings.
-Explain what the learner probably intended, what the original sentence actually communicates, and whether a native speaker could interpret it differently.
-Do not deduct again for the same error already evaluated under syntax.
+Rate these contexts independently: casualConversation, business, news, academic, literary.
+The ratings are practical estimates of relative frequency, not exact corpus counts.
+Do not use vague labels such as low, medium, high, or A rank.
 
-4. Pragmatics: 0-25 points
-Evaluate: whether the expression fits the situation, formality, politeness, directness, emotional strength, implied attitude, whether the wording sounds overly formal, blunt, childish, distant, exaggerated, humorous, or sarcastic.
-Do not use pragmatics as a general category for all unnaturalness.
-If the problem is grammatical, deduct mainly under syntax.
-If the problem changes the meaning, deduct mainly under semantics.
+In frequency.note, explain in Japanese:
+- where the word is commonly encountered
+- where it is uncommon
+- whether it sounds casual, professional, technical, journalistic, academic, or literary
+- a more common everyday alternative when relevant
+- why its frequency differs across contexts
 
-Feedback requirements:
-- Start the reason with the most important conclusion.
-- Identify the exact problematic expression.
-- Explain how a native English speaker is likely to understand the original sentence on the first reading.
-- Explain exactly where the reader may hesitate or reinterpret it.
-- Do not merely say that the sentence is unnatural.
-- If the intended meaning can be inferred, explicitly say so.
-- Do not exaggerate and claim that a sentence is incomprehensible when the intention is reasonably inferable.
-- Explain why the correction is better.
-- Explain what the corrected sentence communicates.
-- Use grammatical terminology only when it is immediately explained in ordinary Japanese.
-- Do not deduct the same underlying error heavily in multiple categories.
+## Nuance
 
-Correction requirements:
-- Preserve the target word whenever it can correctly express the intended meaning.
-- Preserve the learner's likely intention.
-- If multiple intentions are plausible, mention them in suggestion.
-- If the original is fully correct, correctedExample must be identical to the learner example.
+The nuance field must not merely repeat the dictionary definition.
+Explain the central image or feeling of the word, how it differs from a simpler or more common word, its strength, urgency, emotional force, or formality when relevant, whether it usually has a positive, negative, or neutral implication, and any important contextual variation.
 
-Scoring:
-- spellingAndMechanics maximum: 10
-- syntax maximum: 30
-- semantics maximum: 35
-- pragmatics maximum: 25
-- score must equal the sum of the four category scores
-- maximum total score: 100
+## Sentence correction
 
-Verdict:
-- OK: correct and suitable as a learning example
-- 少し不自然: understandable, but a minor or moderate correction is needed
-- 誤用: a serious structural or semantic problem exists
+Do not merely say that an expression is unnatural, unclear, awkward, or grammatically incorrect.
+For every correction, explain the exact incorrect part, the corrected part, why the original form is incorrect, what the original structure actually means when relevant, why the corrected structure is appropriate, and what usage pattern the learner should remember.
+When an error changes the meaning, explain the meaning difference inside the correction explanation.
+Do not include numerical scores.
+Do not include category-by-category evaluation.
+Do not include a separate native-speaker-impression section.
+
+Preserve the target word whenever it can correctly express the learner's likely intended meaning.
+If the target word cannot express the intended meaning, explain why, provide a natural alternative, and provide a version that retains the target word when possible.
+If the original sentence is correct, do not invent unnecessary corrections.
+When multiple intentions are plausible, provide separate items in alternatives.
+
+## Usage points
+
+Each usagePoints item should normally include a common pattern or collocation, its Japanese meaning, a natural English example sentence, and a Japanese translation.
+Prefer patterns and collocations that native speakers actually use frequently.
+Do not invent rare or awkward combinations merely to include the target word.
+Return two to four useful usage points when possible.
+
+## Verdict
+
+Use only:
+- OK
+- 少し修正するとよい
+- 修正が必要
+
+Use OK when no correction is needed.
+Use 少し修正するとよい for minor improvements that do not substantially change the intended meaning.
+Use 修正が必要 when there is a clear grammar, usage, or meaning error.
 `;
 
     function aiCheckUserMessage(target,meaning,reference,learner){
@@ -1425,94 +1523,175 @@ Verdict:
 
     const AI_CHECK_FEWSHOT=[
       {
-        user:aiCheckUserMessage("summarize","要約する","Please summarize the article in one sentence.","Please summarize the article in one sentence."),
+        user:aiCheckUserMessage("imperative","絶対に必要な、急務","It is imperative that we act immediately.","It is imperative that we act immediately."),
         assistant:{
-          verdict:"OK",score:100,
-          reason:"修正は必要ありません。summarizeの後ろに、要約する対象であるthe articleが正しく置かれています。",
-          suggestion:"このまま学習用の例文として使用できます。",
-          correctedExample:"Please summarize the article in one sentence.",
-          evaluations:{
-            spellingAndMechanics:{score:10,maxScore:10,feedback:"スペル、大文字、句読点に問題はありません。"},
-            syntax:{score:30,maxScore:30,feedback:"summarizeの後ろに目的語the articleが置かれ、in one sentenceも自然につながっています。"},
-            semantics:{score:35,maxScore:35,feedback:"「その記事を一文で要約してください」という意味が明確です。"},
-            pragmatics:{score:25,maxScore:25,feedback:"授業、仕事、AIへの指示などで自然に使える依頼です。"}
-          },
-          nativeReception:"母語話者には、記事の重要な内容を一つの文にまとめるよう求める依頼として、迷いなく伝わります。",
-          usageExplanation:"summarizeは、summarize + 要約する対象、という形で使えます。",
-          correctedMeaning:"その記事を一文で要約してください、という意味です。"
+          targetWord:"imperative",
+          partOfSpeechAndMeaning:"形容詞：絶対に必要な、避けられない、緊急性の高い。名詞：必須課題、急務、命令。",
+          frequency:{casualConversation:2,business:5,news:4,academic:4,literary:3,note:"家族や友人との日常的な雑談では、must、essential、really importantなどの方が一般的です。一方、ビジネス上の重要課題、政治的な主張、ニュース、公式な助言ではよく使われます。"},
+          nuance:"単にimportantと言うよりも、「実行しなければ深刻な結果になるため、絶対に行う必要がある」という強い必要性や緊急性を表します。",
+          originalExample:"It is imperative that we act immediately.",
+          correctedExample:"It is imperative that we act immediately.",
+          verdict:"OK",
+          corrections:[],
+          usagePoints:[
+            {pattern:"It is imperative that S + V",meaning:"SがVすることが絶対に必要だ",example:"It is imperative that we act immediately.",translation:"私たちが直ちに行動することが絶対に必要です。"},
+            {pattern:"a business imperative",meaning:"ビジネス上の必須課題、急務",example:"Digital transformation is now a business imperative.",translation:"デジタルトランスフォーメーションは、今やビジネス上の急務です。"}
+          ],
+          correctedMeaning:"私たちが直ちに行動することが絶対に必要です。",
+          alternatives:[]
         }
       },
       {
-        user:aiCheckUserMessage("adapt","適応する","It took me some time to adapt to my new environment.","I am adapting new environment."),
+        user:aiCheckUserMessage("incremental","段階的な、徐々の","We are making incremental progress every day.","We made incremental improvements to the app."),
         assistant:{
-          verdict:"誤用",score:65,
-          reason:"「環境に適応する」はadapt to + 名詞と表します。また、environmentは数えられる名詞なので、1つの環境ならa new environmentとします。",
-          suggestion:"自分が環境に適応する場合はadapt to somethingを使ってください。",
+          targetWord:"incremental",
+          partOfSpeechAndMeaning:"形容詞：徐々の、一歩ずつの、段階的な。",
+          frequency:{casualConversation:2,business:5,news:4,academic:4,literary:2,note:"ビジネス、ソフトウェア開発、政策、研究などで、変化を少しずつ進めることを説明するときによく使われます。日常会話ではsmall、gradual、little by littleなどが使われることが多いです。"},
+          nuance:"一度に大きく変えるのではなく、小さな変化や改善を積み重ねながら、着実に前へ進めることを表します。急激な改革と対比されることが多い表現です。",
+          originalExample:"We made incremental improvements to the app.",
+          correctedExample:"We made incremental improvements to the app.",
+          verdict:"OK",
+          corrections:[],
+          usagePoints:[
+            {pattern:"incremental progress",meaning:"少しずつの進歩、段階的な進展",example:"We are making incremental progress every day.",translation:"私たちは毎日、少しずつ着実に進歩しています。"},
+            {pattern:"incremental improvements",meaning:"小さな改善の積み重ね",example:"We made incremental improvements to the app.",translation:"私たちはそのアプリに段階的な改善を加えました。"},
+            {pattern:"incremental change",meaning:"急激ではない段階的な変化",example:"The company chose incremental change instead of a complete redesign.",translation:"その会社は全面的な再設計ではなく、段階的な変更を選びました。"}
+          ],
+          correctedMeaning:"私たちはそのアプリに、少しずつ段階的な改善を加えました。",
+          alternatives:[]
+        }
+      },
+      {
+        user:aiCheckUserMessage("exuberant","元気や喜びにあふれた","She is known for her exuberant personality.","The fans gave the team an exuberant welcome."),
+        assistant:{
+          targetWord:"exuberant",
+          partOfSpeechAndMeaning:"形容詞：元気、喜び、活力などがあふれんばかりの。植物が豊かに生い茂った。",
+          frequency:{casualConversation:2,business:2,news:3,academic:2,literary:4,note:"普段の会話ではenergetic、really excited、full of energyなどが使われることが多いです。人の性格、祝賀行事、熱狂的な歓迎などを生き生きと描写するニュース記事や文学的な文章で使われます。"},
+          nuance:"元気や喜びが内側に収まらず、外へあふれ出ているような、非常に活発でポジティブな状態を表します。単にhappyやenergeticと言うよりも、感情や活力の強さが際立ちます。",
+          originalExample:"The fans gave the team an exuberant welcome.",
+          correctedExample:"The fans gave the team an exuberant welcome.",
+          verdict:"OK",
+          corrections:[],
+          usagePoints:[
+            {pattern:"an exuberant personality",meaning:"元気や活力にあふれた性格",example:"She is known for her exuberant personality and infectious laugh.",translation:"彼女は活力にあふれた性格と、周囲を笑顔にする笑い声で知られています。"},
+            {pattern:"an exuberant welcome",meaning:"熱狂的で喜びにあふれた歓迎",example:"The fans gave the team an exuberant welcome.",translation:"ファンはチームを熱狂的に歓迎しました。"},
+            {pattern:"an exuberant celebration",meaning:"喜びが爆発するような盛大な祝賀",example:"The victory was followed by an exuberant celebration.",translation:"勝利の後には、喜びにあふれた盛大な祝賀が行われました。"}
+          ],
+          correctedMeaning:"ファンはチームを喜びと熱気にあふれた様子で歓迎しました。",
+          alternatives:[]
+        }
+      },
+      {
+        user:aiCheckUserMessage("meticulous","細部まで注意を払った、几帳面な","The project succeeded because of her meticulous planning.","She is meticulous about every detail."),
+        assistant:{
+          targetWord:"meticulous",
+          partOfSpeechAndMeaning:"形容詞：細部まで細心の注意を払う、非常に几帳面な、綿密な。",
+          frequency:{casualConversation:3,business:5,news:3,academic:4,literary:3,note:"日常会話でも人の性格を説明するときに使えますが、履歴書、推薦状、仕事の評価、計画、調査、品質管理などで特によく使われます。より一般的な表現としてはvery carefulやdetail-orientedがあります。"},
+          nuance:"単にcarefulというだけでなく、細かい部分を一つずつ確認し、見落としがないように徹底することを表します。多くの場合は褒め言葉ですが、文脈によっては細かすぎるという含みを持つこともあります。",
+          originalExample:"She is meticulous about every detail.",
+          correctedExample:"She is meticulous about every detail.",
+          verdict:"OK",
+          corrections:[],
+          usagePoints:[
+            {pattern:"meticulous planning",meaning:"細部まで考えられた綿密な計画",example:"The event was successful thanks to her meticulous planning.",translation:"彼女の綿密な計画のおかげで、そのイベントは成功しました。"},
+            {pattern:"meticulous attention to detail",meaning:"細部に対する細心の注意",example:"He paid meticulous attention to detail during the restoration.",translation:"彼は修復作業の間、細部に細心の注意を払いました。"},
+            {pattern:"be meticulous about something",meaning:"何かについて非常に几帳面である",example:"She is meticulous about keeping accurate records.",translation:"彼女は正確な記録を保つことに非常に几帳面です。"}
+          ],
+          correctedMeaning:"彼女はあらゆる細部について非常に几帳面です。",
+          alternatives:[]
+        }
+      },
+      {
+        user:aiCheckUserMessage("adapt","適応する、目的に合わせて変更する","It took me some time to adapt to my new environment.","I am adapting new environment."),
+        assistant:{
+          targetWord:"adapt",
+          partOfSpeechAndMeaning:"動詞：環境や状況に適応する。物や内容を目的に合わせて変更する。",
+          frequency:{casualConversation:3,business:4,news:4,academic:4,literary:3,note:"環境、仕事、技術、社会の変化への対応を説明するときによく使われます。日常会話で新しい環境に慣れると言う場合は、get used toの方がくだけた表現です。"},
+          nuance:"変化した状況に合わせて、自分の行動や性質を変えること、または物や内容を別の目的に合うよう変更することを表します。",
+          originalExample:"I am adapting new environment.",
           correctedExample:"I am adapting to a new environment.",
-          evaluations:{
-            spellingAndMechanics:{score:10,maxScore:10,feedback:"adaptのスペルや文末の表記に問題はありません。"},
-            syntax:{score:12,maxScore:30,feedback:"adapt toのtoと、a new environmentのaが必要です。adaptの直後に目的語を置くと、環境そのものを変更する構造になります。"},
-            semantics:{score:20,maxScore:35,feedback:"「新しい環境に適応している」という意図は推測できますが、現在の形では「新しい環境を変更している」という意味にも読めます。"},
-            pragmatics:{score:23,maxScore:25,feedback:"新しい学校、職場、国などに慣れている場面としては適切な内容です。"}
-          },
-          nativeReception:"母語話者は意図を推測できますが、adaptの直後にnew environmentが来るため、最初は「環境そのものを変更している」と読み始める可能性があります。",
-          usageExplanation:"adapt to somethingは「何かに適応する」、adapt somethingは「何かを目的に合わせて変更する」という意味です。",
-          correctedMeaning:"私は今、新しい環境に適応しているところです、という意味になります。"
-        }
-      },
-      {
-        user:aiCheckUserMessage("summarize","要約する","Please summarize the article in one sentence.","I summarize new book."),
-        assistant:{
-          verdict:"少し不自然",score:67,
-          reason:"bookは数えられる名詞なので、1冊ならa new bookとします。また、I summarizeという現在形は、今している動作ではなく、普段から行う習慣や仕事として読まれます。",
-          suggestion:"今、1冊の本を要約しているならI am summarizing a new book.とします。習慣ならI summarize new books.とします。",
-          correctedExample:"I am summarizing a new book.",
-          evaluations:{
-            spellingAndMechanics:{score:10,maxScore:10,feedback:"スペル、大文字、句読点に問題はありません。"},
-            syntax:{score:15,maxScore:30,feedback:"new bookの前に冠詞aが必要です。また、現在形のI summarizeは、進行中の動作ではなく、習慣を表します。"},
-            semantics:{score:31,maxScore:35,feedback:"「新しい本を要約する」という意図は推測できます。ただし、今しているのか、普段しているのかは元の文だけでは決まりません。"},
-            pragmatics:{score:11,maxScore:25,feedback:"習慣の説明として読むと、目的語が単数のnew bookであるため、普段どの本を要約するのか少しちぐはぐに聞こえます。"}
-          },
-          nativeReception:"母語話者はまず「私は普段、新しい本を要約する」という習慣として読もうとします。しかし、new bookに冠詞がなく、習慣なのに目的語が単数なので、状況を判断しにくくなります。",
-          usageExplanation:"現在形は習慣、現在進行形は今進行している動作を表します。",
-          correctedMeaning:"I am summarizing a new book.なら、私は今、1冊の新しい本を要約しているところです、という意味になります。"
+          verdict:"修正が必要",
+          corrections:[
+            {originalPart:"adapting new environment",correctedPart:"adapting to a new environment",explanation:"自分が環境に適応する場合はadapt to + 名詞を使います。adaptの直後に目的語を置くadapt somethingは、その対象自体を変更するという意味です。"},
+            {originalPart:"new environment",correctedPart:"a new environment",explanation:"environmentは数えられる名詞です。特定していない1つの新しい環境を指すため、aが必要です。"}
+          ],
+          usagePoints:[
+            {pattern:"adapt to something",meaning:"何かに適応する",example:"It took me some time to adapt to my new environment.",translation:"新しい環境に適応するまで少し時間がかかりました。"},
+            {pattern:"adapt something for something",meaning:"何かを別の目的に合うよう変更する",example:"The book was adapted for television.",translation:"その本はテレビ向けに脚色されました。"}
+          ],
+          correctedMeaning:"私は今、新しい環境に適応しているところです。",
+          alternatives:[]
         }
       },
       {
         user:aiCheckUserMessage("borrow","借りる","I borrowed a book from my friend.","I borrowed him my book."),
         assistant:{
-          verdict:"誤用",score:52,
-          reason:"borrowは「借りる側」の動作ですが、この文では「彼に本を貸した」という反対方向の動作を表そうとしています。",
-          suggestion:"対象単語を残すならI let him borrow my book.とします。直接「貸した」と言うならI lent him my book.です。",
+          targetWord:"borrow",
+          partOfSpeechAndMeaning:"動詞：人から物を一時的に借り、後で返す。",
+          frequency:{casualConversation:5,business:3,news:2,academic:2,literary:3,note:"物やお金などを借りる日常的な場面で非常によく使います。物を貸す側の動作にはlendを使います。"},
+          nuance:"borrowは物を受け取る側、lendは物を渡す側の視点を表します。日本語の「貸す」と「借りる」と同様に、動作の方向が重要です。",
+          originalExample:"I borrowed him my book.",
           correctedExample:"I let him borrow my book.",
-          evaluations:{
-            spellingAndMechanics:{score:10,maxScore:10,feedback:"スペルや句読点に問題はありません。"},
-            syntax:{score:15,maxScore:30,feedback:"borrowの後ろにhimとmy bookをこの順番で直接置くことはできません。"},
-            semantics:{score:8,maxScore:35,feedback:"borrowは「借りる」ですが、元の文では「貸す」という反対方向の意味を表そうとしています。"},
-            pragmatics:{score:19,maxScore:25,feedback:"本を貸し借りする場面自体は自然ですが、現在の文では誰が借りる側なのかが明確に伝わりません。"}
-          },
-          nativeReception:"母語話者はborrowを読んだ時点で「私は何かを借りた」と予想します。その後にhim my bookが続くため、彼を借りたのか、彼から本を借りたのかと関係を取りにくく感じます。",
-          usageExplanation:"borrowは借りる側、lendは貸す側の動作を表します。",
-          correctedMeaning:"I let him borrow my book.なら、私は彼に自分の本を貸し、彼が借りられるようにした、という意味です。"
+          verdict:"修正が必要",
+          corrections:[
+            {originalPart:"borrowed him my book",correctedPart:"let him borrow my book",explanation:"borrowは借りる人を主語にする動詞です。元の文では、自分の本を彼に貸したことを表そうとしています。対象単語を残すなら、彼を借りる側にしてlet him borrow my bookとします。直接「私は彼に本を貸した」と言う場合はI lent him my book.です。"}
+          ],
+          usagePoints:[
+            {pattern:"borrow something from someone",meaning:"誰かから何かを借りる",example:"I borrowed a book from my friend.",translation:"私は友人から本を借りました。"},
+            {pattern:"lend someone something",meaning:"誰かに何かを貸す",example:"I lent my friend a book.",translation:"私は友人に本を貸しました。"},
+            {pattern:"let someone borrow something",meaning:"誰かが何かを借りることを許す",example:"I let him borrow my book.",translation:"私は彼に自分の本を貸しました。"}
+          ],
+          correctedMeaning:"私は彼が自分の本を借りられるようにしました。",
+          alternatives:[
+            {intendedMeaning:"私は彼に自分の本を貸した",example:"I lent him my book.",explanation:"貸す側の動作を直接表す場合はlendを使います。"}
+          ]
+        }
+      },
+      {
+        user:aiCheckUserMessage("summarize","要約する","Please summarize the article in one sentence.","I summarize new book."),
+        assistant:{
+          targetWord:"summarize",
+          partOfSpeechAndMeaning:"動詞：文章や話の重要な点を短くまとめる、要約する。",
+          frequency:{casualConversation:3,business:4,news:3,academic:5,literary:2,note:"授業、会議、レポート、研究、AIへの指示などでよく使われます。日常の会話ではsum upやgive me the main pointsのような表現も使われます。"},
+          nuance:"長い内容から重要な情報だけを選び、短く整理して伝えることを表します。単にshortenするのではなく、要点を保つことが重要です。",
+          originalExample:"I summarize new book.",
+          correctedExample:"I am summarizing a new book.",
+          verdict:"修正が必要",
+          corrections:[
+            {originalPart:"I summarize",correctedPart:"I am summarizing",explanation:"I summarizeという現在形は、今している動作ではなく、普段から繰り返している習慣や仕事を表します。今まさに要約している場合は現在進行形のI am summarizingを使います。"},
+            {originalPart:"new book",correctedPart:"a new book",explanation:"bookは数えられる名詞です。特定していない1冊の本を指すため、aが必要です。"}
+          ],
+          usagePoints:[
+            {pattern:"summarize something",meaning:"何かを要約する",example:"Please summarize the article.",translation:"その記事を要約してください。"},
+            {pattern:"summarize something in one sentence",meaning:"何かを一文で要約する",example:"Can you summarize the report in one sentence?",translation:"その報告書を一文で要約できますか。"},
+            {pattern:"briefly summarize",meaning:"簡潔に要約する",example:"She briefly summarized the main findings.",translation:"彼女は主な調査結果を簡潔にまとめました。"}
+          ],
+          correctedMeaning:"私は今、1冊の新しい本を要約しているところです。",
+          alternatives:[
+            {intendedMeaning:"私は普段、新しい本を要約している",example:"I summarize new books.",explanation:"習慣や仕事を表す場合は現在形を使い、一般的な対象は複数形で表します。"}
+          ]
         }
       }
     ];
+
+    function buildAiCheckMessages(payload){
+      const actualUserPrompt=aiCheckUserMessage(payload.frontText,payload.backText,payload.referenceExample,payload.userExample);
+      return[
+        {role:"system",content:AI_CHECK_SYSTEM_PROMPT},
+        ...AI_CHECK_FEWSHOT.flatMap(item=>[
+          {role:"user",content:item.user},
+          {role:"assistant",content:JSON.stringify(item.assistant)}
+        ]),
+        {role:"user",content:actualUserPrompt}
+      ];
+    }
 
     async function requestAiCheckViaOpenRouter(payload,{onRetry=null}={}){
       const apiKey=normalizeText(appState.settings.openRouterApiKey||"");
       const model=normalizeText(appState.settings.openRouterModel||"openrouter/free");
       if(!apiKey)throw new Error("OpenRouter APIキーを設定してください。");
-      const messages=[{role:"system",content:AI_CHECK_SYSTEM_PROMPT}];
-      for(const shot of AI_CHECK_FEWSHOT){
-        messages.push({role:"user",content:shot.user});
-        messages.push({role:"assistant",content:JSON.stringify(shot.assistant)});
-      }
-      messages.push({role:"user",content:aiCheckUserMessage(payload.frontText,payload.backText,payload.referenceExample,payload.userExample)});
-      return requestAiCheckWithRetry({
-        model,
-        messages,
-        onRetry
-      });
+      const messages=buildAiCheckMessages(payload);
+      return requestAiCheckWithRetry({model,messages,payload,onRetry});
     }
 
     function delay(ms){
@@ -1524,6 +1703,29 @@ Verdict:
       error.status=status;
       if(retryable!==null)error.retryable=!!retryable;
       if(retryAfterMs)error.retryAfterMs=retryAfterMs;
+      return error;
+    }
+
+    function createOpenRouterError(status,text,retryAfterMs=0){
+      const raw=String(text||"");
+      const lower=raw.toLowerCase();
+      let message="OpenRouterでエラーが発生しました。設定を確認して、もう一度お試しください。";
+      if(status===429){
+        message="無料AIが混雑しているため、添削できませんでした。\n少し時間を空けて、もう一度お試しください。";
+      }else if(lower.includes("embedding model")&&lower.includes("chat/completions")){
+        message="選択されているモデルは文章生成に対応していません。\nチャット対応モデルまたはopenrouter/freeを選択してください。";
+      }else if(status===400){
+        message="OpenRouterのリクエストまたはモデル設定に問題があります。\nチャット対応モデルまたはopenrouter/freeを選択してください。";
+      }else if(status===401){
+        message="OpenRouter APIキーが正しくないか、利用できません。\n設定のAPIキーを確認してください。";
+      }else if(status===402){
+        message="OpenRouterの利用枠またはクレジットが不足しています。\nOpenRouterのアカウント状態を確認してください。";
+      }else if(status>=500){
+        message="OpenRouterまたはモデル提供元が一時的に混雑しています。\n少し時間を空けて、もう一度お試しください。";
+      }
+      const error=createAiRequestError(message,{status,retryable:isRetryableAiStatus(status),retryAfterMs});
+      error.rawStatus=status;
+      error.rawBody=raw;
       return error;
     }
 
@@ -1548,6 +1750,9 @@ Verdict:
     }
 
     function aiRetryDelayMs(attempt,error){
+      if(Number(error?.status||0)===429){
+        return attempt<=1?1000:2000;
+      }
       const retryAfter=Math.min(Number(error?.retryAfterMs||0),AI_CHECK_RETRY_MAX_DELAY_MS);
       if(retryAfter>0)return retryAfter;
       const backoff=AI_CHECK_RETRY_BASE_DELAY_MS*Math.pow(2,Math.max(0,attempt-1));
@@ -1557,6 +1762,11 @@ Verdict:
     function briefAiError(error){
       const text=String(error?.message||error||"不明なエラー");
       return text.length>160?`${text.slice(0,160)}...`:text;
+    }
+
+    function userFacingAiError(error){
+      const text=String(error?.message||"AI添削を完了できませんでした。少し時間を空けて、もう一度お試しください。").trim();
+      return text||"AI添削を完了できませんでした。少し時間を空けて、もう一度お試しください。";
     }
 
     async function withAiRetry(operation,onRetry=null){
@@ -1576,13 +1786,13 @@ Verdict:
       throw lastError;
     }
 
-    async function requestAiCheckWithRetry({model,messages,onRetry=null}){
+    async function requestAiCheckWithRetry({model,messages,payload,onRetry=null}){
       const apiKey=normalizeText(appState.settings.openRouterApiKey||"");
       const body=JSON.stringify({
         model,
         messages,
         temperature:.1,
-        max_completion_tokens:1500,
+        max_completion_tokens:1600,
         response_format:{type:"json_object"}
       });
       return withAiRetry(async()=>{
@@ -1603,22 +1813,20 @@ Verdict:
           });
           const text=await res.text();
           if(!res.ok){
-            throw createAiRequestError(`OpenRouter HTTP ${res.status}: ${text.slice(0,500)}`,{
-              status:res.status,
-              retryable:isRetryableAiStatus(res.status),
-              retryAfterMs:parseRetryAfterMs(res.headers.get("Retry-After"))
-            });
+            console.warn("OpenRouter error",res.status,text);
+            throw createOpenRouterError(res.status,text,parseRetryAfterMs(res.headers.get("Retry-After")));
           }
           let data;
           try{
             data=JSON.parse(text);
           }catch(error){
-            throw createAiRequestError(`OpenRouterの応答をJSONとして読めませんでした: ${text.slice(0,200)}`,{retryable:true});
+            console.warn("OpenRouter non-JSON response",text);
+            throw createAiRequestError("OpenRouterの応答形式を読み取れませんでした。少し時間を空けて、もう一度お試しください。",{retryable:true});
           }
           const content=data?.choices?.[0]?.message?.content||"";
           if(!content)throw createAiRequestError("OpenRouterの応答に添削結果がありませんでした。",{retryable:true});
           try{
-            return normalizeAiCheckResult(extractJsonObject(content));
+            return normalizeAiCheckResult(extractJsonObject(content),payload);
           }catch(error){
             error.retryable=true;
             throw error;
@@ -1691,7 +1899,7 @@ Verdict:
           }
         });
         const timestamp=nowIso();
-        const check={id:"ai_"+makeId(),cardId,deckId,frontText,backText,userExample,result,checkedAt:timestamp,createdAt:timestamp,updatedAt:timestamp};
+        const check={id:"ai_"+makeId(),version:2,cardId,deckId,frontText,backText,userExample,result,checkedAt:timestamp,createdAt:timestamp,updatedAt:timestamp};
         await putItem(STORES.aiChecks,check);
         await pruneAiChecks(AI_CHECKS_PER_CARD_LIMIT);
         await loadData();
@@ -1705,9 +1913,9 @@ Verdict:
         }
         queueGoogleDriveAutoSync();
       }catch(error){
+        console.error("AI check failed",error);
         appState.message=null;
-        const retryNote=isRetryableAiError(error)?"自動リトライ後も完了できませんでした。":"設定またはリクエスト内容を確認してください。";
-        appState.error=`AI判定に失敗しました（${frontText}）。\n${retryNote}\n${error.message||error}`;
+        appState.error=`AI添削に失敗しました（${frontText}）。\n${userFacingAiError(error)}`;
       }finally{
         appState.aiInFlight=appState.aiInFlight.filter(id=>id!==cardId);
         render();
@@ -1726,14 +1934,25 @@ Verdict:
       appState.aiReadyNotices=(appState.aiReadyNotices||[]).filter(item=>item?.cardId!==cardId);
     }
 
-    function openAiResultModal(cardId){
+    function openAiResultModal(cardId,checkId=null){
       appState.aiResultModalCardId=cardId;
-      removeAiReadyNotice(cardId);
+      appState.aiResultModalCheckId=checkId;
       render();
     }
 
     function closeAiResultModal(){
       appState.aiResultModalCardId=null;
+      appState.aiResultModalCheckId=null;
+      render();
+    }
+
+    function openAiList(){
+      appState.aiListOpen=true;
+      render();
+    }
+
+    function closeAiList(){
+      appState.aiListOpen=false;
       render();
     }
 
@@ -2234,6 +2453,7 @@ Verdict:
       appState.deckFormOpen=false;
       appState.quickAddOpen=false;
       appState.cardListOpen=false;
+      appState.aiListOpen=false;
       appState.deckOptionsOpen=false;
       appState.deckDataOpen=false;
       clearMessages();
@@ -2514,9 +2734,41 @@ Verdict:
         assert("normalizeDeckName accepts Anki style separators",normalizeDeckName("英語::教科書 / Unit 1")==="英語 / 教科書 / Unit 1");
         assert("deckDisplayName returns final path part",deckDisplayName({name:"英語 / 教科書"})==="教科書");
         assert("deckDepth counts hierarchy levels",deckDepth({name:"英語 / 教科書 / Unit 1"})===2);
-        assert("extractJsonObject accepts fenced JSON",extractJsonObject('```json\n{"verdict":"OK","score":90}\n```').verdict==="OK");
-        assert("normalizeAiCheckResult reads score",normalizeAiCheckResult({verdict:"OK",score:88}).score===88);
+        assert("extractJsonObject accepts fenced JSON",extractJsonObject('```json\n{"verdict":"OK","targetWord":"summarize"}\n```').targetWord==="summarize");
+        {
+          const freq=normalizeFrequency({casualConversation:10,business:0,news:"4",academic:null,literary:"abc"});
+          assert("AI frequency clamps invalid values",freq.casualConversation===5&&freq.business===1&&freq.news===4&&freq.academic===3&&freq.literary===3,JSON.stringify(freq));
+        }
+        {
+          const ok=normalizeAiCheckResult({targetWord:"summarize",partOfSpeechAndMeaning:"動詞：要約する。",frequency:{casualConversation:3,business:4,news:3,academic:5,literary:2},nuance:"要点を短くまとめる。",originalExample:"Please summarize the article in one sentence.",correctedExample:"Please summarize the article in one sentence.",verdict:"OK",corrections:[],usagePoints:[{pattern:"summarize something",meaning:"何かを要約する",example:"Please summarize the article.",translation:"その記事を要約してください。"}],correctedMeaning:"その記事を一文で要約してください。"});
+          assert("AI normalize keeps OK sentence unchanged",ok.verdict==="OK"&&ok.originalExample===ok.correctedExample&&ok.corrections.length===0&&ok.usagePoints.length===1,JSON.stringify(ok));
+        }
+        {
+          const adapt=normalizeAiCheckResult(AI_CHECK_FEWSHOT.find(item=>item.assistant.targetWord==="adapt").assistant);
+          assert("AI adapt few-shot includes required correction",adapt.correctedExample==="I am adapting to a new environment."&&adapt.corrections.some(item=>item.explanation.includes("adapt to + 名詞"))&&adapt.corrections.some(item=>item.correctedPart.includes("a new environment")),JSON.stringify(adapt));
+        }
+        {
+          const summarize=normalizeAiCheckResult(AI_CHECK_FEWSHOT.find(item=>item.assistant.targetWord==="summarize").assistant);
+          assert("AI summarize few-shot includes tense alternative",summarize.correctedExample==="I am summarizing a new book."&&summarize.alternatives.some(item=>item.example==="I summarize new books."),JSON.stringify(summarize));
+        }
+        {
+          const borrow=normalizeAiCheckResult(AI_CHECK_FEWSHOT.find(item=>item.assistant.targetWord==="borrow").assistant);
+          assert("AI borrow few-shot preserves target word and offers lend",borrow.correctedExample==="I let him borrow my book."&&borrow.alternatives.some(item=>item.example==="I lent him my book."),JSON.stringify(borrow));
+        }
+        {
+          const html=renderAiResult({...AI_CHECK_FEWSHOT.find(item=>item.assistant.targetWord==="adapt").assistant,score:88,evaluations:{syntax:{score:1,maxScore:30,feedback:"旧評価"}},nativeReception:"旧印象",usageExplanation:"旧説明"});
+          const legacyScore="/ "+"100";
+          const legacyBreakdown="評価"+"内訳";
+          const legacyNative="母"+"語話者";
+          assert("AI result hides legacy score and breakdown",!html.includes(legacyScore)&&!html.includes(legacyBreakdown)&&!html.includes(legacyNative)&&!html.includes("旧印象"),html);
+        }
+        {
+          const rateLimit=createOpenRouterError(429,"rate limited");
+          const embedding=createOpenRouterError(400,"model is an embedding model and cannot be used with the chat/completions endpoint");
+          assert("AI OpenRouter errors are user-facing",rateLimit.message.includes("無料AIが混雑")&&embedding.message.includes("文章生成に対応していません"),`${rateLimit.message}\n${embedding.message}`);
+        }
         assert("AI retry status classification",isRetryableAiStatus(429)&&isRetryableAiStatus(503)&&!isRetryableAiStatus(401));
+        assert("AI 429 retry delay uses two short waits",aiRetryDelayMs(1,{status:429})===1000&&aiRetryDelayMs(2,{status:429})===2000);
         assert("AI Retry-After seconds parses",parseRetryAfterMs("2",0)===2000);
         assert("AI auth errors are not retried",!isRetryableAiError(createAiRequestError("auth",{status:401,retryable:isRetryableAiStatus(401)})));
         assert("AI network errors are retried",isRetryableAiError(new TypeError("Failed to fetch")));
@@ -2669,32 +2921,78 @@ Verdict:
       return appState.aiChecks.find(check=>check.cardId===cardId)||null;
     }
 
-    const AI_CATEGORY_LABELS={spellingAndMechanics:"スペル・表記",syntax:"統語",semantics:"意味",pragmatics:"語用論"};
+    function aiChecksForDeck(deckId=appState.selectedDeckId){
+      const cardIds=new Set(cardsForDeck(deckId).map(card=>card.id));
+      return (appState.aiChecks||[])
+        .filter(check=>check?.id&&cardIds.has(check.cardId))
+        .sort((left,right)=>String(right.checkedAt||right.createdAt||"").localeCompare(String(left.checkedAt||left.createdAt||"")));
+    }
 
-    function renderAiResult(result,originalExample=""){
-      if(!result)return"";
-      const score=result.score===null||result.score===undefined?"":`<span class="pill">${escapeHtml(result.score)} / 100</span>`;
-      const block=(title,text)=>text?`<div class="aiBlock"><strong>${title}</strong><br>${escapeHtml(text)}</div>`:"";
-      const before=normalizeText(originalExample);
-      const after=normalizeText(result.correctedExample||"");
+    function safeAiResultForCheck(check){
+      try{
+        return normalizeAiCheckResult(check?.result,{frontText:check?.frontText,backText:check?.backText,userExample:check?.userExample});
+      }catch{
+        return normalizeAiCheckResult({}, {frontText:check?.frontText,backText:check?.backText,userExample:check?.userExample});
+      }
+    }
+
+    function aiSection(title,body){
+      if(!body)return"";
+      return`<div class="aiSection"><div class="aiSectionTitle">${escapeHtml(title)}</div>${body}</div>`;
+    }
+
+    function aiTextSection(title,text){
+      const clean=normalizeText(text);
+      return clean?aiSection(title,`<div>${escapeHtml(clean)}</div>`):"";
+    }
+
+    function verdictClass(verdict){
+      if(verdict==="OK")return"ok";
+      if(verdict==="少し修正するとよい")return"minor";
+      return"needs";
+    }
+
+    function renderAiFrequency(frequency){
+      const freq=normalizeFrequency(frequency);
+      const rows=Object.entries(AI_FREQUENCY_LABELS).map(([key,label])=>`<div class="aiFreqRow"><div class="aiFreqLabel">${escapeHtml(label)}</div><div class="aiFreqStars" aria-label="${escapeHtml(label)} ${freq[key]} / 5">${escapeHtml(toStars(freq[key]))}</div></div>`).join("");
+      const note=freq.note?`<div class="aiMiniCard" style="margin-top:10px">${escapeHtml(freq.note)}</div>`:"";
+      return aiSection("使用頻度",`<div class="aiFrequency">${rows}</div>${note}`);
+    }
+
+    function renderAiCompare(result){
+      const before=result.originalExample;
+      const after=result.correctedExample;
       const unchanged=before&&after&&before===after;
-      let compare="";
-      if(before||after){
-        compare=`<div class="aiCompare">${before?`<div class="aiCmpRow"><span class="aiCmpLabel">修正前</span><span class="aiCmpText before ${unchanged?"":"del"}">${escapeHtml(before)}</span></div>`:""}${after?`<div class="aiCmpRow"><span class="aiCmpLabel">修正例文</span><span class="aiCmpText after">${escapeHtml(after)}</span></div>`:""}${unchanged?`<div class="small" style="padding:0 12px 10px">修正は不要です。このまま使えます。</div>`:""}</div>`;
-      }
-      let breakdown="";
-      if(result.evaluations){
-        const rows=Object.keys(AI_CATEGORY_LABELS).map(key=>{
-          const cell=result.evaluations[key];
-          if(!cell)return"";
-          const max=Number(cell.maxScore||0);
-          const value=cell.score===null||cell.score===undefined?null:Number(cell.score);
-          const pct=max&&value!==null?Math.round((value/max)*100):0;
-          return`<div class="aiCat"><div class="aiCatHead"><span>${AI_CATEGORY_LABELS[key]}</span><span class="aiCatScore">${value===null?"–":value} / ${max}</span></div><div class="aiCatBar"><div class="aiCatFill" style="width:${pct}%"></div></div>${cell.feedback?`<div class="small" style="margin-top:4px">${escapeHtml(cell.feedback)}</div>`:""}</div>`;
-        }).join("");
-        if(rows)breakdown=`<div class="aiBreakdown"><strong>評価内訳</strong>${rows}</div>`;
-      }
-      return`<div class="aiResult">${compare}<div class="aiVerdict"><span>${escapeHtml(result.verdict||"判定")}</span>${score}</div>${result.reason?`<div style="margin-top:8px">${escapeHtml(result.reason)}</div>`:""}${result.suggestion?`<div class="small" style="margin-top:8px">${escapeHtml(result.suggestion)}</div>`:""}${block("この文が伝わる印象",result.nativeReception)}${block("使い方のポイント",result.usageExplanation)}${block("修正文の意味",result.correctedMeaning)}${breakdown}</div>`;
+      if(!before&&!after)return"";
+      return`<div class="aiCompare">${before?`<div class="aiCmpRow before"><span class="aiCmpLabel">修正前</span><span class="aiCmpText before ${unchanged?"":"del"}">${escapeHtml(before)}</span></div>`:""}${after?`<div class="aiCmpRow after"><span class="aiCmpLabel">修正後</span><span class="aiCmpText after">${escapeHtml(after)}</span></div>`:""}${unchanged?`<div class="small" style="padding:0 12px 10px">修正は不要です。このまま使えます。</div>`:""}</div>`;
+    }
+
+    function renderAiCorrections(corrections){
+      if(!corrections.length)return"";
+      const rows=corrections.map(item=>`<div class="aiCorrection"><div class="aiCorrectionParts">${item.originalPart?`<div class="aiPartBefore">${escapeHtml(item.originalPart)}</div>`:""}${item.originalPart||item.correctedPart?`<div class="aiArrow">↓</div>`:""}${item.correctedPart?`<div class="aiPartAfter">${escapeHtml(item.correctedPart)}</div>`:""}</div>${item.explanation?`<div>${escapeHtml(item.explanation)}</div>`:""}</div>`).join("");
+      return aiSection("修正ポイント",`<div class="aiList">${rows}</div>`);
+    }
+
+    function renderAiUsagePoints(points){
+      if(!points.length)return"";
+      const rows=points.map(item=>`<div class="aiUsagePoint">${item.pattern?`<div class="aiPattern">${escapeHtml(item.pattern)}</div>`:""}${item.meaning?`<div>${escapeHtml(item.meaning)}</div>`:""}${item.example?`<div class="aiExampleLine">${escapeHtml(item.example)}</div>`:""}${item.translation?`<div class="small">${escapeHtml(item.translation)}</div>`:""}</div>`).join("");
+      return aiSection("使い方のポイント",`<div class="aiList">${rows}</div>`);
+    }
+
+    function renderAiAlternatives(alternatives){
+      if(!alternatives.length)return"";
+      const rows=alternatives.map(item=>`<div class="aiAlternative">${item.intendedMeaning?`<div class="aiPattern">${escapeHtml(item.intendedMeaning)}</div>`:""}${item.example?`<div class="aiExampleLine">${escapeHtml(item.example)}</div>`:""}${item.explanation?`<div style="margin-top:6px">${escapeHtml(item.explanation)}</div>`:""}</div>`).join("");
+      return aiSection("意図別の別案",`<div class="aiList">${rows}</div>`);
+    }
+
+    function renderAiResult(result,payloadOrOriginalExample=""){
+      if(!result)return"";
+      const payload=typeof payloadOrOriginalExample==="string"?{userExample:payloadOrOriginalExample}:payloadOrOriginalExample||{};
+      const normalized=normalizeAiCheckResult(result,payload);
+      const verdict=normalized.verdict;
+      const compare=renderAiCompare(normalized);
+      const verdictHtml=`<div class="aiVerdict"><span class="aiSectionTitle" style="margin:0">判定</span><span class="aiVerdictBadge ${verdictClass(verdict)}">${escapeHtml(verdict)}</span></div>`;
+      return`<div class="aiResult"><div class="aiSectionTitle">対象単語</div><div class="aiWord">${escapeHtml(normalized.targetWord||"対象単語")}</div>${aiTextSection("品詞と意味",normalized.partOfSpeechAndMeaning)}${renderAiFrequency(normalized.frequency)}${aiTextSection("使い方のニュアンス",normalized.nuance)}${compare}${verdictHtml}${renderAiCorrections(normalized.corrections)}${renderAiUsagePoints(normalized.usagePoints)}${aiTextSection("修正文の意味",normalized.correctedMeaning)}${renderAiAlternatives(normalized.alternatives)}</div>`;
     }
 
     function renderAiExamplePanel(card,ratingButtonsHtml=""){
@@ -2706,9 +3004,9 @@ Verdict:
       if(!open)return`<div class="aiPanel">${toggle}</div>`;
       const inFlightNote=inFlight?`<div class="small" style="margin-top:8px">バックグラウンドで生成中です。先に進んでも、完了したら通知します。</div>`:"";
       let resultBlock="";
-      if(sessionResult)resultBlock=`<div class="aiRateAbove">${ratingButtonsHtml}</div>${renderAiResult(sessionResult,appState.exampleDraft)}`;
+      if(sessionResult)resultBlock=`<div class="aiRateAbove">${ratingButtonsHtml}</div>${renderAiResult(sessionResult,{frontText:card.frontText,backText:card.backText,userExample:appState.exampleDraft})}`;
       else if(hasStored)resultBlock=`<button class="ghost" style="margin-top:10px;width:100%" onclick="openAiResultModal('${card.id}')">前回の添削を見る</button>`;
-      return`<div class="aiPanel">${toggle}<label for="userExampleInput" style="margin-top:14px">自分の例文</label><textarea id="userExampleInput" placeholder="${escapeHtml(card.frontText)} を使って英文を書く" oninput="appState.exampleDraft=this.value">${escapeHtml(appState.exampleDraft||"")}</textarea><div class="row" style="margin-top:10px"><button class="blue" onclick="checkCurrentExampleWithAi()" ${inFlight?"disabled":""}>${inFlight?"生成中…":"AIで判定"}</button><button class="ghost" onclick="appState.exampleDraft='';appState.aiCheckResult=null;render();">クリア</button></div>${inFlightNote}${resultBlock}</div>`;
+      return`<div class="aiPanel">${toggle}<label for="userExampleInput" style="margin-top:14px">自分の例文</label><textarea id="userExampleInput" placeholder="${escapeHtml(card.frontText)} を使って英文を書く" oninput="appState.exampleDraft=this.value">${escapeHtml(appState.exampleDraft||"")}</textarea><div class="row" style="margin-top:10px"><button class="blue" onclick="checkCurrentExampleWithAi()" ${inFlight?"disabled":""}>${inFlight?"生成中…":"AIで添削"}</button><button class="ghost" onclick="appState.exampleDraft='';appState.aiCheckResult=null;render();">クリア</button></div>${inFlightNote}${resultBlock}</div>`;
     }
 
     function renderAiReadyNotice(){
@@ -2719,16 +3017,41 @@ Verdict:
       const rows=notices.length
         ? notices.map(item=>`<div class="aiNoticeItem"><div><div class="aiNoticeWord">「${escapeHtml(item.frontText||"AI添削")}」の添削</div><div class="aiNoticeTime">${escapeHtml(formatDateTime(item.readyAt))}</div></div><button class="blue" onclick="openAiResultModal('${escapeHtml(item.cardId)}')">見る</button><button class="aiNoticeDismiss" aria-label="通知を閉じる" onclick="dismissAiReadyNotice('${escapeHtml(item.cardId)}')">×</button></div>`).join("")
         : `<div class="aiNoticeEmpty">完了待ちのAI添削はありません。</div>`;
-      const foot=notices.length?`<div class="aiNoticeFoot"><button class="ghost" onclick="dismissAiReadyNotice()">すべて閉じる</button></div>`:"";
+      const listButton=`<button class="ghost" onclick="openAiList()">一覧を見る</button>`;
+      const dismissButton=notices.length?`<button class="ghost" onclick="dismissAiReadyNotice()">すべて閉じる</button>`:"";
+      const foot=`<div class="aiNoticeFoot">${listButton}${dismissButton}</div>`;
       return`<div class="aiNoticeBox" role="region" aria-live="polite" aria-label="AI添削通知"><div class="aiNoticeHead"><div class="aiNoticeTitle"><span>AI添削</span><span class="aiNoticeCount">${notices.length}件</span></div><button class="aiNoticeMin" onclick="toggleAiNoticeBox()">最小化</button></div><div class="aiNoticeList">${rows}</div>${foot}</div>`;
     }
 
+    function renderAiCheckListModal(){
+      if(!appState.aiListOpen)return"";
+      const checks=aiChecksForDeck();
+      const deckName=deckPath(selectedDeck());
+      const rows=checks.map(check=>{
+        const result=safeAiResultForCheck(check);
+        const verdict=result.verdict||"判定";
+        const original=normalizeText(check.userExample||result.originalExample||"");
+        const corrected=normalizeText(result.correctedExample||"");
+        const checkedAt=formatDateTime(check.checkedAt||check.createdAt);
+        const meta=[
+          original?`自分の例文: ${escapeHtml(original)}`:"",
+          corrected?`修正後: ${escapeHtml(corrected)}`:"",
+          `日時: ${escapeHtml(checkedAt)}`
+        ].filter(Boolean).join("<br>");
+        return`<div class="listItem"><div><div class="listTitle">${escapeHtml(check.frontText||result.targetWord||"AI添削")} <span class="aiVerdictBadge ${verdictClass(verdict)}" style="vertical-align:middle">${escapeHtml(verdict)}</span></div><div class="listMeta">${meta}</div></div><div class="row" style="justify-content:flex-end"><button class="blue" style="flex:0 0 auto" onclick='openAiResultModal(${jsString(check.cardId)},${jsString(check.id)})'>見る</button></div></div>`;
+      }).join("");
+      const body=checks.length?rows:`<div class="empty">保存済みのAI添削はまだありません。</div>`;
+      return`<div class="modalBackdrop" onclick="if(event.target.className==='modalBackdrop')closeAiList();"><div class="modal"><div class="modalHeader"><h2>${escapeHtml(deckName)} のAI添削一覧</h2><button class="secondary" onclick="closeAiList()">閉じる</button></div>${body}</div></div>`;
+    }
+
     function renderAiResultModal(){
-      if(!appState.aiResultModalCardId)return"";
-      const check=latestAiCheckForCard(appState.aiResultModalCardId);
-      const card=appState.cards.find(current=>current.id===appState.aiResultModalCardId);
+      if(!appState.aiResultModalCardId&&!appState.aiResultModalCheckId)return"";
+      const check=appState.aiResultModalCheckId
+        ? appState.aiChecks.find(current=>current.id===appState.aiResultModalCheckId)
+        : latestAiCheckForCard(appState.aiResultModalCardId);
+      const card=appState.cards.find(current=>current.id===(check?.cardId||appState.aiResultModalCardId));
       const title=escapeHtml(check?.frontText||card?.frontText||"AI添削");
-      const body=check?renderAiResult(check.result,check.userExample):`<p class="small">結果が見つかりませんでした。</p>`;
+      const body=check?renderAiResult(check.result,{frontText:check.frontText,backText:check.backText,userExample:check.userExample}):`<p class="small">結果が見つかりませんでした。</p>`;
       return`<div class="modalBackdrop" onclick="if(event.target.className==='modalBackdrop')closeAiResultModal();"><div class="modal"><div class="modalHeader"><h2>${title} の添削</h2><button class="secondary" onclick="closeAiResultModal()">閉じる</button></div>${body}</div></div>`;
     }
 
@@ -2801,7 +3124,8 @@ Verdict:
       const deck=selectedDeck();
       const name=deckPath(deck);
       const cardCount=cardsForDeck(deck.id).length;
-      return`<div class="modalBackdrop" onclick="if(event.target.className==='modalBackdrop')closeDeckOptions();"><div class="modal"><div class="modalHeader"><h2>${escapeHtml(name)}</h2><button class="secondary" onclick="closeDeckOptions()">閉じる</button></div><div class="optionList"><button class="blue" onclick="appState.deckOptionsOpen=false;openQuickAdd()">＋ 単語を追加</button><button class="secondary" onclick="appState.deckOptionsOpen=false;openCardList()">カードを見る（${cardCount}枚）</button><button class="secondary" onclick="appState.deckOptionsOpen=false;openDeckData()">この単語帖の学習データ</button><button class="ghost" onclick="appState.deckOptionsOpen=false;openDeckEditor('${deck.id}')">単語帖名の変更・削除</button></div></div></div>`;
+      const aiCheckCount=aiChecksForDeck(deck.id).length;
+      return`<div class="modalBackdrop" onclick="if(event.target.className==='modalBackdrop')closeDeckOptions();"><div class="modal"><div class="modalHeader"><h2>${escapeHtml(name)}</h2><button class="secondary" onclick="closeDeckOptions()">閉じる</button></div><div class="optionList"><button class="blue" onclick="appState.deckOptionsOpen=false;openQuickAdd()">＋ 単語を追加</button><button class="secondary" onclick="appState.deckOptionsOpen=false;openCardList()">カードを見る（${cardCount}枚）</button><button class="secondary" onclick="appState.deckOptionsOpen=false;openAiList()">AI添削一覧（${aiCheckCount}件）</button><button class="secondary" onclick="appState.deckOptionsOpen=false;openDeckData()">この単語帖の学習データ</button><button class="ghost" onclick="appState.deckOptionsOpen=false;openDeckEditor('${deck.id}')">単語帖名の変更・削除</button></div></div></div>`;
     }
 
     function renderCardListModal(){
@@ -3081,7 +3405,7 @@ Verdict:
       if(appState.tab==="cards")main=renderCards();
       if(appState.tab==="history")main=renderHistory();
       if(appState.tab==="settings")main=renderSettings();
-      root.innerHTML=`${renderBusyBar()}${renderAppHeader()}${renderMessages()}${main}${renderEditor()}${renderDeckEditor()}${renderDeckFormModal()}${renderQuickAddModal()}${renderDeckOptionsSheet()}${renderCardListModal()}${renderDeckDataModal()}${renderCompletionModal()}${renderAiResultModal()}${renderAiReadyNotice()}${renderLightbox()}${renderTabs()}`;
+      root.innerHTML=`${renderBusyBar()}${renderAppHeader()}${renderMessages()}${main}${renderEditor()}${renderDeckEditor()}${renderDeckFormModal()}${renderQuickAddModal()}${renderDeckOptionsSheet()}${renderCardListModal()}${renderAiCheckListModal()}${renderDeckDataModal()}${renderCompletionModal()}${renderAiResultModal()}${renderAiReadyNotice()}${renderLightbox()}${renderTabs()}`;
       if(activeId){
         const el=document.getElementById(activeId);
         if(el){
@@ -3248,7 +3572,7 @@ Verdict:
       return !!el&&(el.tagName==="INPUT"||el.tagName==="TEXTAREA"||el.isContentEditable);
     }
     function studyInteractive(){
-      return appState.tab==="study"&&!appState.editorCardId&&!appState.deckEditorId&&!appState.completionModalState&&!appState.lightboxSrc&&!appState.deckOptionsOpen&&!appState.deckDataOpen&&!appState.cardListOpen&&!appState.quickAddOpen&&!appState.deckFormOpen&&!!currentCard();
+      return appState.tab==="study"&&!appState.editorCardId&&!appState.deckEditorId&&!appState.completionModalState&&!appState.lightboxSrc&&!appState.deckOptionsOpen&&!appState.deckDataOpen&&!appState.cardListOpen&&!appState.aiListOpen&&!appState.aiResultModalCardId&&!appState.aiResultModalCheckId&&!appState.quickAddOpen&&!appState.deckFormOpen&&!!currentCard();
     }
     document.addEventListener("keydown",event=>{
       if(appState.lightboxSrc&&event.key==="Escape"){closeLightbox();return;}
@@ -3293,7 +3617,7 @@ Verdict:
       rateCurrentCard(dx>0?"good":"again");
     },{passive:true});
 
-    Object.assign(window,{appState,render,setTab,selectDeck,toggleDeckCollapse,createDeckFromForm,openDeckEditor,closeDeckEditor,saveDeckFromEditor,deleteDeck,importCsvFile,saveSyncSettings,saveNicknameSettings,saveAiSettings,saveGoogleDriveSettings,connectGoogleDrive,syncGoogleDrive,syncGoogleDriveFromForm,disconnectGoogleDrive,syncFromGas,testGasConnection,openGasUrlForCheck,copyGasUrl,syncFromPastedGasJson,checkCurrentExampleWithAi,openAiResultModal,closeAiResultModal,dismissAiReadyNotice,toggleAiNoticeBox,runSelfTests,rateCurrentCard,skipCurrentCard,speakCardFrontText,speakCurrentCard,speakEditorFrontText,openEditor,closeEditor,closeCompletionModal,saveCardFromEditor,addImageToCard,removeImage,deleteCard,resetAllData,exportData,setTheme,applyTheme,undoLastReview,openLightbox,closeLightbox,onHeroClick,addQuickCard,loadSampleCards,onSearchInput,openDeckForm,closeDeckForm,openQuickAdd,closeQuickAdd,openCardList,closeCardList,openDeckData,closeDeckData,openDeckOptions,closeDeckOptions});
+    Object.assign(window,{appState,render,setTab,selectDeck,toggleDeckCollapse,createDeckFromForm,openDeckEditor,closeDeckEditor,saveDeckFromEditor,deleteDeck,importCsvFile,saveSyncSettings,saveNicknameSettings,saveAiSettings,saveGoogleDriveSettings,connectGoogleDrive,syncGoogleDrive,syncGoogleDriveFromForm,disconnectGoogleDrive,syncFromGas,testGasConnection,openGasUrlForCheck,copyGasUrl,syncFromPastedGasJson,checkCurrentExampleWithAi,openAiResultModal,closeAiResultModal,openAiList,closeAiList,dismissAiReadyNotice,toggleAiNoticeBox,runSelfTests,rateCurrentCard,skipCurrentCard,speakCardFrontText,speakCurrentCard,speakEditorFrontText,openEditor,closeEditor,closeCompletionModal,saveCardFromEditor,addImageToCard,removeImage,deleteCard,resetAllData,exportData,setTheme,applyTheme,undoLastReview,openLightbox,closeLightbox,onHeroClick,addQuickCard,loadSampleCards,onSearchInput,openDeckForm,closeDeckForm,openQuickAdd,closeQuickAdd,openCardList,closeCardList,openDeckData,closeDeckData,openDeckOptions,closeDeckOptions});
 
     if("serviceWorker" in navigator){
       window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").then(registration=>registration.update()).catch(error=>console.warn("Service Worker registration failed:",error)));
